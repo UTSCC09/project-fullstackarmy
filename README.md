@@ -26,10 +26,10 @@ FullStackARMy
 - language configuration
 
 ## Technology Stack
-M - Mongodb
-E - Express + graphQL
-R - React
-N - Node
+- M - Mongodb
+- E - Express + graphQL
+- R - React
+- N - Node
 
 ## Top 5 Technical Challenges
 a description of the top 5 technical challenges
