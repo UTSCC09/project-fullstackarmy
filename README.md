@@ -9,7 +9,7 @@ FullStackARMy
 - Mohamed Tayeh
 
 ## Web Application Description
-A web platform that will leverage enhanced data visualization libraries to showcase charts and figures about COVID-19 Vaccination data based on worldwide statistics.\ 
+A web platform that will leverage enhanced data visualization libraries to showcase charts and figures about COVID-19 Vaccination data based on worldwide statistics.  
 The application will support user management in order to allow users to customize the data dashboard based on personal preferences for configuration of charts, colour schemes, and fonts. Furthermore, the application will support search and filtering features that will allow the users to navigate the dashboard based on data for a specific timeframe or country. In order to support a larger user base, the application will provide multi-lingual support. 
 
 ## Beta Version Key Features
