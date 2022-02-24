@@ -9,8 +9,12 @@ FullStackARMy
 - Mohamed Tayeh
 
 ## Web Application Description
-A web platform that will leverage enhanced data visualization libraries to showcase charts and figures about COVID-19 Vaccination data based on worldwide statistics.  
-The application will support user management in order to allow users to customize the data dashboard based on personal preferences for configuration of charts, colour schemes, and fonts. Furthermore, the application will support search and filtering features that will allow the users to navigate the dashboard based on data for a specific timeframe or country. In order to support a larger user base, the application will provide multi-lingual support. 
+
+A simplified COVID-19 vaccination worldwide statistics dashboard. The website will leverage enhanced data visualization libraries to show case charts and figures of the data. The application will support search and filtering features that will allow the users to navigate the dashboard based on data for a specific timeframe or country. In addition, a user will be allowed to sign up and customize the dashboard based on personal preferences for charts configuration, colour schemes, and fonts. To support a larger user base, the application will provide multi-lingual support.
+
+### Motivation
+
+There are a few vaccination tracker dashboards on the web currently, however even as someone with experience in data these dashboards can get overwhelming to fully understand the data and the story behind. The aim of the website to create a dashboard that would simplify the vaccination story to people are not experienced with reading a large amount of data at a time. In addition, to appeal to as many people as possible, multi-lingual support.
 
 ## Beta Version Key Features
 - Some of the charts such as:
@@ -18,12 +22,12 @@ The application will support user management in order to allow users to customiz
     - Percentage of people fully vaccinated per country
     - Comparison of highest percentages of fully vaccinated countries
     - Comparison of lowest percentages of fully vaccinated countries
-- translation of website
-- data retrieval and parsing
+- Translation of website
+- Data retrieval and parsing
     - Sources:
         - [Our World in Data](https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations)
-- data storage
-- user signup/signin
+- Data storage
+- User signup/signin
 
 ## Final Version Key Features
 - All charts:
@@ -34,8 +38,8 @@ The application will support user management in order to allow users to customiz
     - Comparison of lowest percentages of fully vaccinated countries
     - Vaccination rates by country income level
     See [NYT tracker](https://www.nytimes.com/interactive/2021/world/covid-vaccinations-tracker.html)
-- configuration of charts
-- language configuration
+- Configuration of Charts
+- Language Configuration
 
 ## Technology Stack
 - M - Mongodb
