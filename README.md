@@ -40,6 +40,7 @@ There are a few vaccination tracker dashboards on the web currently, however eve
     See [NYT tracker](https://www.nytimes.com/interactive/2021/world/covid-vaccinations-tracker.html)
 - Configuration of Charts
 - Language Configuration
+- Search and filtering
 
 ## Technology Stack
 - M - Mongodb
