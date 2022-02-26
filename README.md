@@ -32,7 +32,7 @@ To make it easy to digest, we will be creating a series of stories we wish to co
 
 1. What shares of population received the doses by countries/continents/world?
 
-   - Stacked bar chart here good (1st/2nd doses) toggle to show the shares of the booster if they wish
+   - Stacked bar chart here is good (1st/2nd doses) + toggle to show the shares of the booster if they wish
    - Have a breakdown by age in the stacked bar chart
    - Have a breakdown by income in the stacked bar chart - see [NYT tracker](https://www.nytimes.com/interactive/2021/world/covid-vaccinations-tracker.html)
    - Heat map is good
