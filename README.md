@@ -16,14 +16,14 @@ A simplified COVID-19 vaccination worldwide statistics dashboard. The website wi
 
 ### Motivation
 
-There are a few vaccination tracker dashboards on the web currently, however even as someone with experience in data these dashboards can get overwhelming to fully understand the data and the story behind. The aim of the website to create a dashboard that would simplify the vaccination story to people who are not experienced with reading a large amount of data at a time. In addition, to appeal to as many people as possible, multi-lingual support.
+There are a few vaccination tracker dashboards on the web currently, however even someone who is experienced with data these dashboards can get overwhelming to fully understand and the story behind the facts and figures. The aim of the website is to create a dashboard that would simplify the vaccination story to people who are not experienced with reading a large amount of data at a time. In addition, to appeal to as many people as possible, multi-lingual support.
 
 ### Stories Narrated
 
 To make it easy to digest, we will be creating a series of stories we wish to convey using simple figures, charts and maps.
 
 1. What shares of population received the doses by countries/continents/world?
-2. What are the rates of vaccination over time by countries/continents/world?
+2. What are the rates of vaccination (/100 people) over time by income/countries/continents/world?
 3. What does the vaccine distribution between countries/continents look like?
 
 ## Beta Version Key Features
@@ -32,7 +32,7 @@ To make it easy to digest, we will be creating a series of stories we wish to co
 
 1. What shares of population received the doses by countries/continents/world?
 
-   - Stacked bar chart here good (1st/2nd doses) toggle to show the shares of the booster if they wish
+   - Stacked bar chart here good (1st/2nd doses) in addition to a toggle to show the shares of the booster shot if the user wishes
    - Have a breakdown by age in the stacked bar chart
    - Have a breakdown by income in the stacked bar chart - see [NYT tracker](https://www.nytimes.com/interactive/2021/world/covid-vaccinations-tracker.html)
    - Heat map is good
@@ -47,7 +47,6 @@ Note: the breakdowns are not easily digestable therefore need to think of a UI/U
    - Bar chart to show how many vaccines each country/continent/income group have
    - Bar chart to show how many vaccines were administered in each
    - Bar chart to show how many were donated by each country (/100 people doesn't matter here in the toggle)
-   - Can have a toggle button for
 
 - Translation of website
 - Data retrieval and parsing
