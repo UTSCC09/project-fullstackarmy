@@ -35,7 +35,6 @@ To make it easy to digest, we will be creating a series of stories we wish to co
    - Stacked bar chart is good for this purpose (1st/2nd doses) in addition to a toggle to show the shares of the booster shot if the user wishes
    - Have a breakdown by age in the stacked bar chart
    - Have a breakdown by income in the stacked bar chart - see [NYT tracker](https://www.nytimes.com/interactive/2021/world/covid-vaccinations-tracker.html)
-   - Heat map is good for this purpose
 
 Note: the breakdowns are not easily digestable therefore need to think of a UI/UX Design that will allow to hide these breakdowns and show them when user wishes.
 
@@ -56,7 +55,7 @@ Note: the breakdowns are not easily digestable therefore need to think of a UI/U
 - User signup/signin
 
 ## Final Version Key Features
-
+- Heat map for the first story
 - A way to change between World/Continent/Country statistics and have a comparison between country/continent and world statistic
 - Configuration of Charts - choosing the countries/continents on the charts
 - Language Configuration
