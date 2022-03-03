@@ -1,4 +1,4 @@
-# Data Plan
+# Data & Charts Plan
 
 ### Stories Narrated
 
