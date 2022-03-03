@@ -42,12 +42,11 @@ Note: the breakdowns are not easily digestable therefore need to think of a UI/U
        1. Vaccination rate /100 is already obtained in the OWID Vaccination data for each of countries/continents/world and countries can be combined by income
 
 3. Vaccine distribution?
-   - Bar chart to show how many vaccines each country/continent/income group have
-     - Data needed:
-       1. Vaccination Doses given to each country - source: TBA
+
+   - Bar chart to show how many vaccines each country/continent/income group have (not needed since it doesn't matter)
    - Bar chart to show how many vaccines were administered in each
      - Data needed:
        1. Vaccinations administered data - source [OWID Vaccinations](https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations)
    - Bar chart to show how many were donated by each country
      - Data needed:
-       1. Vaccine donations - source: TBA
+       1. Vaccine donations - source: [COVID19 Task Force](https://data.covid19taskforce.com/data/tables)
