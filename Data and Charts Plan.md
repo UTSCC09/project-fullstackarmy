@@ -43,7 +43,7 @@ Note: the breakdowns are not easily digestable therefore need to think of a UI/U
 
 3. Vaccine distribution?
 
-   - Bar chart to show how many vaccines each country/continent/income group have (not needed since it doesn't matter)
+   - ~~Bar chart to show how many vaccines each country/continent/income group have~~ **not needed since it doesn't matter**
    - Bar chart to show how many vaccines were administered in each
      - Data needed:
        1. Vaccinations administered data - source [OWID Vaccinations](https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations)
