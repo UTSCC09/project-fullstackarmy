@@ -8,6 +8,7 @@ const multer  = require('multer');
 const graphql = require('graphql');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema');
+const mongoose = require('mongoose');
 
 const app = express();
 let upload = multer({ dest: path.join(__dirname, 'uploads')});
@@ -24,7 +25,18 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+const uri = `
+    mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD
+    }@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority
+`;
 
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(() => {
+    app.listen(3000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 const http = require('http');
 const { captureRejectionSymbol } = require('events');
