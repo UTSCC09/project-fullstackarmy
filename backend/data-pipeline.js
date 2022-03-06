@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const csvtojson = require('csvtojson')
+const csvtojson = require('csvtojson');
 const fs = require('fs');
 
 const vaccinationData = async () => {
