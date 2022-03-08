@@ -47,33 +47,3 @@ mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .catch(err => {
     console.log(err);
   });
-
-
-// Notes from videos for later
-// import the event schema
-
-// The following is resolver code:
-// For the 
-const event = new Event({
-  title: arg1,
-  date: arg2,
-  user: arg3,
-});
-
-event.save().then(result => {
-  // enriched object in mongodb
-  return {...result._doc, _id = result.id};
-}).catch(err => {
-  console.err(err);
-  throw err;
-});
-
-// For the get
-return Event.find().then(events => {
-  return events.map(event => {
-    return {... events._doc, _id = event.id};
-  })
-}).catch(err => {
-  throw err;
-})
-
