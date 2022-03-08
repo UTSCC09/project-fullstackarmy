@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const vaccinationDataSchema = new Schema({
+const vaccinationDataPerCountrySchema = new Schema({
+    // primary key
     iso_code: {
         type: String,
         required: true
@@ -37,6 +38,6 @@ const vaccinationDataSchema = new Schema({
     ]
 });
 
-vaccinationDataSchema.index({ "iso_code": 1, "date": 1}, { "unique": true, "dropDups": true });
+vaccinationDataPerCountrySchema.index({ "iso_code": 1, "date": 1}, { "unique": true, "dropDups": true });
 
 module.exports = mongoose.model('VaccinationData', vaccinationDataSchema);
