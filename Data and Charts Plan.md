@@ -6,6 +6,15 @@
 2. What are the rates of vaccination (/100 people) over time by income/countries/continents/world?
 3. What does the vaccine distribution between countries/continents look like?
 
+### Who will be using this?
+
+When will we reach heard immunation?
+
+why are some ages
+
+critical time markers for the vaccination rates
+when new variates came out
+
 ### Chart Data & Configuration
 
 1. What shares of population received the doses by countries/continents/world?

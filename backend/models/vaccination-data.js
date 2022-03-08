@@ -4,18 +4,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const vaccinationDataSchema = new Schema({
-    // primary key
     iso_code: {
         type: String,
-        unique: true,
-        dropDups: true,
         required: true
     },
-    // primary key
     date: {
         type: Date,
-        unique: true,
-        dropDups: true,
         required: true
     },
     total_vaccinations:{
@@ -34,6 +28,15 @@ const vaccinationDataSchema = new Schema({
         type: Number,
         required: true
     },
+    // Connecting on model to another
+    createdEvents: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Event'
+        }
+    ]
 });
+
+vaccinationDataSchema.index({ "iso_code": 1, "date": 1}, { "unique": true, "dropDups": true });
 
 module.exports = mongoose.model('VaccinationData', vaccinationDataSchema);
