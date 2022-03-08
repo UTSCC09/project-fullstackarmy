@@ -34,3 +34,6 @@
    - people_with_booster_per_hundred: float
    - iso_code
    - pk: iso_code, date
+
+## To run with proper env variables add:
+MONGO_USER=\[mongo username\] MONGO_PASSWORD=\[mongo password\] MONGO_DB=\[mongo database\] node app.js

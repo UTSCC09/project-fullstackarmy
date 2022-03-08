@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const vaccinationDataSchema = new Schema({
+const vaccinationDataPerCountrySchema = new Schema({
     // primary key
     iso_code: {
         type: String,
@@ -36,4 +36,4 @@ const vaccinationDataSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model('VaccinationData', vaccinationDataSchema);
+module.exports = mongoose.model('VaccinationDataPerCountry', vaccinationDataPerCountrySchema);

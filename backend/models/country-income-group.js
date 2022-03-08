@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const incomeGroupSchema = new Schema({
+const countryIncomeGroupSchema = new Schema({
     // primary key
     iso_code: {
         type: String,
@@ -24,4 +24,4 @@ const incomeGroupSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('IncomeGroup', incomeGroupSchema);
+module.exports = mongoose.model('CountryIncomeGroup', countryIncomeGroupSchema);
