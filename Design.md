@@ -53,3 +53,11 @@ Design by page
 - Age breakdown:
   - See which age groups need to be targetted more so that herd immunity is reached
   - Where should i go? young adults -> bars and nightlife stuff or teenagers -> schools
+
+
+
+# Tabs
+1. what is heard immunity? (scroll effect)
+2. how far are we to reach it? (data viz)
+3. when will we reach? (time series viz) 
+4. who needs the most help to reach it? (vaccine distribution viz)
