@@ -56,7 +56,7 @@ Design by page
 
 
 
-# Tabs
+## Tabs
 1. what is heard immunity? (scroll effect)
 2. how far are we to reach it? (data viz)
 3. when will we reach? (time series viz) 
