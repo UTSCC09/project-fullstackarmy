@@ -1,0 +1,74 @@
+[
+    {
+        "isoCode": "OWID_AFR",
+        "countrName": "Africa"
+    },
+    {
+        "isoCode": "OWID_ASI",
+        "countrName": "Asia"
+    },
+    {
+        "isoCode": "OWID_ENG",
+        "countrName": "England"
+    },
+    {
+        "isoCode": "OWID_EUR",
+        "countrName": "Europe"
+    },
+    {
+        "isoCode": "OWID_EUN",
+        "countrName": "European Union"
+    },
+    {
+        "isoCode": "OWID_HIC",
+        "countrName": "High income"
+    },
+    {
+        "isoCode": "OWID_KOS",
+        "countrName": "Kosovo"
+    },
+    {
+        "isoCode": "OWID_LIC",
+        "countrName": "Low income"
+    },
+    {
+        "isoCode": "OWID_LMC",
+        "countrName": "Lower middle income"
+    },
+    {
+        "isoCode": "OWID_NAM",
+        "countrName": "North America"
+    },
+    {
+        "isoCode": "OWID_CYN",
+        "countrName": "Northern Cyprus"
+    },
+    {
+        "isoCode": "OWID_NIR",
+        "countrName": "Northern Ireland"
+    },
+    {
+        "isoCode": "OWID_OCE",
+        "countrName": "Oceania"
+    },
+    {
+        "isoCode": "OWID_SCT",
+        "countrName": "Scotland"
+    },
+    {
+        "isoCode": "OWID_SAM",
+        "countrName": "South America"
+    },
+    {
+        "isoCode": "OWID_UMC",
+        "countrName": "Upper middle income"
+    },
+    {
+        "isoCode": "OWID_WLS",
+        "countrName": "Wales"
+    },
+    {
+        "isoCode": "OWID_WRL",
+        "countrName": "World"
+    }
+]
