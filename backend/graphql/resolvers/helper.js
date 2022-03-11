@@ -5,4 +5,9 @@ const transformCountry = country => {
     };
 };
 
+const numberObj = (number) => {
+    return {number};
+}
+
 exports.transformCountry = transformCountry;
+exports.numberObj = numberObj;
