@@ -1,5 +1,6 @@
-const Country = require('../../models/country');
+const Country = require('../../models/IsoCode');
 
+// ! needs to be refactored
 // const { transformCountry } = require('./helper');
 
 const transformCountry = country => {
@@ -10,8 +11,9 @@ const transformCountry = country => {
 };
 
 module.exports = {
-    countries: async () => {
+    country: async () => {
         try {
+            // ! Should have pagination etc.
             const countries = await Country.find();
             return countries.map(country => {
                 return transformCountry(country);
@@ -30,9 +32,10 @@ module.exports = {
     },
     addCountry: async (args, req) => {
         const country = new Country({
-        iso_code: args.countryInput.iso_code,
-        country_name: args.countryInput.country_name
+            isoCode: args.countryInput.isoCode,
+            countryName: args.countryInput.countryName
         });
+
         try {
             const result = await country.save();
             return transformCountry(result);
