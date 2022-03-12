@@ -43,9 +43,11 @@ const HerdImmunityBarChart: React.FC = () => {
             value: .94,
             scaleID: "y",
             borderWidth: 3,
+            borderColor: '#2148C0',
             label: {
               enabled: true,
               content: `Herd Immunity Percentile Threshold`,
+              backgroundColor: '#2148C0',
               position: 'start',
             }
           }]

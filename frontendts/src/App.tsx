@@ -10,9 +10,9 @@ function App() {
         <Header />
         <Routes>
           {/* TODO: Change names of components. Also to appropriate paths */}
-          <Route path='/tab2' 
-                  element={<Tab2 />} />
           <Route path='/' 
+                  element={<Tab2 />} />
+          <Route path='/tab3' 
                   element={<Tab3 />} />
         </Routes>
       </div>

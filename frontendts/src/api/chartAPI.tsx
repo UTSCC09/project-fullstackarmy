@@ -46,13 +46,13 @@ export default class chartAPI extends rootAPI  {
             {
               type: 'bar' as const,
               label: 'People Vaccinated',
-              backgroundColor: 'rgb(75, 192, 192)',
+              backgroundColor: '#0F6889',
               data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 1})),
             },
             {
               type: 'bar' as const,
               label: 'People Fully Vaccinated',
-              backgroundColor: 'rgb(53, 162, 235)',
+              backgroundColor: '#2C9DBF',
               data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 1 })),
             },
         ];
