@@ -30,13 +30,18 @@ const HerdImmunityTimeSeriesChart: React.FC = () => {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top' as const,
+          position: 'bottom' as const,
         },
         title: {
           display: true,
           text: 'When Will We Reach Herd Immunity?',
         },
       },
+      scales: {
+        x: {
+            type: 'timeseries',
+        }
+      }
     };
 
     // set up api instance to get data and labels

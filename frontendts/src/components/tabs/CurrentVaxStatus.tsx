@@ -2,7 +2,7 @@ import React from 'react'
 import HerdImmunityBarChart from "../charts/HerdImmunityBarChart";
 
 // TODO: Rename for proper page name
-const Tab2: React.FC = () => {
+const CurrentVaccStatus: React.FC = () => {
   return (
     <div>
       <HerdImmunityBarChart />
@@ -10,4 +10,4 @@ const Tab2: React.FC = () => {
   )
 }
 
-export default Tab2
+export default CurrentVaccStatus

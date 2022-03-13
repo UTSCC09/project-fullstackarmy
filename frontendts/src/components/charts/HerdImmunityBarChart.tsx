@@ -15,8 +15,13 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation'
 import { Bar } from 'react-chartjs-2';
 import chartAPI from '../../api/chartAPI';
+import { 
+  gql, 
+  useQuery
+} from "@apollo/client";
 
-const HerdImmunityBarChart: React.FC = () => {
+
+const HerdImmunityBarChart = () => {
   // Register necessary elements from ChartJS
   ChartJS.register(
       LinearScale,
@@ -35,12 +40,14 @@ const HerdImmunityBarChart: React.FC = () => {
           display: true,
           text: 'How Far Are We to Reach Herd Immunity?',
         },
+        legend: {
+          position: 'bottom'
+        },
         annotation: {
           annotations: [{
             id: "herdImmThreshold",
             type: 'line',
-            // herd immunity is apparently 94% from https://www.mayoclinic.org/diseases-conditions/coronavirus/in-depth/herd-immunity-and-coronavirus/art-20486808#:~:text=quickly%20become%20overwhelmed.-,Vaccines,causing%20illness%20or%20resulting%20complications.
-            value: .94,
+            value: 90.0,
             scaleID: "y",
             borderWidth: 3,
             borderColor: '#2148C0',
@@ -60,19 +67,43 @@ const HerdImmunityBarChart: React.FC = () => {
         },
         y: {
           stacked: true,
+          min: 0,
+          max: 100.0,
+          title: {
+            display: true,
+            text: '% of Population'
+          }
         },
       },
   };
 
   // set up api instance to get data and labels
   const api: chartAPI = new chartAPI();
+
+  const GET_LABELS = gql`
+    query {
+      isoCodes{
+        isoCode
+        name
+      }
+
+    }
+  `;
+  // NOTE: Can't change these vars
+  // const { loading, error, data } = useQuery(GET_LABELS);
+
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
+  // const labels = data;
   
-  const data: ChartData<'bar'> = {
+  const chartData: ChartData<'bar'> = {
       labels: api.getBarLabels(),
       datasets: api.getBarDataSets(),
+      // labels,
+      // datasets,
   };
 
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={chartData} />;
 
 }
 

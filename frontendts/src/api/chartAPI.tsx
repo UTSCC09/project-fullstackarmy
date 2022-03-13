@@ -1,4 +1,8 @@
 import rootAPI from "./rootAPI";
+import { 
+    gql, 
+    useQuery
+} from "@apollo/client";
 import { faker } from '@faker-js/faker';
 
 export default class chartAPI extends rootAPI  {
@@ -31,29 +35,42 @@ export default class chartAPI extends rootAPI  {
     ];
 
     getBarLabels() {
+    
+        const GET_LABELS = gql`
+            query isoCode {
+
+            }
+        `;
+
+        // TODO: Can't use useQuery in a class, needs to be function or custom react hook
+
+        // const { loading, error, data } = useQuery(GET_LABELS);
+
+        // if (loading) return 'Loading...';
+        // if (error) return `Error! ${error.message}`;
+
+        // need to call api based on selected countries from filter
         return this.barLabels;
     }
     
     // TODO: data.datasets[index].data is data from api 
     //       want most recent peopleVaccinated and peopleFullyVaccinated
-    // TODO: line is the herd immunity line, but see if you can make it stretch across
-    //       want: calculate herd immunity per iso_code
     // TODO: data.datasets[index].label is data from api
-    //       want dataset2 to be peopleVaccinatedPerHundred
-    //       want dataset3 to be peopleFullyVaccinatedPerHundred/totalBoostersPerHundred
+    //       want People Fully Vaccinated to be peopleFullyVaccinatedPerHundred/totalBoostersPerHundred
+    //       want People Vaccinated to be peopleVaccinatedPerHundred
     getBarDataSets() {
         return [
             {
               type: 'bar' as const,
-              label: 'People Vaccinated',
+              label: 'People Fully Vaccinated',
               backgroundColor: '#0F6889',
-              data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 1})),
+              data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 100.0})),
             },
             {
               type: 'bar' as const,
-              label: 'People Fully Vaccinated',
+              label: 'People Vaccinated',
               backgroundColor: '#2C9DBF',
-              data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 1 })),
+              data: this.barLabels.map(() => faker.datatype.float({ min: 0, max: 100.0 })),
             },
         ];
     }
