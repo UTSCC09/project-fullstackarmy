@@ -30,6 +30,8 @@ const updateIsoCodeVaccDataQueries = (isoCodeData, isoCodeToID) => {
                 dailyVaccinationsPerMillion: dataRow.dailyVaccinationsPerMillion,
                 dailyPeopleVaccinated: dataRow.dailyPeopleVaccinated,
                 dailyPeopleVaccinatedPerHundred: dataRow.dailyPeopleVaccinatedPerHundred,
+                peopleFullyVaccinated: dataRow.peopleFullyVaccinated,
+                peopleFullyVaccinatedPerHundred: dataRow.peopleFullyVaccinatedPerHundred,
                 totalBoosters: dataRow.totalBoosters,
                 totalBoostersPerHundred: dataRow.totalBoostersPerHundred,
             };

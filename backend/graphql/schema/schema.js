@@ -35,6 +35,8 @@ input DailyVaccDataInput {
     dailyVaccinationsPerMillion: Float
     dailyPeopleVaccinated: Float
     dailyPeopleVaccinatedPerHundred: Float
+    peopleFullyVaccinated: Float
+    peopleFullyVaccinatedPerHundred: Float
     totalBoosters: Float
     totalBoostersPerHundred: Float
 }
