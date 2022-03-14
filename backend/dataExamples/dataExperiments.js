@@ -2,7 +2,7 @@ const vaccinationData = require('./vaccinationData.json');
 const fs = require('fs');
 
 let isoCodes = vaccinationData.filter(country => country.iso_code.startsWith('OWID')).map(country => {
-    return {isoCode: country.iso_code, countrName: country.country}
+    return {isoCode: country.iso_code, countryName: country.country}
 });
 fs.writeFileSync('./isoCodes.json', JSON.stringify(isoCodes, null, 4));
 
