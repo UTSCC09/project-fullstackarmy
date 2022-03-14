@@ -29,24 +29,20 @@ module.exports = {
     */
     getMostRecentVaccDataByIsoCode: async (args) => {
         try {
-            console.log(args);
             // get the ids of the isoCodes
             const isoCodeIds = await IsoCode.find({}, '_id')
-                .where('isoCode').in(args.isoCodes).then();
-            console.log(isoCodeIds);
+                .where('isoCode').in(args.isoCodes).exec();
+            // Since need to get most recent per isoCode, need to call per isoCode
             let dailyVaccData = [];
-            for (let obj in isoCodeIds) {
-                const middleData = await DailyVaccData.find({'isoCode': obj._id})
+            for (let i in isoCodeIds) {
+                const middleData = await DailyVaccData.findOne({'isoCode': isoCodeIds[i]._id})
                 .sort({date: -1})
-                .limit(1)
                 .exec();
                 dailyVaccData.push(middleData);
             }
-            return;
-            // // TODO: Can't get multiple most recents
-            // return dailyVaccData.map(dailyVaccData => {
-            //     return transformDailyVaccData(dailyVaccData);
-            // });
+            return dailyVaccData.map(dailyVaccData => {
+                return transformDailyVaccData(dailyVaccData);
+            });
         } catch (err) {
             throw err;
         }
@@ -57,6 +53,7 @@ module.exports = {
     */
     getDailyVaccDataByDateRange: async (args) => {
         try {
+            // expected: params should be just a month and year?
             
         } catch (err) {
             throw err;
