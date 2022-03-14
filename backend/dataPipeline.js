@@ -102,6 +102,8 @@ const getDataSets = async () => {
           dailyVaccinationsPerMillion: dataEl["daily_vaccinations_per_million"],
           dailyPeopleVaccinated: dataEl["daily_people_vaccinated"],
           dailyPeopleVaccinatedPerHundred: dataEl["daily_people_vaccinated_per_hundred"],
+          peopleFullyVaccinated: dataEl["people_fully_vaccinated"],
+          peopleFullyVaccinatedPerHundred: dataEl["people_fully_vaccinated_per_hundred"],
           totalBoosters: dataEl["total_boosters"],
           totalBoostersPerHundred: dataEl["total_boosters_per_hundred"]
         }
@@ -175,7 +177,7 @@ const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput) => {
 const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
 
   let allQueries = [];
-	const numRecordsPerReq = 50;
+	const numRecordsPerReq = 200;
 
   records = 0;
   let index = 0;
