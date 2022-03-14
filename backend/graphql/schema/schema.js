@@ -1,6 +1,5 @@
 const { buildSchema } = require('graphql');
 
-// TODO: dailyVaccData shouldn't accept all the dates
 module.exports = buildSchema(`
 type Number {
     number: Int!
@@ -15,6 +14,7 @@ type IsoCodeType {
     isoCodeType: String!
 }
 type DailyVaccData {
+    isoCode: IsoCode!
     date: String!
     totalVaccinations: Float
     totalVaccinationsPerHundred: Float
@@ -58,8 +58,10 @@ input IsoCodeVaccDataInput {
     data: [DailyVaccDataInput!]!
 }
 type RootQuery {
-    isoCodes(isoCodes:[String!]): [IsoCode!]!
-    dailyVaccData(isoCodes:[String!], dates:[String!]): [DailyVaccData!]!
+    isoCodes(isoCodes:[String!]!): [IsoCode!]!
+    getMostRecentVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
+    getDailyVaccDataByDateRange(startDate: String!, endDate: String!): [DailyVaccData!]!
+    getDailyVaccDataByIsoCodeAndDateRange(isoCodes:[String!]!, startDate: String!, endDate: String!): [DailyVaccData!]!
 }
 type RootMutation {
     updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput]): Number!

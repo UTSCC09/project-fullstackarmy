@@ -1,3 +1,5 @@
+const IsoCodeType = require('../../models/IsoCodeType');
+
 const isoCodeType = async isoCodeTypeId => {
     try {
       const isoCodeType = await IsoCodeType.findById(isoCodeTypeId);
@@ -22,5 +24,10 @@ const numberObj = (number) => {
     return {number};
 }
 
+const dateToString = (date) => {
+    return new Date(date).toISOString();
+}
+
 exports.transformIsoCode = transformIsoCode;
 exports.numberObj = numberObj;
+exports.dateToString = dateToString;

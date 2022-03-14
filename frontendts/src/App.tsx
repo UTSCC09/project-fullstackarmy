@@ -10,7 +10,7 @@ function App() {
         <Header />
         <Routes>
           {/* TODO: Change names of components. Also to appropriate paths */}
-          <Route path='/' 
+          <Route path='/'
                   element={<CurrentVaccStatus />} />
           <Route path='/tab3' 
                   element={<Tab3 />} />

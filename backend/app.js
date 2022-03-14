@@ -1,4 +1,6 @@
 const express = require('express');
+//TODO: get rid of this later
+const cors = require(`cors`);
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const schema = require('./graphql/schema/schema');
@@ -19,6 +21,9 @@ const app = express();
 // For uploads 
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
+
+// TODO: Need to get rid of this later. Using this so I can call graphQL for now
+app.use(cors());
 
 app.use(bodyParser.json());
 

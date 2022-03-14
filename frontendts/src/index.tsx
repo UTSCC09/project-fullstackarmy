@@ -11,9 +11,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  // TODO: Get uri for graphql server
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
-  cache: new InMemoryCache()
+  // TODO: Need to update this URI
+  uri: 'http://localhost:8000/api',
+  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(

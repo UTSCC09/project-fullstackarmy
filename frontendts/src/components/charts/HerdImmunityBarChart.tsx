@@ -80,31 +80,57 @@ const HerdImmunityBarChart = () => {
   // set up api instance to get data and labels
   const api: chartAPI = new chartAPI();
 
+  // important stuff: https://graphql.org/graphql-js/passing-arguments/
   const GET_LABELS = gql`
-    query {
-      isoCodes{
-        isoCode
-        name
-      }
+  query isoCodes($isoCodes: [String!]!){
+      isoCodes(isoCodes:$isoCodes){
+      isoCode
+      isoCodeName
+    }
+  }
+  `;
 
+  const GET_DATA = gql`
+    query getMostRecentVaccDataByIsoCode($isoCodes:[String!]!) {
+      getMostRecentVaccDataByIsoCode(isoCodes:$isoCodes) {
+        peopleVaccinatedPerHundred
+        peopleFullyVaccinatedPerHundred
+      }
     }
   `;
+
+  // TODO: vars will come from Filter Component, remember vars need to be ""
+  let vars: String[] = ["CAN"];
   // NOTE: Can't change these vars
-  // const { loading, error, data } = useQuery(GET_LABELS);
+  const { error, data } = useQuery(GET_LABELS,
+    {
+      variables: {
+        isoCodes: vars
+      }
+    }
+  );
 
-  // if (loading) return 'Loading...';
-  // if (error) return `Error! ${error.message}`;
-  // const labels = data;
-  
-  const chartData: ChartData<'bar'> = {
-      labels: api.getBarLabels(),
+  if (error) return <h1>Error! {error.message}</h1>;
+
+  if (data) {
+    // StrictMode causes this to print 2x
+    const res = data.isoCodes;
+    let labels = []
+    for (let d in res) {
+      labels.push(res[d].isoCodeName + " (" + res[d].isoCode + ")");
+    }
+    console.log(labels)
+    const chartData: ChartData<'bar'> = {
+      // labels: api.getBarLabels(),
       datasets: api.getBarDataSets(),
-      // labels,
+      labels: labels,
       // datasets,
-  };
+    };
 
-  return <Bar options={options} data={chartData} />;
-
+    return <Bar options={options} data={chartData} />;
+  }
+    // TODO: did this bc of strict mode. FIX!
+    return <></>;
 }
 
 export default HerdImmunityBarChart

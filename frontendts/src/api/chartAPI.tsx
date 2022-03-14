@@ -1,8 +1,8 @@
 import rootAPI from "./rootAPI";
-import { 
-    gql, 
-    useQuery
-} from "@apollo/client";
+// import { 
+//     gql, 
+//     useQuery
+// } from "@apollo/client";
 import { faker } from '@faker-js/faker';
 
 export default class chartAPI extends rootAPI  {
@@ -36,11 +36,11 @@ export default class chartAPI extends rootAPI  {
 
     getBarLabels() {
     
-        const GET_LABELS = gql`
-            query isoCode {
+        // const GET_LABELS = gql`
+        //     query isoCode {
 
-            }
-        `;
+        //     }
+        // `;
 
         // TODO: Can't use useQuery in a class, needs to be function or custom react hook
 
