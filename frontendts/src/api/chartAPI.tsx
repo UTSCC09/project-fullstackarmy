@@ -1,8 +1,5 @@
 import rootAPI from "./rootAPI";
-// import { 
-//     gql, 
-//     useQuery
-// } from "@apollo/client";
+import { request, gql } from 'graphql-request';
 import { faker } from '@faker-js/faker';
 
 export default class chartAPI extends rootAPI  {
@@ -34,24 +31,36 @@ export default class chartAPI extends rootAPI  {
         // 'England (OWID_ENG)' 
     ];
 
-    getBarLabels() {
+    // getBarLabels: Array<String> = async (vars: String[]) => {
     
-        // const GET_LABELS = gql`
-        //     query isoCode {
-
-        //     }
-        // `;
-
-        // TODO: Can't use useQuery in a class, needs to be function or custom react hook
-
-        // const { loading, error, data } = useQuery(GET_LABELS);
-
-        // if (loading) return 'Loading...';
-        // if (error) return `Error! ${error.message}`;
-
-        // need to call api based on selected countries from filter
-        return this.barLabels;
-    }
+    //   const GET_LABELS = gql`
+    //     query isoCodes($isoCodes: [String!]!){
+    //       isoCodes(isoCodes:$isoCodes){
+    //       isoCode
+    //       isoCodeName
+    //     }
+    //   }`;
+    //   console.log(vars)
+    //   let labels: String[] = [];
+    //   const labelData = this.client.request(GET_LABELS, {isoCodes: vars})
+    //       .then(res => {
+    //         for (let i in res.isoCodes) {
+    //           console.log(res.isoCodes[i]);
+    //           labels.push(res.isoCodes[i].isoCodeName + " (" + res.isoCodes[i].isoCode + ")");
+    //         }
+    //       })
+    //       .catch(err => console.error(err))
+    //   // Something causes this to print 2x
+    //   console.log(labelData);
+    //   // if (labelData) {
+    //   //   // const res = labelData.isoCodes;
+        
+    //   //   for (let d in res) {
+    //   //     labels.push(res[d].isoCodeName + " (" + res[d].isoCode + ")");
+    //   //   }
+    //   // }
+    //   return labels;
+    // }
     
     // TODO: data.datasets[index].data is data from api 
     //       want most recent peopleVaccinated and peopleFullyVaccinated
