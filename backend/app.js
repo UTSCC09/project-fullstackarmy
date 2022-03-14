@@ -1,20 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const fs = require('fs');
-const multer  = require('multer');
-const graphqlHTTP = require('express-graphql');
-const schema = require('./schema');
+const schema = require('./graphql/schema/schema');
+const resolvers = require('./graphql/resolvers/rootResolver');
 const mongoose = require('mongoose');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const { buildSchema } = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
 
+// For security
+// const bcrypt = require('bcrypt');
+
 // For uploads 
+// const path = require('path');
 // const fs = require('fs');
 // const multer  = require('multer');
-
 
 const app = express();
 
@@ -24,58 +22,30 @@ const app = express();
 
 app.use(bodyParser.json());
 
-
-
 app.use('/api', graphqlHTTP({
-    schema: buildSchema(`
-        type RootQuery {
-            vaccinationData: [String!]!
-        }
-        
-        type RootMutation {
-            createVaccinationData(date: String): String
-        }
-
-        schema {
-            query: RootQuery
-            mutation: RootMutation
-        }
-    `), 
-    rootValue: {
-        vaccinationData: () => {
-            return ['Poop', 'pooP', 'PoOp'];
-        },
-        createVaccinationData: (args) => {
-            const vaccinationDataDate = args.date;
-            return vaccinationDataDate;
-        }
-    },
-    graphiql: true
-}))
+  schema: schema,
+  rootValue: resolvers, 
+  pretty: true,
+  graphiql: true,
+}));
 
 app.use(session({
     secret: 'this is a secure secret amirite?',
     resave: false,
     saveUninitialized: true,
 }));
-const uri = `
-    mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD
-    }@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority
-`;
+
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+const http = require('http');
+const PORT = 3000;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    app.listen(3000);
+    http.createServer(app).listen(PORT, function (err) {
+      if (err) console.log(err);
+      else console.log("HTTP server on http://localhost:%s", PORT);
+    });
   })
   .catch(err => {
     console.log(err);
   });
-
-const http = require('http');
-const { captureRejectionSymbol } = require('events');
-const PORT = 3000;
-
-http.createServer(app).listen(PORT, function (err) {
-    if (err) console.log(err);
-    else console.log("HTTP server on http://localhost:%s", PORT);
-});
