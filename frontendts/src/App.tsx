@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Header } from "./components/Header"
 import CurrentVaccStatus from "./components/tabs/CurrentVaxStatus";
-import Tab3 from "./components/tabs/Tab3";
+import VaccRateForecast from "./components/tabs/VaccRateForecast";
 
 function App() {
   return (
@@ -9,11 +9,11 @@ function App() {
       <div>
         <Header />
         <Routes>
-          {/* TODO: Change names of components. Also to appropriate paths */}
-          <Route path='/'
+          {/* TODO: Change to appropriate paths */}
+          <Route path='/currVaccStatus'
                   element={<CurrentVaccStatus />} />
-          <Route path='/tab3' 
-                  element={<Tab3 />} />
+          <Route path='/' 
+                  element={<VaccRateForecast />} />
         </Routes>
       </div>
     </Router>

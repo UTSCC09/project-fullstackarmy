@@ -20,6 +20,7 @@ type DailyVaccData {
     totalVaccinationsPerHundred: Float
     peopleVaccinated: Float
     peopleVaccinatedPerHundred: Float
+    peopleFullyVaccinatedPerHundred: Float
     dailyVaccinationsRaw: Float
     dailyVaccinations: Float
     dailyVaccinationsPerMillion: Float
@@ -45,6 +46,7 @@ input DailyVaccDataInput {
     totalVaccinationsPerHundred: Float
     peopleVaccinated: Float
     peopleVaccinatedPerHundred: Float
+    peopleFullyVaccinatedPerHundred: Float
     dailyVaccinationsRaw: Float
     dailyVaccinations: Float
     dailyVaccinationsPerMillion: Float
@@ -60,8 +62,7 @@ input IsoCodeVaccDataInput {
 type RootQuery {
     isoCodes(isoCodes:[String!]!): [IsoCode!]!
     getMostRecentVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
-    getDailyVaccDataByDateRange(startDate: String!, endDate: String!): [DailyVaccData!]!
-    getDailyVaccDataByIsoCodeAndDateRange(isoCodes:[String!]!, startDate: String!, endDate: String!): [DailyVaccData!]!
+    getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]!
 }
 type RootMutation {
     updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput]): Number!

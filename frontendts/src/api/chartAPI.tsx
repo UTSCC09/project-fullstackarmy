@@ -8,13 +8,6 @@ export default class chartAPI extends rootAPI  {
     //     super(parentField);
     // }
 
-    // TODO: Should these labels go based off of dates or months
-    timeSeriesLabels: Array<String> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-    getTimeSeriesLabels() {
-        return this.timeSeriesLabels;
-    }
-
     // TODO: labels are countries/ISO-codes
     // will need to update according to chosen countries
     // can query at IsoCode schema
@@ -89,13 +82,13 @@ export default class chartAPI extends rootAPI  {
         return [
             {
               label: 'Dataset 1',
-              data: this.timeSeriesLabels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+              data: [],
               borderColor: 'rgb(255, 99, 132)',
               backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
               label: 'Dataset 2',
-              data: this.timeSeriesLabels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+              data: [],
               borderColor: 'rgb(53, 162, 235)',
               backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },

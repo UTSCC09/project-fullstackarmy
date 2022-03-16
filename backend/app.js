@@ -1,5 +1,4 @@
 const express = require('express');
-//TODO: get rid of this later
 const cors = require(`cors`);
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -22,7 +21,7 @@ const app = express();
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
 
-// TODO: Need to get rid of this later. Using this so I can call graphQL for now
+// TODO: Need to only add allowed origins.
 app.use(cors());
 
 app.use(bodyParser.json());

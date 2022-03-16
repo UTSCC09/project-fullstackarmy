@@ -40,7 +40,7 @@ const HerdImmunityBarChart = () => {
       plugins: {
         title: {
           display: true,
-          text: 'How Far Are We to Reach Herd Immunity?',
+          text: 'Share of Population Vaccinated',
         },
         legend: {
           position: 'bottom'

@@ -1,7 +1,6 @@
 import React from 'react'
 import HerdImmunityTimeSeriesChart from '../charts/HerdImmunityTimeSeriesChart'
-// TODO: Rename according to proper page
-const Tab3: React.FC = () => {
+const VaccRateForecast: React.FC = () => {
   return (
     <div>
       <HerdImmunityTimeSeriesChart />
@@ -9,4 +8,4 @@ const Tab3: React.FC = () => {
   )
 }
 
-export default Tab3
+export default VaccRateForecast

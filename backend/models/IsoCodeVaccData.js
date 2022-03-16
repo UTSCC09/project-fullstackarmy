@@ -25,6 +25,12 @@ const isoCodeVaccDataSchema = new Schema({
     peopleVaccinatedPerHundred:{
         type: Number,
     },
+    peopleFullyVaccinated:{
+        type: Number,
+    },
+    peopleFullyVaccinatedPerHundred:{
+        type: Number,
+    },
     dailyVaccinationsPerMillion: {
         type: Number,
     },

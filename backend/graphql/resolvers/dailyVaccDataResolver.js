@@ -35,7 +35,7 @@ module.exports = {
             // Since need to get most recent per isoCode, need to call per isoCode
             let dailyVaccData = [];
             for (let i in isoCodeIds) {
-                const middleData = await DailyVaccData.findOne({'isoCode': isoCodeIds[i]._id})
+                const middleData = await DailyVaccData.findOne({'isoCode': isoCodeIds[i]._id, 'peopleFullyVaccinatedPerHundred': { $ne: null } })
                 .sort({date: -1})
                 .exec();
                 dailyVaccData.push(middleData);
@@ -48,30 +48,36 @@ module.exports = {
         }
     },
     /** 
-    * @param {{"startDate": String!, "endDate": String!}} args   starting and end date of range. end date non-inclusive
-    * @return {[DailyVaccData!]!} all vaccination data for given date range
+    * @param {{"startDate": String!, "endDate": String!, "isoCodes": [String!]!}} args   starting and end date of range. dates inclusive. for isocodes given
+    * @return {[DailyVaccData!]!} all vaccination data for given date range and isocodes
     */
-    getDailyVaccDataByDateRange: async (args) => {
+     getVaccDataByDateRangeAndIsoCode: async (args) => {
         try {
-            // expected: params should be just a month and year?
-            
+            // get the ids of the isoCodes
+            const isoCodeIds = await IsoCode.find({}, '_id')
+                .where('isoCode').in(args.isoCodes).exec();
+            // convert the dates
+            const startDate = new Date(args.startDate);
+            const endDate = new Date(args.endDate);
+
+            // need to get data per isoCode
+            let fullyVaccData = []
+            for (let i in isoCodeIds) {
+                const middleData = await DailyVaccData
+                .find({ $and: [
+                    {'isoCode': isoCodeIds[i]._id},
+                    {'peopleFullyVaccinatedPerHundred': { $ne: null }},
+                    {'date': {$gte: startDate, $lte: endDate}},
+                ]})
+                .exec();
+                fullyVaccData.push(middleData);
+            }
+            return fullyVaccData.map(fullyVaccData => {
+                return transformDailyVaccData(fullyVaccData);
+            });
+
         } catch (err) {
             throw err;
         }
-    },
-    getDailyVaccDataByIsoCodeAndDate: (args) => {
-        // try {
-        //     // get the actual isoCodes and not just their ids
-        //     const isoCodes = await IsoCode.find({isoCode:1})
-        //         .where('_id').in(args.isoCodes).exec();
-        //     console.log(isoCodes);
-        //     const dailyVaccData = await DailyVaccData.find()
-        //                 .where('isoCode').in(isoCodes).exec();
-        //     return dailyVaccData.map(dailyVaccData => {
-        //         return transformDailyVaccData(dailyVaccData);
-        //     });
-        // } catch (err) {
-        //     throw err;
-        // }
     },
 };
