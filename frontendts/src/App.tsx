@@ -10,9 +10,9 @@ function App() {
         <Header />
         <Routes>
           {/* TODO: Change to appropriate paths */}
-          <Route path='/'
+          <Route path='/currentVaccinationStatus'
                   element={<CurrentVaccStatus />} />
-          <Route path='/vaccRateForecast' 
+          <Route path='/' 
                   element={<VaccRateForecast />} />
         </Routes>
       </div>

@@ -14,10 +14,11 @@ const isoCode = async isoCodeId => {
 
 const transformDailyVaccData = dailyVaccData => {
     if (dailyVaccData) {
-        return {
+        const date = dailyVaccData._doc ? dailyVaccData._doc.date : dailyVaccData.date;
+        return res = {
         ...dailyVaccData._doc,
         _id: dailyVaccData.id,
-        date: dateToString(dailyVaccData._doc.date),
+        date: dateToString(date),
         isoCode: isoCode.bind(this, dailyVaccData.isoCode)
         };
     }
@@ -63,7 +64,7 @@ module.exports = {
             // Since need to get most recent per isoCode, need to call per isoCode
             let dailyVaccData = [];
             for (let i in args.isoCodes) {
-                // get the ids of the isoCode
+                // get the id of the isoCode
                 const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
                 // look up the data
                 const mostRecentSecondDose = await DailyVaccData
@@ -91,9 +92,8 @@ module.exports = {
             // Since need to get most recent per isoCode, need to call per isoCode
             let dailyVaccData = [];
             for (let i in args.isoCodes) {
-                // get the ids of the isoCode
+                // get the id of the isoCode
                 const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
-                console.log(isoCodeId);
                 // look up the data
                 const mostRecentThirdDose = await DailyVaccData
                 .findOne({$and: 
@@ -126,18 +126,20 @@ module.exports = {
             for (let i in args.isoCodes) {
                 // get the ids of the isoCode
                 const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
-                const middleData = await DailyVaccData
+                let middleData = await DailyVaccData
                 .find({ $and: [
                     {'isoCode': isoCodeId},
                     {'peopleFullyVaccinatedPerHundred': { $ne: null }},
+                    {'date': { $ne: null }},
                     {'date': {$gte: startDate, $lte: endDate}},
                 ]})
                 .exec();
+                middleData = middleData.map(middleData => {
+                    return transformDailyVaccData(middleData);
+                });
                 fullyVaccData.push(middleData);
             }
-            return fullyVaccData.map(fullyVaccData => {
-                return transformDailyVaccData(fullyVaccData);
-            });
+            return fullyVaccData;
 
         } catch (err) {
             throw err;

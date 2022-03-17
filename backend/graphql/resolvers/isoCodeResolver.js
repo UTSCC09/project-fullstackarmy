@@ -8,6 +8,7 @@ module.exports = {
     */
     isoCodes: async (args) => {
         try {
+            // to maintain order need to query one by one
             let isoCodes = [];
             for (let i in args.isoCodes){
                 const middleData = await IsoCode

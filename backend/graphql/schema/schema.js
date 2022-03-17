@@ -64,7 +64,7 @@ type RootQuery {
     getMostRecentFirstVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentFullyVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentBoosterVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
-    getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]!
+    getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [[DailyVaccData!]!]
 }
 type RootMutation {
     updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput]): Number!

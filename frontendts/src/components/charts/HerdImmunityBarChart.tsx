@@ -1,6 +1,4 @@
-import React from 'react'
-import { faker } from '@faker-js/faker';
-// from https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/bar/stacked?from-embed=&file=/App.tsx:315-556
+// Adapted from https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/bar/stacked?from-embed=&file=/App.tsx:315-556
 import {
   Chart as ChartJS,
   ChartOptions,
@@ -15,7 +13,7 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation'
 import { Bar } from 'react-chartjs-2';
-// import chartAPI from '../../api/chartAPI';
+
 import { 
   DocumentNode,
   gql, 
@@ -35,49 +33,6 @@ const HerdImmunityBarChart = () => {
       Legend,
       Tooltip
   );
-    
-  const options: ChartOptions<'bar'> = {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Share of Population Vaccinated',
-        },
-        legend: {
-          position: 'bottom'
-        },
-        annotation: {
-          annotations: [{
-            id: "herdImmThreshold",
-            type: 'line',
-            value: 90.0,
-            scaleID: "y",
-            borderWidth: 3,
-            borderColor: '#2148C0',
-            label: {
-              enabled: true,
-              content: `Herd Immunity Percentile Threshold`,
-              backgroundColor: '#2148C0',
-              position: 'start',
-            }
-          }]
-        }
-      },
-      responsive: true,
-      scales: { // TODO: Fix theses scales
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true,
-          min: 0,
-          max: 100.0,
-          title: {
-            display: true,
-            text: '% of Population'
-          }
-        },
-      },
-  };
 
   // important stuff: https://graphql.org/graphql-js/passing-arguments/
   const GET_LABELS: DocumentNode = gql`
@@ -114,7 +69,13 @@ const HerdImmunityBarChart = () => {
   `;
 
   // TODO: vars will come from Filter Component, remember vars need to be ""
-  let vars: String[] = ["CAN", "AFG", "AND"];
+  let vars: String[] = [
+    "CAN", 
+    "AFG", 
+    "AND", 
+    "CHL",
+    "PRT"
+  ];
 
   const { error: labelErr, data: labelData } = useQuery(GET_LABELS,
     {
@@ -149,21 +110,91 @@ const HerdImmunityBarChart = () => {
   );
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;
   if (err) return <h1>Error {err.message}</h1>
-  // Something causes this to print 2x
+
+  // For debugging
+  // console.log(labelData)
+  // console.log('-')
+  // console.log(firstVaccData)
+  // console.log('-')
+  // console.log(secondVaccData)
+  // console.log('-')
+  // console.log(boosterVaccData)
+  // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
   if (labelData && firstVaccData && secondVaccData && boosterVaccData) {
-    // update label and chart data. assumption same number of labels as data
-    // const res = labelData.isoCodes;
-    let labels = []
-    let vaccData = []
-    let fullyVaccData = []
-    let boosterData = []
-    console.log(secondVaccData)
+    // update label and chart data.
+    let labels: string[] = []
+    let vaccData: number[] = []
+    let fullyVaccData: number[] = []
+    let boosterData: number[] = []
+    let maxTot: number = 0
+    let maxFirstVal =0
     for (let i in vars) {
       labels.push(labelData.isoCodes[i].isoCodeName + " (" + labelData.isoCodes[i].isoCode + ")");
       vaccData.push(firstVaccData.getMostRecentFirstVaccDataByIsoCode[i].peopleVaccinatedPerHundred);
       fullyVaccData.push(secondVaccData.getMostRecentFullyVaccDataByIsoCode[i].peopleFullyVaccinatedPerHundred);
       boosterData.push(boosterVaccData.getMostRecentBoosterVaccDataByIsoCode[i].totalBoostersPerHundred);
+      // Justification for this method instead of creating an array of totals is less space used
+      let firstVal = firstVaccData.getMostRecentFirstVaccDataByIsoCode[i].peopleVaccinatedPerHundred
+      let total = firstVaccData.getMostRecentFirstVaccDataByIsoCode[i].peopleVaccinatedPerHundred +
+        secondVaccData.getMostRecentFullyVaccDataByIsoCode[i].peopleFullyVaccinatedPerHundred +
+        boosterVaccData.getMostRecentBoosterVaccDataByIsoCode[i].totalBoostersPerHundred
+      if (firstVal >= maxFirstVal) maxTot = total
     }
+    //TODO unsure if the comparison btwn CHL and PRT is okay
+    // This value is to get the proper scaling of the chart
+    // Adapted from https://stackoverflow.com/questions/11142884/fast-way-to-get-the-min-max-values-among-properties-of-object
+    const max: number = maxTot / (Math.max(...vaccData) / 100)
+
+    const options: ChartOptions<'bar'> = {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Share of Population Vaccinated',
+        },
+        legend: {
+          position: 'bottom'
+        },
+      annotation: {
+        annotations: [{
+          id: "herdImmThreshold",
+          type: 'line',
+          value: max * .90,
+          scaleID: "y",
+          borderWidth: 3,
+          borderColor: '#2148C0',
+          label: {
+            enabled: true,
+            content: `Herd Immunity Percentile Threshold`,
+            backgroundColor: '#2148C0',
+            position: 'start',
+          }
+        }]
+      }
+    },
+    responsive: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+        min: 0,
+        max: max,
+        // Adapted from Wayne F. Kaskie https://stackoverflow.com/questions/40994841/chart-js-bar-graph-with-percentage-values
+        ticks: {
+          stepSize: max / 10,
+          callback: function (value) {
+            let numValue: number = +value;
+            return (numValue / max * 100).toFixed(0) + '%'; // convert it to percentage
+          },
+        },
+        title: {
+          display: true,
+          text: '% of Population'
+        }
+      },
+    },
+  };
     // update chart data
     const data: ChartData<'bar'> = {
       labels: labels,
@@ -191,7 +222,7 @@ const HerdImmunityBarChart = () => {
 
     return <Bar options={options} data={data} />;
   }
-    // TODO: Figure out why it does this
+    // In some instances where the data returned by the queries are undefined
     return <></>;
 }
 

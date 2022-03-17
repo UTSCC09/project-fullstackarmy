@@ -23,8 +23,8 @@ export const Header = () => {
       <div className="nav-bar">
         <div className="tabs">
           <TabHeader title="Tab 1" imgPath={infoImg}/>
-          <TabHeader title="Tab 2" imgPath={barsImg}/>
-          <TabHeader title="Tab 3" imgPath={trendImg}/>
+          <TabHeader title="Current Vaccination Status" imgPath={barsImg}/>
+          <TabHeader title="Vaccination Rates and Herd Immunity Forecasts" imgPath={trendImg}/>
           <TabHeader title="Tab 4" imgPath={mapImg}/>
         </div>
       </div>
