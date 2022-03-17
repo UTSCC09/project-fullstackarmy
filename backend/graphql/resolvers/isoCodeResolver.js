@@ -8,8 +8,13 @@ module.exports = {
     */
     isoCodes: async (args) => {
         try {
-            const isoCodes = await IsoCode.find()
-                .where('isoCode').in(args.isoCodes).exec();
+            let isoCodes = [];
+            for (let i in args.isoCodes){
+                const middleData = await IsoCode
+                    .findOne({'isoCode': args.isoCodes[i]})
+                    .exec();
+                isoCodes.push(middleData)
+            }
             return isoCodes.map(isoCode => {
                 return transformIsoCode(isoCode);
             });

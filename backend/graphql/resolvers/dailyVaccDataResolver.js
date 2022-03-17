@@ -13,32 +13,96 @@ const isoCode = async isoCodeId => {
 };
 
 const transformDailyVaccData = dailyVaccData => {
-    return {
-      ...dailyVaccData._doc,
-      _id: dailyVaccData.id,
-      date: dateToString(dailyVaccData._doc.date),
-      isoCode: isoCode.bind(this, dailyVaccData.isoCode)
-    };
+    if (dailyVaccData) {
+        return {
+        ...dailyVaccData._doc,
+        _id: dailyVaccData.id,
+        date: dateToString(dailyVaccData._doc.date),
+        isoCode: isoCode.bind(this, dailyVaccData.isoCode)
+        };
+    }
+    return {};
 };
 
 // JUSTIFICATION: Can't have inclusive either/or in schema, it's better to split them
 module.exports = {
     /** 
     * @param {{"isoCodes": [String!]!}} args   Array of ISO Codes
-    * @return {[DailyVaccData!]!} most recent vaccination data for given ISO Codes
+    * @return {[DailyVaccData!]!} most recent first vaccination data for given ISO Codes
     */
-    getMostRecentVaccDataByIsoCode: async (args) => {
+    getMostRecentFirstVaccDataByIsoCode: async (args) => {
         try {
-            // get the ids of the isoCodes
-            const isoCodeIds = await IsoCode.find({}, '_id')
-                .where('isoCode').in(args.isoCodes).exec();
             // Since need to get most recent per isoCode, need to call per isoCode
             let dailyVaccData = [];
-            for (let i in isoCodeIds) {
-                const middleData = await DailyVaccData.findOne({'isoCode': isoCodeIds[i]._id, 'peopleFullyVaccinatedPerHundred': { $ne: null } })
+            for (let i in args.isoCodes) {
+                // get the ids of the isoCode
+                const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
+                // look up the data
+                const mostRecentFirstDose = await DailyVaccData
+                .findOne({$and: 
+                    [{'isoCode': isoCodeId},
+                    {'peopleVaccinatedPerHundred': { $ne: null }},
+                ]})
                 .sort({date: -1})
                 .exec();
-                dailyVaccData.push(middleData);
+                dailyVaccData.push(mostRecentFirstDose);
+            }
+            return dailyVaccData.map(dailyVaccData => {
+                return transformDailyVaccData(dailyVaccData);
+            });
+        } catch (err) {
+            throw err;
+        }
+    },
+    /** 
+    * @param {{"isoCodes": [String!]!}} args   Array of ISO Codes
+    * @return {[DailyVaccData!]!} most recent second vaccination data for given ISO Codes
+    */
+     getMostRecentFullyVaccDataByIsoCode: async (args) => {
+        try {
+            // Since need to get most recent per isoCode, need to call per isoCode
+            let dailyVaccData = [];
+            for (let i in args.isoCodes) {
+                // get the ids of the isoCode
+                const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
+                // look up the data
+                const mostRecentSecondDose = await DailyVaccData
+                .findOne({$and: 
+                    [{'isoCode': isoCodeId},
+                    {'peopleFullyVaccinatedPerHundred': { $ne: null }},
+                ]})
+                .sort({date: -1})
+                .exec();
+                dailyVaccData.push(mostRecentSecondDose);
+            }
+            return dailyVaccData.map(dailyVaccData => {
+                return transformDailyVaccData(dailyVaccData);
+            });
+        } catch (err) {
+            throw err;
+        }
+    },
+    /** 
+    * @param {{"isoCodes": [String!]!}} args   Array of ISO Codes
+    * @return {[DailyVaccData!]!} most recent booster vaccination data for given ISO Codes
+    */
+     getMostRecentBoosterVaccDataByIsoCode: async (args) => {
+        try {
+            // Since need to get most recent per isoCode, need to call per isoCode
+            let dailyVaccData = [];
+            for (let i in args.isoCodes) {
+                // get the ids of the isoCode
+                const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
+                console.log(isoCodeId);
+                // look up the data
+                const mostRecentThirdDose = await DailyVaccData
+                .findOne({$and: 
+                    [{'isoCode': isoCodeId},
+                    {'totalBoostersPerHundred': { $ne: null }},
+                ]})
+                .sort({date: -1})
+                .exec();
+                dailyVaccData.push(mostRecentThirdDose);
             }
             return dailyVaccData.map(dailyVaccData => {
                 return transformDailyVaccData(dailyVaccData);
@@ -53,19 +117,18 @@ module.exports = {
     */
      getVaccDataByDateRangeAndIsoCode: async (args) => {
         try {
-            // get the ids of the isoCodes
-            const isoCodeIds = await IsoCode.find({}, '_id')
-                .where('isoCode').in(args.isoCodes).exec();
             // convert the dates
             const startDate = new Date(args.startDate);
             const endDate = new Date(args.endDate);
 
             // need to get data per isoCode
-            let fullyVaccData = []
-            for (let i in isoCodeIds) {
+            let fullyVaccData = [];
+            for (let i in args.isoCodes) {
+                // get the ids of the isoCode
+                const isoCodeId = await IsoCode.find({'isoCode': args.isoCodes[i]}, '_id').exec();
                 const middleData = await DailyVaccData
                 .find({ $and: [
-                    {'isoCode': isoCodeIds[i]._id},
+                    {'isoCode': isoCodeId},
                     {'peopleFullyVaccinatedPerHundred': { $ne: null }},
                     {'date': {$gte: startDate, $lte: endDate}},
                 ]})

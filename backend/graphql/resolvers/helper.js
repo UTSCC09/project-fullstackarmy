@@ -13,11 +13,14 @@ const isoCodeType = async isoCodeTypeId => {
 };
 
 const transformIsoCode = isoCode => {
-    return {
-      ...isoCode._doc,
-      _id: isoCode.id,
-      isoCodeType: isoCodeType.bind(this, isoCode.isoCodeType)
-    };
+    if (isoCode) {
+      return {
+        ...isoCode._doc,
+        _id: isoCode.id,
+        isoCodeType: isoCodeType.bind(this, isoCode.isoCodeType)
+      };
+    }
+    return {};
 };
 
 const numberObj = (number) => {
