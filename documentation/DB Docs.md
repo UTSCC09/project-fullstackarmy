@@ -4,33 +4,54 @@
 
 1. Country table
 
-   - iso_code: string
-   - country_name: string
-   - pk: iso_code
+   - \_id
+   - isoCode: string
+   - countryName: string
+
+   - unique: iso_code
 
 2. Income group table
 
-   - Income Group
-   - Year
-   - iso_code
-   - pk: iso_code, year
+   - \_id
+   - incomeGroup
 
-3. Vaccination Data Table
+   - unique: incomeGroup
 
+3. Income to Country
+
+   - \_id
+   - year
+   - incomeGroup: foreign key to `income`
+   - isoCode: foreign key to `country`
+
+   - unique: isoCode, year
+
+4. Vaccination Data Table
+
+   - \_id
    - date: date
-   - total_vaccinations: int
-   - people_vaccinated: int
-   - total_vaccinations_per_hundred: float
-   - people_vaccinated_per_hundred: float
-   - iso_code
-   - pk: iso_code, date
+   - totalVaccinations: int
+   - peopleVaccinated: int
+   - totalVaccinationsPerHundred: float
+   - peopleVaccinatedPerHundred: float
+   - isoCode: foreign key to `country`
 
-4. Vaccination by Age
+   - unique: isoCode, date
 
+5. Vaccination by Age
+
+   - \_id
    - date: date
-   - age_group: string
-   - people_vaccinated_per_hundred: float
-   - people_fully_vaccinated_per_hundred: float
-   - people_with_booster_per_hundred: float
-   - iso_code
-   - pk: iso_code, date
+   - ageGroup: string
+   - peopleVaccinatedPerHundred: float
+   - peopleFullyVaccinatedPerHundred: float
+   - peopleWithBoosterPerHundred: float
+   - isoCode
+
+   - unique: isoCode, date
+
+## To run with proper env variables add:
+
+```
+MONGO_USER=\[mongo username\] MONGO_PASSWORD=\[mongo password\] MONGO_DB=\[mongo database\] node app.js
+```

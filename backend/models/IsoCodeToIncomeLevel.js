@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -9,7 +10,7 @@ const isoCodeToIncomeLevelSchema = new Schema({
     },
     incomeLevel: {
         type: Schema.Types.ObjectId,
-        ref: 'incomeLevel'
+        ref: 'IncomeLevel'
     },
     isoCode: {
         type: Schema.Types.ObjectId,

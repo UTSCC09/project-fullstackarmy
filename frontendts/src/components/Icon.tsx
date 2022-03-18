@@ -1,12 +1,13 @@
 import React from 'react'
+import { IconType } from 'react-icons'
 
 interface Props {
-  imgPath: string;
+  icon: IconType;
 }
 
-const Icon: React.FC<Props> = ({imgPath}) => {
+const Icon: React.FC<Props> = ({icon}) => {
   return (
-    <div className="icon" style={{backgroundImage: `url(${imgPath})`}}></div>
+    <div className="icon">{React.createElement(icon)}</div>
   )
 }
 

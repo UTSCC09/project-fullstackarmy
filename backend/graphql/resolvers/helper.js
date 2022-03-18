@@ -34,3 +34,4 @@ const dateToString = (date) => {
 exports.transformIsoCode = transformIsoCode;
 exports.numberObj = numberObj;
 exports.dateToString = dateToString;
+exports.numberObj = numberObj;
