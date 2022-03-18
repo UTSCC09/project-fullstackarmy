@@ -34,7 +34,6 @@ const HerdImmunityBarChart = () => {
       Tooltip
   );
 
-  // important stuff: https://graphql.org/graphql-js/passing-arguments/
   const GET_LABELS: DocumentNode = gql`
   query isoCodes($isoCodes: [String!]!){
       isoCodes(isoCodes:$isoCodes){
@@ -119,6 +118,7 @@ const HerdImmunityBarChart = () => {
   // console.log(secondVaccData)
   // console.log('-')
   // console.log(boosterVaccData)
+
   // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
   if (labelData && firstVaccData && secondVaccData && boosterVaccData) {
     // update label and chart data.
@@ -140,7 +140,7 @@ const HerdImmunityBarChart = () => {
         boosterVaccData.getMostRecentBoosterVaccDataByIsoCode[i].totalBoostersPerHundred
       if (firstVal >= maxFirstVal) maxTot = total
     }
-    //TODO unsure if the comparison btwn CHL and PRT is okay
+    // TODO: unsure if the comparison btwn CHL and PRT is okay
     // This value is to get the proper scaling of the chart
     // Adapted from https://stackoverflow.com/questions/11142884/fast-way-to-get-the-min-max-values-among-properties-of-object
     const max: number = maxTot / (Math.max(...vaccData) / 100)

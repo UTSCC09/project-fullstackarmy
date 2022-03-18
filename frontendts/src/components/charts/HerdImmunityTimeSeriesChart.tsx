@@ -15,9 +15,8 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js';
-import 'chartjs-adapter-moment';
+import 'chartjs-adapter-luxon';
 import { Line } from 'react-chartjs-2';
-// import chartAPI from '../../api/chartAPI';
 import { 
   DocumentNode,
   gql, 
@@ -47,7 +46,7 @@ const HerdImmunityTimeSeriesChart = () => {
 
   // TODO: vars will come from Filter Component, remember vars need to be ""
   let vars: string[] = ["USA", "GBR"];
-  // TODO: These values should come from graphQL
+  // TODO: These values should come from Slider Component
   const startDate = '2020-12-12'
   const endDate = '2022-03-17'
 
@@ -113,6 +112,7 @@ const HerdImmunityTimeSeriesChart = () => {
           y: resObj.peopleFullyVaccinatedPerHundred
         };
       })
+      // TODO: Replace with actual colours for lines
       let borderColor = randomColor({
         format: 'rgba',
         alpha: 0
