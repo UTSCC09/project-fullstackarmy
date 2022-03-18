@@ -35,6 +35,12 @@ const isoCodeVaccDataSchema = new Schema({
     dailyPeopleVaccinatedPerHundred: {
         type: Number,
     },
+    peopleFullyVaccinated: {
+        type: Number,
+    },
+    peopleFullyVaccinatedPerHundred: {
+        type: Number,
+    },
     totalBoosters: {
         type: Number,
     },
@@ -43,7 +49,7 @@ const isoCodeVaccDataSchema = new Schema({
     },
     isoCode: {
         type: Schema.Types.ObjectId,
-        ref: 'Country'
+        ref: 'IsoCode'
     }
 }, {collection: 'IsoCodeVaccData'});
 
