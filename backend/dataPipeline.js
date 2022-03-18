@@ -46,7 +46,7 @@ const isoCodeToType = (isoCode) => {
   return type;
 }
 
-let isoCodesUpdatePayload;
+let isoCodesUpdatePayload = [];
 let vaccDataPayload = [];
 
 /** 
@@ -60,7 +60,7 @@ const getDataSets = async () => {
   const countryIncomeLevelData = await fetch('https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv');
   let csvData = await countryIncomeLevelData.text();
   
-  csvtojson().fromString(csvData).then((jsonData) => {
+  await csvtojson().fromString(csvData).then((jsonData) => {
     isoCodesUpdatePayload = jsonData.map(dataPoint => {
       return {
         "isoCode": dataPoint["Code"],
@@ -80,6 +80,7 @@ const getDataSets = async () => {
   let isoCodesUpdateData = [];
 
   isoCodesVaccDataJSON.forEach(isoCodeVaccData => {
+    // Add all the non-country isoCodes that are not in the incomeLevel dataset
     if (isoCodeToType(isoCodeVaccData["iso_code"]) != country) {
       isoCodesUpdateData.push({
         "isoCode": isoCodeVaccData["iso_code"],
@@ -102,12 +103,15 @@ const getDataSets = async () => {
           dailyVaccinationsPerMillion: dataEl["daily_vaccinations_per_million"],
           dailyPeopleVaccinated: dataEl["daily_people_vaccinated"],
           dailyPeopleVaccinatedPerHundred: dataEl["daily_people_vaccinated_per_hundred"],
+          peopleFullyVaccinated: dataEl["people_fully_vaccinated"],
+          peopleFullyVaccinatedPerHundred: dataEl["people_fully_vaccinated_per_hundred"],
           totalBoosters: dataEl["total_boosters"],
           totalBoostersPerHundred: dataEl["total_boosters_per_hundred"]
         }
       })
     })
   })
+
 
   isoCodesUpdatePayload = isoCodesUpdatePayload.concat(isoCodesUpdateData);
 }
@@ -122,9 +126,9 @@ const getDataSets = async () => {
 */
 const isoCodesUpdateReq = async (isoCodeDataInput) => {
   const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
-
+  
   const query = graphqlRequest.gql`  
-    mutation UpdateIsoCodeData($isoCodeDataInput: [IsoCodeDataInput!]!) {              
+    mutation UpdateIsoCodeData($isoCodeDataInput: [IsoCodeDataInput]) {              
       updateIsoCodeData(isoCodeDataInput: $isoCodeDataInput) {
         number
       }
@@ -175,7 +179,7 @@ const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput) => {
 const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
 
   let allQueries = [];
-	const numRecordsPerReq = 50;
+	const numRecordsPerReq = 200;
 
   records = 0;
   let index = 0;
