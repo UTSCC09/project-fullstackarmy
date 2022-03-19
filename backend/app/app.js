@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require(`cors`);
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const schema = require('./graphql/schema/schema');
@@ -20,6 +21,23 @@ const app = express();
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
 
+// TODO: Need to only add allowed origins.
+let allowedOrigins = ['http://localhost:3000',
+                      'http://localhost:8000',
+];
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.use(bodyParser.json());
 
 app.use('/api', graphqlHTTP({
@@ -37,7 +55,7 @@ app.use(session({
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const http = require('http');
-const PORT = 3000;
+const PORT = 8000;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {

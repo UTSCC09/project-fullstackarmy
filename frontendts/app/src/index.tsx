@@ -1,12 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  // TODO: Need to update this URI
+  uri: 'http://localhost:8000/api',
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
