@@ -5,14 +5,6 @@ FROM node:16
 # Create app directory
 WORKDIR /usr/src/app
 
-# Set up db env variables
-ENV MONGO_USER = admin \
-    MONGO_PASSWORD = CEZHrExc5aMCcp5s \
-    MONGO_DB = VaccDataDev
-
-# Trying to find IP addr
-RUN hostname -I
-
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)

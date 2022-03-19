@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  # dns:
+  #   hostname: somename
+  #   domainname
+  frontend:
+    image: projectfrontend:latest
+    build: './frontend'
+    ports:
+      - 80:80
+  backend:
+    image: projectbackend:latest
+    build: './backend'
+    ports:
+      - 3000:3000
+    environment:
+      MONGO_USER: admin
+      MONGO_PASSWORD: CEZHrExc5aMCcp5s
+      MONGO_DB: VaccDataDev
+# If need to get a static IP address
+# From: zainengineer https://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container
+#       networks:
+#         static-network:
+#           ipv4_address: 172.17.0.3
+# networks:
+#   static-network:
+#     ipam:
+#       config:
+#         - subnet: 172.20.0.0/16
