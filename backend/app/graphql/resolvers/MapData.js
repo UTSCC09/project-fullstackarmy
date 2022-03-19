@@ -1,4 +1,3 @@
-const { result } = require('lodash');
 const dataPipelineConstants = require('../../dataPipeline/dataPipelineConstants');
 const IsoCode = require('../../models/IsoCode');
 const IsoCodeVaccData = require('../../models/IsoCodeVaccData');
