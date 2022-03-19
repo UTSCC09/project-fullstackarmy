@@ -6,7 +6,6 @@ interface Props {
 
 const VaccMap: React.FC<Props> = () => {
   //? get the data here and pass it to the map container
-  const GET_MAP_VACC_DATA = 
 
   return (
     <MapContainer />

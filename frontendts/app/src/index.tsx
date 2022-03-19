@@ -12,6 +12,8 @@ import reportWebVitals from './reportWebVitals';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   // TODO: Need to update this URI
+  // TODO: There is a way for it to detect 
+  // TODO: if this is local or production
   uri: 'http://localhost:8000/api',
   cache: new InMemoryCache(),
 });

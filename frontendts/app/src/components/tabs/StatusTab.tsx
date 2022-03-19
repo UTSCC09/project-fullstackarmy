@@ -1,10 +1,12 @@
 import React from 'react'
-import HerdImmunityBarChart from "../charts/HerdImmunityBarChart";
+import VaccMap from '../map/VaccMap'
 
 export const StatusTab = () => {
+
   return (
     <div>
-        <HerdImmunityBarChart />
+      <h1>Vaccination Status</h1>
+      <VaccMap />
     </div>
   )
 }
