@@ -8,14 +8,14 @@ module.exports = {
     */
     isoCodes: async (args) => {
         try {
+            // From Jyotman Singh https://stackoverflow.com/questions/22797768/does-mongodbs-in-clause-guarantee-order
             // to maintain order need to query one by one
-            let isoCodes = [];
-            for (let i in args.isoCodes){
-                const middleData = await IsoCode
-                    .findOne({'isoCode': args.isoCodes[i]})
-                    .exec();
-                isoCodes.push(middleData)
-            }
+            const pipeline = [
+                {$match: {isoCode: {$in: args.isoCodes}}},
+                {$addFields: {"__order": {$indexOfArray: [args.isoCodes, "$isoCode" ]}}},
+                {$sort: {"__order": 1}}
+            ];
+            const isoCodes = await IsoCode.aggregate(pipeline).exec()
             return isoCodes.map(isoCode => {
                 return transformIsoCode(isoCode);
             });

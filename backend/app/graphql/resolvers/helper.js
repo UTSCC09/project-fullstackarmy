@@ -14,8 +14,10 @@ const isoCodeType = async isoCodeTypeId => {
 
 const transformIsoCode = isoCode => {
     if (isoCode) {
+      // adding in __order doesn't allow for the spread operator       
       return {
-        ...isoCode._doc,
+        isoCode: isoCode.isoCode,
+        isoCodeName: isoCode.isoCodeName,
         _id: isoCode.id,
         isoCodeType: isoCodeType.bind(this, isoCode.isoCodeType)
       };
