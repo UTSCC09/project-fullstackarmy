@@ -25,7 +25,7 @@ const app = express();
 let allowedOrigins = [
     'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
     'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
-    'http://c09-chuaaren.utsc-labs.utoronto.ca'
+    'http://c09-chuaaren.utsc-labs.utoronto.ca',
 ];
 
 app.use(cors({

@@ -12,7 +12,7 @@ import reportWebVitals from './reportWebVitals';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   // TODO: Need to update this URI
-  uri: 'http://localhost:8000/api',
+  uri: 'http://c09-chuaaren.utsc-labs.utoronto.ca:3000/api',
   cache: new InMemoryCache(),
 });
 
