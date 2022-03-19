@@ -15,7 +15,7 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js';
-import 'chartjs-adapter-luxon';
+import 'chartjs-adapter-moment';
 import { Line } from 'react-chartjs-2';
 import { 
   DocumentNode,
@@ -47,8 +47,8 @@ const HerdImmunityTimeSeriesChart = () => {
   // TODO: vars will come from Filter Component, remember vars need to be ""
   let vars: string[] = ["USA", "GBR"];
   // TODO: These values should come from Slider Component
-  const startDate = '2020-12-12'
-  const endDate = '2022-03-17'
+  const startDate = "2020-12-12"
+  const endDate = "2022-03-17"
 
   const { error: err, data: chartData } = useQuery(GET_DATA,
     {
