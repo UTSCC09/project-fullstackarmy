@@ -1,10 +1,6 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
-type Number {
-    number: Int!
-}
-
 type IsoCode {
     _id: ID!
     isoCode: String!
@@ -46,8 +42,30 @@ input IsoCodeVaccDataInput {
     data: [DailyVaccDataInput!]!
 }
 
+type Number {
+    number: Int!
+}
+
+type CountryVaccMapData {
+    isoCode: String
+    peopleVaccinatedPerHundred: Float
+}
+
+type CountryFullyVaccMapData {
+    isoCode: String
+    peopleFullyVaccinatedPerHundred: Float
+}
+
+type CountryBoosterVaccMapData {
+    isoCode: String
+    totalBoostersPerHundred: Float
+}
+
 type RootQuery {
     isoCode: [IsoCode!]!
+    countryVaccMapData(startDate: String!, endDate: String!): [CountryVaccMapData!]!
+    countryFullyVaccMapData(startDate: String!, endDate: String!): [CountryFullyVaccMapData!]!
+    countryBoosterVaccMapData(startDate: String!, endDate: String!): [CountryBoosterVaccMapData!]!
 }
 
 type RootMutation {
