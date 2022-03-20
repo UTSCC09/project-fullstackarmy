@@ -5,24 +5,24 @@ import { gql, useQuery } from '@apollo/client';
 interface Props {
 }
 
-const VaccMap: React.FC<Props> = () => {
-  
+const BoosterVaccMap: React.FC<Props> = () => {
+
   // todo make the range dynamic here
 	const startDate = '2021-01-01';
 	const endDate = '2022-03-17';
   let featureData;
 
-	const GET_VACC_MAP_DATA = gql`
-    query CountryVaccMapData($startDate: String!, $endDate: String!){
-      countryVaccMapData(startDate: $startDate, endDate: $endDate) {
+	const GET_FULL_VACC_MAP_DATA = gql`
+    query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
+      countryBoosterVaccMapData(startDate: $startDate, endDate: $endDate) {
         isoCode
-        peopleVaccinatedPerHundred
+        totalBoostersPerHundred
       }
     }
   `;
   
   //todo create interfaces for the data
-  const { loading, error, data } = useQuery(GET_VACC_MAP_DATA,
+  const { loading, error, data } = useQuery(GET_FULL_VACC_MAP_DATA,
     {
       variables: {
         startDate,
@@ -31,15 +31,11 @@ const VaccMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
-  if (error) return null;
-
   if (data) {
-    featureData = data.countryVaccMapData.map(dataRow => {
+    featureData = data.countryBoosterVaccMapData.map(dataRow => {
       return {
         isoCode: dataRow.isoCode,
-        value: dataRow.peopleVaccinatedPerHundred,
+        value: dataRow.totalBoostersPerHundred,
       }
     })
   }
@@ -49,6 +45,6 @@ const VaccMap: React.FC<Props> = () => {
   )
 }
 
-export default VaccMap
+export default BoosterVaccMap
 
 
