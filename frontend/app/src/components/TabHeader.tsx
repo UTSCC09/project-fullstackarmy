@@ -6,14 +6,13 @@ interface Props {
   title: string,
   icon: IconType,
   selected: boolean,
-  onSelect: MouseEventHandler,
   path: string,
 }
 
-const TabHeader: React.FC<Props> = ({title, icon, selected, onSelect, path}) => {
+const TabHeader: React.FC<Props> = ({title, icon, selected, path}) => {
   return (
     <Link to={path} style={{textDecoration: 'none'}}>
-      <div className={`tab-header ${selected ? 'tab-header-selected' : ''}`}  onClick={onSelect} >
+      <div className={`tab-header ${selected ? 'tab-header-selected' : ''}`} >
         <div className="tab-icon">{React.createElement(icon)}</div>
         {title}
       </div>
