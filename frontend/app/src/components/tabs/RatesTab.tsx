@@ -1,9 +1,10 @@
 import React from 'react'
+import HerdImmunityTimeSeriesChart from '../charts/HerdImmunityTimeSeriesChart'
 
 export const RatesTab = () => {
   return (
     <div>
-        <h1>Vaccination Rates</h1>
+        <HerdImmunityTimeSeriesChart />
     </div>
   )
 }

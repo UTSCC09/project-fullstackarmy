@@ -10,6 +10,7 @@ import {AiOutlineLineChart} from 'react-icons/ai'
 import {BiBarChartSquare} from 'react-icons/bi'
 
 export const Header = () => {
+  const [selectedTab, setSelectedTab] = useState('')
   const currentPath = window.location.pathname
   return (
     <header>
@@ -24,10 +25,10 @@ export const Header = () => {
         </div>
         <div className="bottom-bar">
           <div className="tabs">
-            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/background-information' ? true : false} path="/background-information"/>
-            <TabHeader title="Vaccination Status " icon={BiWorld} selected={currentPath === '/vaccination-status' ? true : false} path="/vaccination-status"/>
-            <TabHeader title="Vaccination Rates " icon={AiOutlineLineChart} selected={currentPath === '/vaccination-rates' ? true : false} path="/vaccination-rates"/>
-            <TabHeader title="Vaccination Distribution " icon={BiBarChartSquare} selected={currentPath === '/vaccination-distribution' ? true : false} path="/vaccination-distribution"/>
+            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/background-information' && selectedTab === 'info' ? true : false} onSelect={() => setSelectedTab('info')} path="/background-information"/>
+            <TabHeader title="Vaccination Status " icon={BiWorld} selected={currentPath === '/vaccination-status' && selectedTab === 'status' ? true : false} onSelect={() => setSelectedTab('status')} path="/vaccination-status"/>
+            <TabHeader title="Vaccination Rates " icon={AiOutlineLineChart} selected={currentPath === '/vaccination-rates' && selectedTab === 'rates' ? true : false} onSelect={() => setSelectedTab('rates')} path="/vaccination-rates"/>
+            <TabHeader title="Vaccination Distribution " icon={BiBarChartSquare} selected={currentPath === '/vaccination-distribution' && selectedTab === 'distribution' ? true : false} onSelect={() => setSelectedTab('distribution')} path="/vaccination-distribution"/>
           </div>
         </div>
       </div>

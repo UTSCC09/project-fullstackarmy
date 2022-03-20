@@ -37,7 +37,7 @@ header {
   align-self: center;
   font-family: "Coda";
   font-size: 20px;
-  margin: 10px;
+  margin: 5px;
   color: white;
 }
 .logo:first-child span:first-child {
@@ -53,7 +53,6 @@ header {
 
 .top-bar-btns {
   display: flex;
-  margin: 10px;
 }
 
 .icon {
