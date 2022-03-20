@@ -8,7 +8,6 @@ import { StatusTab } from "./components/tabs/StatusTab";
 import { RatesTab } from "./components/tabs/RatesTab";
 import { DistributionTab } from "./components/tabs/DistributionTab";
 
-
 function App() {
   return (
     <Router>
@@ -26,7 +25,7 @@ function App() {
         <Footer />
         
       </div>
-    </Router>   
+    </Router>
   );
 }
 

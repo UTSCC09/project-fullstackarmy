@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require(`cors`);
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const schema = require('./graphql/schema/schema');
@@ -19,6 +20,26 @@ const app = express();
 // For uploads 
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
+
+// From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
+let allowedOrigins = [
+    'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
+    'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
+    'http://c09-chuaaren.utsc-labs.utoronto.ca',
+];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 app.use(bodyParser.json());
 
