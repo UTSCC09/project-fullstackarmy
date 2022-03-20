@@ -1,109 +1,134 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 @font-face {
-  font-family: 'Coda';
-  src: url('./media/Coda-Regular.ttf');
+  font-family: "Coda";
+  src: url("./media/Coda-Regular.ttf");
 }
 
-header{
+header {
   display: flex;
   flex-direction: column;
 }
-
-.top-bar{
+.nav-bar{
   display: flex;
-  background-color: #E5E5E5;
+  flex-direction: column;
+  background-color: #e5e5e5;
+}
+.top-bar {
+  display: flex;
   justify-content: space-between;
   height: 50px;
 }
 
 /* Logo */
-.logo{
+.logo {
   align-self: center;
-  font-family: 'Coda';
+  font-family: "Coda";
   font-size: 20px;
-  margin: 5px;
+  margin: 10px;
+  color: white;
 }
-.logo:first-child span:first-child{
-  color: #00ACEA;
+.logo:first-child span:first-child {
+  color: #00acea;
 }
-.logo:first-child span:last-child{
-  color: #2148C0;
+.logo:first-child span:last-child {
+  color: #2148c0;
   font-weight: bold;
 }
-.logo:hover{
+.logo:hover {
   opacity: 0.7;
 }
 
-.top-bar-btns{
+.top-bar-btns {
   display: flex;
+  margin: 10px;
 }
 
-.icon{
+.icon {
+  display:flex;
+  align-items: center;
+  justify-content: center;
   align-self: center;
   width: 25px;
   height: 25px;
   border: none;
   border-radius: 50%;
   margin: 3px;
-  background-color: #FFFFFF;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 75%;
+  background-color: #2148c0;
+  color: white;
 }
-.icon:hover{
+.icon:hover {
   opacity: 0.7;
 }
 
-.btn{
+.btn {
   margin: 5px;
+  height: 35px;
+  align-self: center;
   border-radius: 5px;
   border: none;
   font-size: 15px;
 }
-.btn:hover{
+.btn:hover {
   opacity: 0.7;
 }
 
-.nav-bar{
+.bottom-bar {
   display: flex;
   justify-content: center;
-  background-color: #E5E5E5;
 }
-.tabs{
-  border-right: 2px solid #ACABAB;
+.tabs {
+  border-right: 2px solid #acabab;
   display: flex;
 }
-.tab-header{
+.tab-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  background-color: #E5E5E5;
-  padding: 3px;
-  border-left: 2px solid #ACABAB;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e5e5e5;
+  padding: 5px;
+  border-left: 2px solid #acabab;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 16px;
   cursor: pointer;
+  color: black;
 }
-.tab-header:hover{
-  background-color: #FFFFFF;
+.tab-header:hover {
+  background-color: #ffffff;
 }
-.tab-icon{
-  width: 25px;
-  height: 25px;
-  background-position: center;
-  background-size: 75%;
-  background-repeat: no-repeat;
+.tab-header-selected{
+  background-color: #ffffff;
+  color: #2148c0;
+  text-decoration: underline;
+}
+.tab-icon {
+  align-self: center;
+  margin: 3px;
+}
+
+footer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: whitesmoke;
+  font-size: 12px;
+  height: 30px;
+  padding: 3px;
+  margin: 5px;
+  margin-top: 100vh;
+}
+footer a:hover{
+  color:#2148c0;
 }
