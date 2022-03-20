@@ -21,10 +21,13 @@ const app = express();
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
 
-// TODO: Need to only add allowed origins.
-let allowedOrigins = ['http://localhost:3000',
-                      'http://localhost:8000',
+// From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
+let allowedOrigins = [
+    'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
+    'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
+    'http://c09-chuaaren.utsc-labs.utoronto.ca',
 ];
+
 app.use(cors({
   origin: function(origin, callback){
     // allow requests with no origin
@@ -55,7 +58,7 @@ app.use(session({
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const http = require('http');
-const PORT = 8000;
+const PORT = 3000;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
