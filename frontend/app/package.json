@@ -1,5 +1,5 @@
 {
-  "name": "frontendts",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,7 +17,6 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-annotation": "^1.4.0",
     "graphql": "^16.3.0",
-    "graphql-request": "^4.1.0",
     "moment": "^2.29.1",
     "randomcolor": "^0.6.2",
     "react": "^17.0.2",
@@ -54,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/google.maps": "^3.48.2",
-    "@faker-js/faker": "^6.0.0-beta.0"
+    "@faker-js/faker": "^6.0.0-beta.0",
+    "@types/google.maps": "^3.48.2"
   }
 }
