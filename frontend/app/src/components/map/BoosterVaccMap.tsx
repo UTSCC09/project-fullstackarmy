@@ -12,7 +12,7 @@ const BoosterVaccMap: React.FC<Props> = () => {
 	const endDate = '2022-03-17';
   let featureData;
 
-	const GET_FULL_VACC_MAP_DATA = gql`
+	const GET_BOOSTER_VACC_MAP_DATA = gql`
     query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
       countryBoosterVaccMapData(startDate: $startDate, endDate: $endDate) {
         isoCode
@@ -22,7 +22,7 @@ const BoosterVaccMap: React.FC<Props> = () => {
   `;
   
   //todo create interfaces for the data
-  const { loading, error, data } = useQuery(GET_FULL_VACC_MAP_DATA,
+  const { loading, error, data } = useQuery(GET_BOOSTER_VACC_MAP_DATA,
     {
       variables: {
         startDate,
@@ -31,6 +31,10 @@ const BoosterVaccMap: React.FC<Props> = () => {
     }
   );
   
+  //todo should make loading and error map components
+  if (loading) return null;
+  if (error) return null;
+
   if (data) {
     featureData = data.countryBoosterVaccMapData.map(dataRow => {
       return {

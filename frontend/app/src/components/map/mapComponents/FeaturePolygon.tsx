@@ -15,11 +15,10 @@ const mouseInFeature = (e: google.maps.Data.MouseEvent, map: google.maps.Map | n
   const value = feature.getProperty('value');
 
   if (map) {
-    console.log('in if statement');
     const content: string = `
       <div style="font-size: 14px; display: flex; flex-direction: column;">
         <div>Country: ${country}</div>
-        <div>Population Percentage Partially Vaccinated: ${value}</div>
+        <div>Percentage: ${value}%</div>
       </div>
     `;
 

@@ -32,6 +32,10 @@ const FullVacMap: React.FC<Props> = () => {
     }
   );
   
+  //todo should make loading and error map components
+  if (loading) return null;
+  if (error) return null;
+
   if (data) {
     featureData = data.countryFullyVaccMapData.map(dataRow => {
       return {

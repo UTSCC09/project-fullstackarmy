@@ -27,7 +27,7 @@ const Map: React.FC<Props> = ({center, zoom, height, children}) => {
   }
 
   return (
-    <div ref={ref} style={style} id="map">
+    <div ref={ref} style={style} className="map">
       {React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
           // set the map prop on the child components like markers, feature polygons, legend etc.

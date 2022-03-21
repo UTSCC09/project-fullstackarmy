@@ -8,7 +8,6 @@ interface Props {
   featureData: any;
 }
 
-const apiKey: string = "AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA";
 const defaultHeight: string = "600px";
 const deafultZoom: number = 1.8;
 const defaultCenter = {lat: 0, lng: 0}
@@ -58,11 +57,11 @@ const styleFeature = (feature: google.maps.Data.Feature) =>  {
   }
 
   if (hover) {
-    fillOpacity = 0.7;
+    fillOpacity = 0.95;
     strokeOpacity = 1;
     strokeWeight = 2;
   } else {
-    fillOpacity =  0.5;
+    fillOpacity =  0.7;
     strokeOpacity = 0.7;
     strokeWeight = 1;
   }
@@ -79,10 +78,10 @@ const styleFeature = (feature: google.maps.Data.Feature) =>  {
 }
 
 const MapContainer: React.FC<Props> = ({featureData}) => {
-
   return (
     <Wrapper 
-      apiKey={apiKey}
+      apiKey={'AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA'}
+      //todo needs to be store in .env file
     >
       <Map zoom={deafultZoom} center={defaultCenter} height={defaultHeight}>
         <Legend map={null} LegendItems={LegendItems}/>
