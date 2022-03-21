@@ -2,14 +2,14 @@ const IsoCodeDataPipeline = require('./dataPipelineResolvers/IsoCodeDataPipeline
 const IsoCodeVaccDataPipeline = require('./dataPipelineResolvers/IsoCodeVaccDataPipeline');
 const IsoCodeResolver = require('./isoCodeResolver');
 const DailyVaccDataResolver = require('./dailyVaccDataResolver');
-const MapData = require('./MapData');
+const MapDataResolver = require('./mapDataResolver');
 
 const rootResolver = {
   ...IsoCodeDataPipeline,
   ...IsoCodeVaccDataPipeline,
   ...IsoCodeResolver,
   ...DailyVaccDataResolver,
-  ...MapData,
+  ...MapDataResolver,
 };
 
 module.exports = rootResolver;

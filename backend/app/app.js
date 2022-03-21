@@ -6,6 +6,7 @@ const schema = require('./graphql/schema/schema');
 const resolvers = require('./graphql/resolvers/rootResolver');
 const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
+const http = require('http');
 
 // For security
 // const bcrypt = require('bcrypt');
@@ -17,6 +18,9 @@ const { graphqlHTTP } = require('express-graphql');
 
 const app = express();
 
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+const PORT = 3000;
+
 // For uploads 
 // let upload = multer({ dest: path.join(__dirname, 'uploads')});
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +30,10 @@ let allowedOrigins = [
     'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
     'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
     'http://c09-chuaaren.utsc-labs.utoronto.ca',
+    `http://localhost:3000`,
+    `http://localhost:3001`,
+    `http://localhost:80`,
+    `http://localhost`
 ];
 
 app.use(cors({
@@ -33,7 +41,7 @@ app.use(cors({
     // allow requests with no origin
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
+      let msg = 'The CORS policy for this site does not ' +
                 'allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
@@ -55,10 +63,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
-const http = require('http');
-const PORT = 3000;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
