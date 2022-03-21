@@ -13,8 +13,8 @@ function App() {
     <Router>
       <div className="container">
         <Routes>
-          <Route path= "/" element={<><Header /></>}></Route>
-          <Route path= "/background-information" element={<><Header /> <InfoTab /> </>}></Route>
+          {/* <Route path= "/" element={<><Header /></>}></Route> */}
+          <Route path= "/" element={<><Header /> <InfoTab /> </>}></Route>
           <Route path= "/vaccination-status" element={<><Header /> <StatusTab /> </>}></Route>
           <Route path= "/vaccination-rates" element={<><Header /> <RatesTab /> </>}></Route>
           <Route path= "/vaccination-distribution" element={<><Header /> <DistributionTab /> </>}></Route>
