@@ -4,54 +4,33 @@
 
 1. Country table
 
-   - \_id
-   - isoCode: string
-   - countryName: string
-
-   - unique: iso_code
+   - iso_code: string
+   - country_name: string
+   - pk: iso_code
 
 2. Income group table
 
-   - \_id
-   - incomeGroup
+   - Income Group
+   - Year
+   - iso_code
+   - pk: iso_code, year
 
-   - unique: incomeGroup
+3. Vaccination Data Table
 
-3. Income to Country
-
-   - \_id
-   - year
-   - incomeGroup: foreign key to `income`
-   - isoCode: foreign key to `country`
-
-   - unique: isoCode, year
-
-4. Vaccination Data Table
-
-   - \_id
    - date: date
-   - totalVaccinations: int
-   - peopleVaccinated: int
-   - totalVaccinationsPerHundred: float
-   - peopleVaccinatedPerHundred: float
-   - isoCode: foreign key to `country`
+   - total_vaccinations: int
+   - people_vaccinated: int
+   - total_vaccinations_per_hundred: float
+   - people_vaccinated_per_hundred: float
+   - iso_code
+   - pk: iso_code, date
 
-   - unique: isoCode, date
+4. Vaccination by Age
 
-5. Vaccination by Age
-
-   - \_id
    - date: date
-   - ageGroup: string
-   - peopleVaccinatedPerHundred: float
-   - peopleFullyVaccinatedPerHundred: float
-   - peopleWithBoosterPerHundred: float
-   - isoCode
-
-   - unique: isoCode, date
-
-## To run with proper env variables add:
-
-```
-MONGO_USER=\[mongo username\] MONGO_PASSWORD=\[mongo password\] MONGO_DB=\[mongo database\] node app.js
-```
+   - age_group: string
+   - people_vaccinated_per_hundred: float
+   - people_fully_vaccinated_per_hundred: float
+   - people_with_booster_per_hundred: float
+   - iso_code
+   - pk: iso_code, date
