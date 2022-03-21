@@ -33,7 +33,8 @@ let allowedOrigins = [
     `http://localhost:3000`,
     `http://localhost:3001`,
     `http://localhost:80`,
-    `http://localhost`
+    `http://localhost`,
+    'http://covid19vaxtracker.live'
 ];
 
 app.use(cors({

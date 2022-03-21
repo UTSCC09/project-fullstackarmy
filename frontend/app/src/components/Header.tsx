@@ -24,7 +24,7 @@ export const Header = () => {
         </div>
         <div className="bottom-bar">
           <div className="tabs">
-            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/background-information' ? true : false} path="/background-information"/>
+            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/' ? true : false} path="/background-information"/>
             <TabHeader title="Vaccination Status " icon={BiWorld} selected={currentPath === '/vaccination-status' ? true : false} path="/vaccination-status"/>
             <TabHeader title="Vaccination Rates " icon={AiOutlineLineChart} selected={currentPath === '/vaccination-rates' ? true : false} path="/vaccination-rates"/>
             <TabHeader title="Vaccination Distribution " icon={BiBarChartSquare} selected={currentPath === '/vaccination-distribution' ? true : false} path="/vaccination-distribution"/>
