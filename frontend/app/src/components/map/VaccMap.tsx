@@ -1,6 +1,8 @@
 import React from 'react'
-import MapContainer from './mapComponents/MapContainer';
+import MapContainer from './components/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import Loading from '../elements/Loading';
+import * as MapConstants from './components/MapConstants';
 
 interface Props {
 }
@@ -21,7 +23,6 @@ const VaccMap: React.FC<Props> = () => {
     }
   `;
   
-  //todo create interfaces for the data
   const { loading, error, data } = useQuery(GET_VACC_MAP_DATA,
     {
       variables: {
@@ -31,8 +32,8 @@ const VaccMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
+  //todo should make error components
+  if (loading) return <Loading />;
   if (error) return null;
 
   if (data) {
@@ -45,7 +46,8 @@ const VaccMap: React.FC<Props> = () => {
   }
 
   return (
-    <MapContainer featureData={featureData} />
+    // <MapContainer featureData={featureData} mapLegend={MapConstants.ScaledLegend} />
+    <></>
   )
 }
 

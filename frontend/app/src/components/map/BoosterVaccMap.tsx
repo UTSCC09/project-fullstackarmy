@@ -1,9 +1,13 @@
 import React from 'react'
-import MapContainer from './mapComponents/MapContainer';
+import MapContainer from './components/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import Loading from '../elements/Loading';
+import * as MapConstants from './components/MapConstants';
 
 interface Props {
 }
+
+const mapName = 'BoosterVaccMap';
 
 const BoosterVaccMap: React.FC<Props> = () => {
 
@@ -11,6 +15,8 @@ const BoosterVaccMap: React.FC<Props> = () => {
 	const startDate = '2021-01-01';
 	const endDate = '2022-03-17';
   let featureData;
+  let mapLegend;
+  let binary = true;
 
 	const GET_BOOSTER_VACC_MAP_DATA = gql`
     query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
@@ -21,7 +27,6 @@ const BoosterVaccMap: React.FC<Props> = () => {
     }
   `;
   
-  //todo create interfaces for the data
   const { loading, error, data } = useQuery(GET_BOOSTER_VACC_MAP_DATA,
     {
       variables: {
@@ -31,8 +36,8 @@ const BoosterVaccMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
+  // todo add error component
+  if (loading) return <Loading />;
   if (error) return null;
 
   if (data) {
@@ -42,10 +47,18 @@ const BoosterVaccMap: React.FC<Props> = () => {
         value: dataRow.totalBoostersPerHundred,
       }
     })
+
+    if (binary) {
+      mapLegend = MapConstants.BinaryLegend;
+    } else {
+      mapLegend = MapConstants.ScaledLegend
+    }
   }
+  
+  const featureValueName = 'boosterVacc';
 
   return (
-    <MapContainer featureData={featureData} />
+    <MapContainer featureData={featureData} mapLegend={mapLegend} mapName={mapName} featureValueName={featureValueName}/>
   )
 }
 
