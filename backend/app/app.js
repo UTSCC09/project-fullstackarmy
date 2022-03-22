@@ -27,14 +27,14 @@ const PORT = 3000;
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
-    'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
-    'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
-    'http://c09-chuaaren.utsc-labs.utoronto.ca',
     `http://localhost:3000`,
     `http://localhost:3001`,
     `http://localhost:80`,
     `http://localhost`,
-    'http://covid19vaxtracker.live'
+    'http://covid19vaxtracker.live',
+    'http://covid19vaxtracker.live:3000',
+    'http://covid19vaxtracker.live:80',
+    'http://covid19vaxtracker.live:443',
 ];
 
 app.use(cors({
