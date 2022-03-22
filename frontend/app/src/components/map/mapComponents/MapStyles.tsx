@@ -1,4 +1,4 @@
-const MapStyles = [
+const MapStyles: google.maps.MapTypeStyle[] = [
     {
         "featureType": "all",
         "elementType": "labels",

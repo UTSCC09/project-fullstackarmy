@@ -1,8 +1,11 @@
 import React from 'react'
-import { Wrapper} from "@googlemaps/react-wrapper";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Map from './Map';
 import Legend from './Legend';
 import FeaturePolygon from './FeaturePolygon';
+import MapLoading from './MapLoading';
+import MapError from './MapError';
+import './MapContainer.css';
 
 interface Props {
   featureData: any;
@@ -77,11 +80,23 @@ const styleFeature = (feature: google.maps.Data.Feature) =>  {
   return featureStyle;
 }
 
+const render = (status) => {
+  switch (status) {
+    case Status.LOADING:
+      return <MapLoading />;
+    case Status.FAILURE:
+      return <MapError />;
+  }
+};
+
 const MapContainer: React.FC<Props> = ({featureData}) => {
+  
+  //todo needs to be store in .env file
+
   return (
     <Wrapper 
       apiKey={'AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA'}
-      //todo needs to be store in .env file
+      render={render}
     >
       <Map zoom={deafultZoom} center={defaultCenter} height={defaultHeight}>
         <Legend map={null} LegendItems={LegendItems}/>

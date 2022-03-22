@@ -13,8 +13,8 @@ import reportWebVitals from './reportWebVitals';
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   //todo change so that it uses the env var
   // uri: process.env.REACT_APP_API,
-  // uri: 'http://localhost:3000/api',
-  uri: 'http://c09-chuaaren.utsc-labs.utoronto.ca:3000/api',
+  uri: 'http://localhost:3000/api',
+  // uri: 'http://c09-chuaaren.utsc-labs.utoronto.ca:3000/api',
   cache: new InMemoryCache(),
 });
 

@@ -1,12 +1,16 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import MapStyles from './MapStyles';
-import './Map.css';
 
 interface Props {
   center: google.maps.LatLngLiteral;
   zoom: number;
   height: string;
   children: ReactNode;
+}
+
+const mapOptions: google.maps.MapOptions = {
+  styles: MapStyles,
+  streetViewControl: false,
 }
 
 const Map: React.FC<Props> = ({center, zoom, height, children}) => {
@@ -17,9 +21,11 @@ const Map: React.FC<Props> = ({center, zoom, height, children}) => {
   const style = {height};
 
   useEffect(() => {
-    const newMap = new window.google.maps.Map(ref.current!, {styles: MapStyles})
-    setMap(newMap);
-  }, []);
+    if (ref.current && !map) {
+      const newMap = new window.google.maps.Map(ref.current!, mapOptions)
+      setMap(newMap);
+    }
+  }, [ref, map]);
 
   if (map) {
     map.setCenter(center);
