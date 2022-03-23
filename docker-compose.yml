@@ -1,6 +1,7 @@
 version: "3.7"
 
 services:
+  # TODO: changing to test that this triggers deployment
   # nginx-proxy:
   #   image: jwilder/nginx-proxy
   #   container_name: nginx-proxy
