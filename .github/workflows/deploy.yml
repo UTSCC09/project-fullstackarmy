@@ -1,0 +1,32 @@
+name: Deploy Frontend
+
+on:
+  push:
+    # Only run this workflow if it is a commit to main.
+    branches:
+      - main
+    # Only run this workflow if the commit has modified files from any of frontend, backend, or docker-compose.yml
+    paths:
+      - frontend/**
+      - backend/**
+      - 'docker-compose.yml'
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+        - name: Pull Images and Deploy in Container
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            script: |
+              docker-compose up -d
