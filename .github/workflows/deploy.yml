@@ -7,9 +7,9 @@ on:
       - main
     # Only run this workflow if the commit has modified files from any of frontend, backend, or docker-compose.yml
     paths:
-      - frontend/**
-      - backend/**
       - 'docker-compose.yml'
+  repository_dispatch:
+    types: [trigger-deploy-workflow]
 
 jobs:
   deploy:
@@ -29,4 +29,6 @@ jobs:
             key: ${{ secrets.KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
+              ls
+              cd project
               docker-compose up -d
