@@ -10,7 +10,7 @@ COPY ./app/package.json ./
 RUN npm i
 RUN npm install react-scripts@3.4.1 -g
 COPY ./app ./
-# RUN npm run build
+RUN npm run build
 
 # Serve these static files with NGINX.
 FROM nginx:1.21.6-alpine
