@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import continentFeatures from '../featureData/countries.json';
-import { MapLegend } from './MapConstants';
+import countryFeatures from '../featureData/countryFeatures.json';
+import continentFeatures from '../featureData/continentFeatures.json';
+import { MapLegend, isoCodeProperty, isoCodeNameProperty } from './MapConstants';
 
 interface Props {
   map: google.maps.Map | null;
   featureData: any;
-  mapLegend: MapLegend;
   valueName: string;
+  mapLegend: MapLegend;
 }
 
-const FeaturePolygon: React.FC<Props> = ({map, featureData, mapLegend, valueName}) => {
+const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend}) => {
+
+  // * State
+  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
+
+  useEffect(() => {
+    const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
+    setInfoWindow(infoWindow)
+  }, []);
+
+  if (!(map && mapLegend)) return null;
 
   // * Prop dependent helpers
   /** 
@@ -22,13 +33,13 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, mapLegend, valueName
     const feature: google.maps.Data.Feature = e.feature;
     feature.setProperty('hover', true); // setting hover state to change style
     
-    const country = feature.getProperty('ADMIN');
+    const country = feature.getProperty(isoCodeNameProperty);
     const value = feature.getProperty(valueName);
   
     if (map) {
       const content: string = `
         <div style="font-size: 14px; display: flex; flex-direction: column;">
-          <div>Country: ${country}</div>
+          <div>Region: ${country}</div>
           <div>Percentage: ${value}%</div>
         </div>
       `;
@@ -64,14 +75,7 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, mapLegend, valueName
     let fillOpacity: number;
     let strokeWeight: number;
     let strokeOpacity: number;
-  
-    for (let i = 0; i < mapLegend.length; i++) {
-      if (metric > mapLegend[i][2]) {
-        fillColor = mapLegend[i][0];
-        break;
-      }
-    }
-  
+
     if (hover) {
       fillOpacity = 0.95;
       strokeOpacity = 1;
@@ -80,8 +84,20 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, mapLegend, valueName
       fillOpacity =  0.7;
       strokeOpacity = 0.7;
       strokeWeight = 1;
+    }  
+
+    if (metric) {
+      for (let i = 0; i < mapLegend.length; i++) {
+        if (metric > mapLegend[i][2]) {
+          fillColor = mapLegend[i][0];
+          break;
+        }
+      }
+    } else {
+      fillColor = '';
+      fillOpacity = 0;
     }
-  
+ 
     const featureStyle = {
       strokeColor: "#fff",
       strokeOpacity,
@@ -93,36 +109,51 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, mapLegend, valueName
     return featureStyle;
   }
 
-  // * State
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
-
-  useEffect(() => {
-    const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
-    setInfoWindow(infoWindow)
-  }, []);
-
   // * Render Logic
-  if (map && infoWindow) {
+  if (infoWindow) {
     map.data.setStyle(styleFeature);
     
     map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
     map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
 
-    //todo will need to make this dynamic based on the chosen features either country/continent data
+    // map.data.addGeoJson(countryFeatures, {
+    //   idPropertyName: isoCodeProperty
+    // });
+
     map.data.addGeoJson(continentFeatures, {
-      idPropertyName: 'ISO_A3'
+      idPropertyName: isoCodeProperty
     });
     
-    if (featureData) {
+    // map.data.loadGeoJson(
+    //   "https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.js"
+    //   , {
+    //   idPropertyName: isoCodeProperty
+    // });
 
-      featureData.forEach(isoCodeData => {
-        const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
+    const loadFeatures = () => {
+      if (featureData) {
+        let c = 0;
+      
+        featureData.forEach(isoCodeData => {
+          const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
+          
+          if (c < 1) {
+            c = 1;
+            console.log(isoCodeFeature)
+          }
 
-        if (isoCodeFeature) {
-          isoCodeFeature.setProperty(valueName, isoCodeData.value);
-        }
-      })
+          if (isoCodeFeature) {
+            isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
+          }
+        })
+      }
     }
+
+    // wait for the request to complete by listening for the first feature to be
+    // added
+    google.maps.event.addListenerOnce(map.data, "addfeature", () => {
+      loadFeatures();
+    });
   }
 
   return null;

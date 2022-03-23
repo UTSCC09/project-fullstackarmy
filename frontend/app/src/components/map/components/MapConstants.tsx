@@ -1,4 +1,6 @@
-export type MapLegend = [string, string, number][];;
+export type MapLegend = [string, string, number][] | null;
+
+export type FeatureData = [isoCode: string, value: number][];
 
 export const ScaledLegend: MapLegend = [
     ['#010a19', '91% - 100%', 91],
@@ -17,3 +19,7 @@ export const BinaryLegend: MapLegend = [
     ['#80ff80', 'Herd I/P (>85%)', 85],
     ['#ff4d4d', 'Not Herd I/P', 0],
 ];
+
+export const isoCodeProperty: string = 'isoCode';
+
+export const isoCodeNameProperty: string = 'isoCodeName';

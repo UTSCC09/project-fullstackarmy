@@ -1,29 +1,41 @@
-import React from 'react'
-import MapContainer from './components/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import React from 'react';
 import Loading from '../elements/Loading';
-import * as MapConstants from './components/MapConstants';
+import VaccinationMap from './VaccinationMap';
 
 interface Props {
 }
 
-const VaccMap: React.FC<Props> = () => {
-  
-  // todo make the range dynamic here
-	const startDate = '2021-01-01';
-	const endDate = '2022-03-17';
-  let featureData;
+// todo make the range dynamic here
+const startDate = '2021-01-01';
+const endDate = '2022-03-17';
 
-	const GET_VACC_MAP_DATA = gql`
-    query CountryVaccMapData($startDate: String!, $endDate: String!){
-      countryVaccMapData(startDate: $startDate, endDate: $endDate) {
-        isoCode
-        peopleVaccinatedPerHundred
-      }
+const GET_VACC_MAP_COUNTRY_DATA = gql`
+  query CountryVaccMapData($startDate: String!, $endDate: String!){
+    countryVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleVaccinatedPerHundred
     }
-  `;
-  
-  const { loading, error, data } = useQuery(GET_VACC_MAP_DATA,
+  }
+`;
+
+const GET_VACC_MAP_CONTINENT_DATA = gql`
+  query CountryVaccMapData($startDate: String!, $endDate: String!){
+    countryVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleVaccinatedPerHundred
+    }
+  }
+`;
+
+const mapName = 'FirstDoseVaccMap';
+const featureValueName = 'peopleVaccinatedPerHundred';
+
+let featureData;
+
+const VaccMap: React.FC<Props> = () => {
+ 
+  const { loading, error, data } = useQuery(GET_VACC_MAP_COUNTRY_DATA,
     {
       variables: {
         startDate,
@@ -37,17 +49,11 @@ const VaccMap: React.FC<Props> = () => {
   if (error) return null;
 
   if (data) {
-    featureData = data.countryVaccMapData.map(dataRow => {
-      return {
-        isoCode: dataRow.isoCode,
-        value: dataRow.peopleVaccinatedPerHundred,
-      }
-    })
+    featureData = data.countryVaccMapData
   }
-
+  
   return (
-    // <MapContainer featureData={featureData} mapLegend={MapConstants.ScaledLegend} />
-    <></>
+    <VaccinationMap mapName={mapName} binaryFeatureStyling={false} featureData={featureData} featureValueName={featureValueName}/>
   )
 }
 

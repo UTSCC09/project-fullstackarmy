@@ -8,6 +8,8 @@ interface Props {
 
 const Legend: React.FC<Props> = ({map, mapLegend}) => {
   
+  if(!(map && mapLegend)) return null;
+
   const legend = document.createElement('div');
   
   legend.style.marginLeft = '7px';
@@ -44,11 +46,9 @@ const Legend: React.FC<Props> = ({map, mapLegend}) => {
     legend.style.opacity = '0.7';
   })
 
-  if(map) {
-    const leftBottomControls = map.controls[google.maps.ControlPosition.LEFT_BOTTOM];
-    leftBottomControls.clear();
-    leftBottomControls.push(legend); 
-  }
+  const leftBottomControls = map.controls[google.maps.ControlPosition.LEFT_BOTTOM];
+  leftBottomControls.clear();
+  leftBottomControls.push(legend); 
 
   return null;
 }
