@@ -25,7 +25,6 @@ services:
   #       - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
     image: projectfrontend:latest
-    build: './frontend'
     container_name: projectfrontend
     restart: always
     # expose:
@@ -35,13 +34,11 @@ services:
     environment:
       REACT_APP_API: http://143.110.214.9:3000/api
       REACT_APP_GOOGLE_MAPS_API_KEY: AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA
-      NODE_OPTIONS: "--max-old-space-size=8192"
       VIRTUAL_HOST: http://covid19vaxtracker.live
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
   backend:
     image: projectbackend:latest
     container_name: projectbackend
-    build: './backend'
     restart: always
     # expose:
     #   - 3000
