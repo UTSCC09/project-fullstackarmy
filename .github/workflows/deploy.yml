@@ -9,6 +9,8 @@ on:
     paths:
       - 'docker-compose.yml'
   repository_dispatch:
+    branches:
+      - main
     types: [trigger-deploy-workflow]
 
 jobs:
