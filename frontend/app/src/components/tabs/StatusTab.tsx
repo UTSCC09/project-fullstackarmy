@@ -10,12 +10,12 @@ export const StatusTab = () => {
   return (
     <div>
       <HerdImmunityBarChart />
-      <h2>First Vaccination Dose Heat Map</h2>
+      {/* <h2>First Vaccination Dose Heat Map</h2> */}
       {/* <VaccMap />  */}
       <h2>Second Vaccination Dose Heat Map</h2>
-      <FullVacMap />  
-      <h2>Booster Dose Heat Map</h2>
-      <BoosterVaccMap />  
+      <FullVacMap />
+      {/* <h2>Booster Dose Heat Map</h2> */}
+      {/* <BoosterVaccMap />   */}
     </div>
   )
 }
