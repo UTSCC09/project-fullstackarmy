@@ -8,6 +8,7 @@ on:
     # Only run this workflow if the commit has modified files from any of frontend, backend, or docker-compose.yml
     paths:
       - 'docker-compose.yml'
+  # From https://stevenmortimer.com/running-github-actions-sequentially/
   repository_dispatch:
     branches:
       - main
@@ -17,7 +18,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
     defaults:
       run:
         working-directory: .
