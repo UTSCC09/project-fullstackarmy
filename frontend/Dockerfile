@@ -1,6 +1,6 @@
 # Dockerfile adapted from
 # https://mherman.org/blog/dockerizing-a-react-app/
-# TODO: Blah
+
 # Build the React app
 # basically, this compiles the React jsx to static HTML and js files.
 FROM node:14-alpine3.14 as build

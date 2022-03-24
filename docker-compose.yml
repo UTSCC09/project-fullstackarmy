@@ -26,7 +26,10 @@ services:
   #       - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
     image: projectfrontend:latest
-    build: ./frontend
+    build: 
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: http://covid19vaxtracker.live:3000/api
     container_name: projectfrontend
     restart: always
     # expose:
@@ -38,10 +41,7 @@ services:
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
   backend:
     image: projectbackend:latest
-    build:
-      context: ./backend
-      args:
-        REACT_APP_API_URL: http://covid19vaxtracker.live:3000/api
+    build: ./backend
     container_name: projectbackend
     restart: always
     # expose:

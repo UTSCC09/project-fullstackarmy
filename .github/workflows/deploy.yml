@@ -17,8 +17,8 @@ on:
   #   types: [trigger-deploy-workflow]
 
 jobs:
-  deploy:
-    name: Deploy
+  build-deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
     defaults:
