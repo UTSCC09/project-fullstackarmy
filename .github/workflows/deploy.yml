@@ -39,10 +39,6 @@ jobs:
                 #   - 'frontend/**'
                 docker-compose:
                   - 'docker-compose.yml'
-        # Runs a set of commands using the runners shell
-        - name: Debug problem
-          run: |
-            ls
         - name: Copy over new docker-compose.yml if changed
           if: steps.changes.outputs.docker-compose == 'true'
           uses: appleboy/scp-action@master
@@ -73,16 +69,16 @@ jobs:
         #     passphrase: ${{ secrets.PASSPHRASE }}
         #     source: "frontend/"
         #     target: "~"
-        - name: Build when necessary
-          if: steps.changes.outputs.frontend == 'true' || steps.changes.outputs.backend == 'true'
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.KEY }}
-            passphrase: ${{ secrets.PASSPHRASE }}
-            script: |
-              docker-compose build
+        # - name: Build when necessary
+        #   if: steps.changes.outputs.frontend == 'true' || steps.changes.outputs.backend == 'true'
+        #   uses: appleboy/ssh-action@master
+        #   with:
+        #     host: ${{ secrets.HOST }}
+        #     username: ${{ secrets.USERNAME }}
+        #     key: ${{ secrets.KEY }}
+        #     passphrase: ${{ secrets.PASSPHRASE }}
+        #     script: |
+        #       docker-compose build
         - name: Deploy in Container
           uses: appleboy/ssh-action@master
           with:
