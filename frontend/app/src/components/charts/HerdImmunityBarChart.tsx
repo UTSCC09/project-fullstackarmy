@@ -118,13 +118,13 @@ const HerdImmunityBarChart = () => {
   if (err) return <h1>Error {err.message}</h1>
 
   // For debugging
-  console.log(labelData)
-  console.log('-')
-  console.log(firstVaccData)
-  console.log('-')
-  console.log(secondVaccData)
-  console.log('-')
-  console.log(boosterVaccData)
+  // console.log(labelData)
+  // console.log('-')
+  // console.log(firstVaccData)
+  // console.log('-')
+  // console.log(secondVaccData)
+  // console.log('-')
+  // console.log(boosterVaccData)
 
   // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
   if (labelData && firstVaccData && secondVaccData && boosterVaccData) {
