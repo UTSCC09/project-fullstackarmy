@@ -111,9 +111,9 @@ const HerdImmunityBarChart = () => {
       notifyOnNetworkStatusChange: true
     }
   );
-  console.log(labelErr)
-  console.log(loading)
-  console.log(labelData)
+  // console.log(labelErr)
+  // console.log(loading)
+  // console.log(labelData)
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;
   if (err) return <h1>Error {err.message}</h1>
 
