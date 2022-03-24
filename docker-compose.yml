@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  # TODO: Testing still that new docker-compose.yml gets added
+  # TODO: Testing that the ghcr images get pulled
   # nginx-proxy:
   #   image: jwilder/nginx-proxy
   #   container_name: nginx-proxy
@@ -25,7 +25,7 @@ services:
   #   environment:
   #       - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
-    image: ghcr.io/UTSCC09/frontend-aarenchu
+    image: ghcr.io/utscc09/frontend-aarenchu
     container_name: projectfrontend
     restart: always
     # expose:
@@ -38,7 +38,7 @@ services:
       VIRTUAL_HOST: http://covid19vaxtracker.live
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
   backend:
-    image: ghcr.io/UTSCC09/backend-aarenchu
+    image: ghcr.io/utscc09/backend-aarenchu
     container_name: projectbackend
     restart: always
     # expose:
