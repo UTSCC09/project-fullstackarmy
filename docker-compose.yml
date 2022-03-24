@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  # TODO: Testing that the ghcr images get pulled
+  # TODO: Needed to log in
   # nginx-proxy:
   #   image: jwilder/nginx-proxy
   #   container_name: nginx-proxy
