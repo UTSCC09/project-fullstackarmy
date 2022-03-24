@@ -1,18 +1,17 @@
 version: "3.7"
 
 services:
-  # TODO: Blah
-  # nginx-proxy:
-  #   image: jwilder/nginx-proxy
-  #   container_name: nginx-proxy
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
-  #     - ./certs:/etc/nginx/certs 
-  #     - ./vhost:/etc/nginx/vhost.d 
-  #     - ./html:/usr/share/nginx/html 
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      # - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs 
+      - ./vhost:/etc/nginx/vhost.d 
+      - ./html:/usr/share/nginx/html 
       
   # nginx-proxy-acme:
   #   image: nginxproxy/acme-companion
@@ -26,33 +25,31 @@ services:
   #       - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
     image: projectfrontend:latest
-    # image: ghcr.io/utscc09/frontend-aarenchu
     build: 
       context: ./frontend
       args:
         REACT_APP_API_URL: http://covid19vaxtracker.live:3000/api
     container_name: projectfrontend
     restart: always
-    # expose:
-    #   - 80
-    ports:
-      - "80:80"
+    expose:
+      - 80
+    # ports:
+    #   - "80:80"
     environment:
       VIRTUAL_HOST: http://covid19vaxtracker.live
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
   backend:
-    # image: ghcr.io/utscc09/backend-aarenchu
     image: projectbackend:latest
     build: ./backend
     container_name: projectbackend
     restart: always
-    # expose:
-    #   - 3000
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
+    # ports:
+    #   - "3000:3000"
     environment:
       MONGO_USER: admin
       MONGO_PASSWORD: CEZHrExc5aMCcp5s
       MONGO_DB: VaccDataDev
-      VIRTUAL_HOST: api.http://covid19vaxtracker.live
-      LETSENCRYPT_HOST: api.http://covid19vaxtracker.live
+      VIRTUAL_HOST: http://api.covid19vaxtracker.live
+      LETSENCRYPT_HOST: http://api.covid19vaxtracker.live
