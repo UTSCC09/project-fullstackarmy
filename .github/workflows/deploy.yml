@@ -16,6 +16,9 @@ on:
   #     - main
   #   types: [trigger-deploy-workflow]
 
+env:
+  MONGO_PASSWORD: CEZHrExc5aMCcp5s
+
 jobs:
   build-deploy:
     name: Build and Deploy
@@ -90,6 +93,7 @@ jobs:
             key: ${{ secrets.KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
+              export MONGO_PASSWORD=$MONGO_PASSWORD
               docker-compose up -d
             # script: |
             #   echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
