@@ -50,7 +50,7 @@ services:
       - "3000:3000"
     environment:
       MONGO_USER: admin
-      MONGO_PASSWORD: { $MONGO_PASSWORD }
+      MONGO_PASSWORD: { MONGO_PASSWORD }
       MONGO_DB: VaccDataDev
       VIRTUAL_HOST: api.http://covid19vaxtracker.live
       LETSENCRYPT_HOST: api.http://covid19vaxtracker.live
