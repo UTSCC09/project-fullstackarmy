@@ -81,7 +81,7 @@ jobs:
             key: ${{ secrets.KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
-              docker-compose up -d
+              docker-compose build
         - name: Deploy in Container
           uses: appleboy/ssh-action@master
           with:
