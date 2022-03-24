@@ -9,15 +9,17 @@ import {
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+// what
+const reactAPIEnv = process.env.REACT_APP_API_URL
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  uri: process.env.REACT_APP_API,
+  uri: reactAPIEnv,
   cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
+      {console.log(reactAPIEnv)}
       <App />
     </ApolloProvider>
   </React.StrictMode>,
