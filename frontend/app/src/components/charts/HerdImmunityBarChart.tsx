@@ -107,7 +107,9 @@ const HerdImmunityBarChart = () => {
       }
     }
   );
-  if (loading) console.log("Loading")
+  console.log(labelErr)
+  console.log(loading)
+  console.log(labelData)
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;
   if (err) return <h1>Error {err.message}</h1>
 
