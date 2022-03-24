@@ -39,8 +39,6 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             source: "docker-compose.yml"
             target: "~"
-        - name: Log into GitHub Container Registry
-          run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
         - name: Pull Images and Deploy in Container
           uses: appleboy/ssh-action@master
           with:
@@ -49,4 +47,5 @@ jobs:
             key: ${{ secrets.KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
+              echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
               docker-compose pull && docker-compose up -d
