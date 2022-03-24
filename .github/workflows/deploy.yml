@@ -91,6 +91,7 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
               export MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}
+              echo $MONGO_PASSWORD
               docker-compose up -d
             # script: |
             #   echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
