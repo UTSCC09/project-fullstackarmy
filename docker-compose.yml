@@ -34,7 +34,7 @@ services:
     ports:
       - "80:80"
     environment:
-      REACT_APP_API: http://covid19vaxtracker.live:3000/api
+      REACT_APP_API: http://143.110.214.9:3000/api
       REACT_APP_GOOGLE_MAPS_API_KEY: AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA
       VIRTUAL_HOST: http://covid19vaxtracker.live
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
