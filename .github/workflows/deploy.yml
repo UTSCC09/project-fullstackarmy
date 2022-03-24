@@ -24,6 +24,8 @@ jobs:
         working-directory: .
 
     steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - uses: actions/checkout@v2
         - name: Copy over new docker-compose.yml
           uses: appleboy/scp-action@master
           with:
