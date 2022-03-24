@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  # TODO: Testing that new docker-compose.yml gets added
+  # TODO: Testing again that new docker-compose.yml gets added
   # nginx-proxy:
   #   image: jwilder/nginx-proxy
   #   container_name: nginx-proxy
