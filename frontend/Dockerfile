@@ -11,6 +11,7 @@ RUN npm i
 RUN npm install react-scripts@3.4.1 -g
 COPY ./app ./
 ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL $REACT_APP_API_URL
 ENV NODE_OPTIONS "--max-old-space-size=8192"
 RUN npm run build
 
