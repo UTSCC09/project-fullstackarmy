@@ -76,7 +76,7 @@ const HerdImmunityBarChart = () => {
     "PRT"
   ];
 
-  const { error: labelErr, loading, data: labelData } = useQuery(GET_LABELS,
+  const { error: labelErr, data: labelData } = useQuery(GET_LABELS,
     {
       variables: {
         isoCodes: vars
@@ -111,9 +111,6 @@ const HerdImmunityBarChart = () => {
       notifyOnNetworkStatusChange: true
     }
   );
-  // console.log(labelErr)
-  // console.log(loading)
-  // console.log(labelData)
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;
   if (err) return <h1>Error {err.message}</h1>
 
