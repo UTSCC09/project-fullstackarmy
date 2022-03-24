@@ -6,7 +6,6 @@
 FROM node:14-alpine3.14 as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-RUN hostname -I
 COPY ./app/package.json ./
 RUN npm i
 RUN npm install react-scripts@3.4.1 -g
