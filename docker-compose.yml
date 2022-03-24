@@ -25,7 +25,8 @@ services:
   #   environment:
   #       - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
-    image: ghcr.io/utscc09/frontend-aarenchu
+    image: projectfrontend:latest
+    build: ./frontend
     container_name: projectfrontend
     restart: always
     # expose:
@@ -38,7 +39,8 @@ services:
       VIRTUAL_HOST: http://covid19vaxtracker.live
       LETSENCRYPT_HOST: http://covid19vaxtracker.live
   backend:
-    image: ghcr.io/utscc09/backend-aarenchu
+    image: projectbackend:latest
+    build: ./backend
     container_name: projectbackend
     restart: always
     # expose:
