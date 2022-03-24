@@ -49,4 +49,3 @@ jobs:
             script: |
               echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
               docker-compose pull && docker-compose up -d
-              docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' projectfrontend
