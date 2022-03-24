@@ -1,4 +1,4 @@
-# TODO: gotta check if just building containers on the server works for IP addr issue
+# TODO: BLAH
 # Dockerfile adapted from
 # https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
 FROM node:16
