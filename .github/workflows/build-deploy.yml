@@ -11,10 +11,10 @@ on:
       - frontend/**
       - backend/**
   # From https://stevenmortimer.com/running-github-actions-sequentially/
-  repository_dispatch:
-    branches:
-      - main
-    types: [trigger-deploy-workflow]
+  # repository_dispatch:
+  #   branches:
+  #     - main
+  #   types: [trigger-deploy-workflow]
 
 jobs:
   build-deploy:
@@ -33,10 +33,10 @@ jobs:
           id: changes
           with:
               filters: |
-                # backend:
-                #   - 'backend/**'
-                # frontend:
-                #   - 'frontend/**'
+                backend:
+                  - 'backend/**'
+                frontend:
+                  - 'frontend/**'
                 docker-compose:
                   - 'docker-compose.yml'
         - name: Copy over new docker-compose.yml if changed
