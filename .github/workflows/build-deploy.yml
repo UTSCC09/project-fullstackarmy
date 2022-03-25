@@ -69,8 +69,8 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             source: "frontend/"
             target: "~"
-        - name: Build when necessary
-          if: steps.changes.outputs.frontend == 'true' || steps.changes.outputs.backend == 'true'
+        - name: Build frontend when necessary
+          if: steps.changes.outputs.frontend == 'true'
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.HOST }}
@@ -78,7 +78,17 @@ jobs:
             key: ${{ secrets.KEY }}
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
-              docker-compose build
+              docker-compose build backend
+        - name: Build backend when necessary
+          if: steps.changes.outputs.backend == 'true'
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            script: |
+              docker-compose build backend
         - name: Deploy in Container
           uses: appleboy/ssh-action@master
           with:
