@@ -8,9 +8,10 @@ interface Props {
   featureData: any;
   valueName: string;
   mapLegend: MapLegend;
+  isContinentFeatures: boolean;
 }
 
-const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend}) => {
+const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend, isContinentFeatures}) => {
 
   // * State
   const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
@@ -20,7 +21,7 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     setInfoWindow(infoWindow)
   }, []);
 
-  if (!(map && mapLegend)) return null;
+  if (!(map && mapLegend && infoWindow)) return null;
 
   // * Prop dependent helpers
   /** 
@@ -70,11 +71,13 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
   const styleFeature = (feature: google.maps.Data.Feature) =>  {
     const hover = feature.getProperty('hover'); 
     const metric = feature.getProperty(valueName);
-    
+    const isoCodeType = feature.getProperty('isoCodeType')
+
     let fillColor: string = '';
     let fillOpacity: number;
     let strokeWeight: number;
     let strokeOpacity: number;
+    let visible: boolean;
 
     if (hover) {
       fillOpacity = 0.95;
@@ -98,63 +101,74 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       fillOpacity = 0;
     }
  
-    const featureStyle = {
+    if (isoCodeType === 'continent' && isContinentFeatures) {
+      visible = true;
+    } else if (isoCodeType === 'country' && !isContinentFeatures) {
+      visible = true;
+    } else {
+      visible = false;
+    }
+
+    const featureStyle: google.maps.Data.StyleOptions = {
       strokeColor: "#fff",
       strokeOpacity,
       strokeWeight,
       fillOpacity,
       fillColor,
+      visible,
     };
     
     return featureStyle;
   }
 
   // * Render Logic
-  if (infoWindow) {
-    map.data.setStyle(styleFeature);
-    
-    map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
-    map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
 
-    // map.data.addGeoJson(countryFeatures, {
-    //   idPropertyName: isoCodeProperty
-    // });
+  map.data.setStyle(styleFeature);
 
+  map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
+  map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
+
+  // No features then add the features needed once, and not removed in case of toggle
+  // then there is no ned to keep adding and removing
+
+  const firstFeatureId: string = continentFeatures['features'][0]['properties']['isoCode'];
+
+  if (!map.data.getFeatureById(firstFeatureId)) {
     map.data.addGeoJson(continentFeatures, {
       idPropertyName: isoCodeProperty
     });
-    
-    // map.data.loadGeoJson(
-    //   "https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.js"
-    //   , {
-    //   idPropertyName: isoCodeProperty
-    // });
-
-    const loadFeatures = () => {
-      if (featureData) {
-        let c = 0;
-      
-        featureData.forEach(isoCodeData => {
-          const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
-          
-          if (c < 1) {
-            c = 1;
-            console.log(isoCodeFeature)
-          }
-
-          if (isoCodeFeature) {
-            isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
-          }
-        })
-      }
-    }
-
-    // wait for the request to complete by listening for the first feature to be
-    // added
-    google.maps.event.addListenerOnce(map.data, "addfeature", () => {
-      loadFeatures();
+  
+    map.data.addGeoJson(countryFeatures, {
+      idPropertyName: isoCodeProperty
     });
   }
+
+  if (featureData) {  
+    featureData.forEach(isoCodeData => {
+      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
+
+      if (isoCodeFeature) {
+        isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
+      }
+    })
+  }
+
+  // Continent
+  // map.data.addGeoJson(continentFeatures, {
+  //   idPropertyName: isoCodeProperty
+  // });
+  
+  // map.data.loadGeoJson(
+  //   "https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.js"
+  //   , {
+  //   idPropertyName: isoCodeProperty
+  // });
+
+  // wait for the request to complete by listening for the first feature to be
+  // added
+  // google.maps.event.addListenerOnce(map.data, "addfeature", () => {
+  //   loadFeatures();
+  // });
 
   return null;
 }
