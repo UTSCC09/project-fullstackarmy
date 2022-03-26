@@ -14,6 +14,6 @@ RUN npm install --legacy-peer-deps
 
 # Bundle app source
 COPY ./app .
-
+# Expose the backend port
 EXPOSE 3000
 CMD [ "node", "app.js" ]

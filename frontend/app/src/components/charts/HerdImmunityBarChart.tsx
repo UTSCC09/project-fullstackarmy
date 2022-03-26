@@ -80,7 +80,8 @@ const HerdImmunityBarChart = () => {
     {
       variables: {
         isoCodes: vars
-      }
+      },
+      notifyOnNetworkStatusChange: true
     }
   );
 
@@ -88,7 +89,8 @@ const HerdImmunityBarChart = () => {
     {
       variables: {
         isoCodes: vars
-      }
+      },
+      notifyOnNetworkStatusChange: true
     }
   );
 
@@ -96,7 +98,8 @@ const HerdImmunityBarChart = () => {
     {
       variables: {
         isoCodes: vars
-      }
+      },
+      notifyOnNetworkStatusChange: true
     }
   );
 
@@ -104,7 +107,8 @@ const HerdImmunityBarChart = () => {
     {
       variables: {
         isoCodes: vars
-      }
+      },
+      notifyOnNetworkStatusChange: true
     }
   );
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;

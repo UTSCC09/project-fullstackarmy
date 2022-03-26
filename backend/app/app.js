@@ -27,14 +27,13 @@ const PORT = 3000;
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
-    'http://c09-chuaaren.utsc-labs.utoronto.ca:3000',
-    'http://c09-chuaaren.utsc-labs.utoronto.ca:80',
-    'http://c09-chuaaren.utsc-labs.utoronto.ca',
     `http://localhost:3000`,
     `http://localhost:3001`,
     `http://localhost:80`,
     `http://localhost`,
-    'http://covid19vaxtracker.live'
+    'https://covid19vaxtracker.live',
+    'https://api.covid19vaxtracker.live',
+    'https://www.covid19vaxtracker.live'
 ];
 
 app.use(cors({
@@ -52,7 +51,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use('/api', graphqlHTTP({
+app.use('/', graphqlHTTP({
   schema: schema,
   rootValue: resolvers, 
   pretty: true,
@@ -69,7 +68,7 @@ mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     http.createServer(app).listen(PORT, function (err) {
       if (err) console.log(err);
-      else console.log("HTTP server on http://localhost:%s", PORT);
+      else console.log("Running server");
     });
   })
   .catch(err => {
