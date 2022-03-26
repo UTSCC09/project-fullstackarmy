@@ -1,29 +1,41 @@
 import React from 'react'
-import MapContainer from './mapComponents/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import Loading from '../elements/Loading';
+import VaccinationMap from './VaccinationMap';
 
 interface Props {
 }
 
+// todo make the range dynamic here
+const startDate = '2021-01-01';
+const endDate = '2022-03-17';
+
+const GET_FULL_VACC_COUNTRY_MAP_DATA = gql`
+  query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
+    countryFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleFullyVaccinatedPerHundred
+    }
+  }
+`;
+
+const GET_FULL_VACC_CONTINENT_MAP_DATA = gql`
+  query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
+    continentFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleFullyVaccinatedPerHundred
+    }
+  }
+`;
+
+const mapName = 'FullVacMap';
+const featureValueName = 'peopleFullyVaccinatedPerHundred';
+
+let featureData;
+
 const FullVacMap: React.FC<Props> = () => {
   
-  // todo make the range dynamic here
-	const startDate = '2021-01-01';
-	const endDate = '2022-03-17';
-  let featureData;
-
-  //TODO change the data
-	const GET_FULL_VACC_MAP_DATA = gql`
-    query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
-      countryFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
-        isoCode
-        peopleFullyVaccinatedPerHundred
-      }
-    }
-  `;
-  
-  //todo create interfaces for the data
-  const { loading, error, data } = useQuery(GET_FULL_VACC_MAP_DATA,
+  const { loading, error, data } = useQuery(GET_FULL_VACC_CONTINENT_MAP_DATA,
     {
       variables: {
         startDate,
@@ -32,24 +44,30 @@ const FullVacMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
-  if (error) return null;
+  // const dataCall = (type: 'country' | 'continent') => {
+  //   if (type === 'country') {
+      
+  //   } else if (type === 'continent') {
+  //     const { loading, error, data } = useQuery(GET_FULL_VACC_COUNTRY_MAP_DATA,
+  //       {
+  //         variables: {
+  //           startDate,
+  //           endDate,
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 
-  if (data) {
-    featureData = data.countryFullyVaccMapData.map(dataRow => {
-      return {
-        isoCode: dataRow.isoCode,
-        value: dataRow.peopleFullyVaccinatedPerHundred,
-      }
-    })
-  }
+  // todo add error component
+  if (loading) return <Loading />;
+  if (error) return null;
+  // if (data) featureData = data.countryFullyVaccMapData;
+  if (data) featureData = data.continentFullyVaccMapData;
 
   return (
-    <MapContainer featureData={featureData} />
+    <VaccinationMap mapName={mapName} binaryFeatureStyling={true} featureData={featureData} featureValueName={featureValueName} />
   )
 }
 
 export default FullVacMap
-
-

@@ -1,4 +1,5 @@
 const { buildSchema } = require('graphql');
+const { mapDataTypes, mapDataRootQuery } = require('./mapDataSchema');
 
 module.exports = buildSchema(`
 type Number {
@@ -33,21 +34,6 @@ type DailyVaccData {
     totalBoostersPerHundred: Float
 }
 
-type CountryVaccMapData {
-    isoCode: String
-    peopleVaccinatedPerHundred: Float
-}
-
-type CountryFullyVaccMapData {
-    isoCode: String
-    peopleFullyVaccinatedPerHundred: Float
-}
-
-type CountryBoosterVaccMapData {
-    isoCode: String
-    totalBoostersPerHundred: Float
-}
-
 input isoCodeInput {
     isoCode: String!
     isoCodeName: String!
@@ -60,6 +46,8 @@ input IsoCodeDataInput {
     year: String
     incomeLevel: String
 }
+
+${mapDataTypes}
 
 input DailyVaccDataInput {
     date: String!
@@ -89,9 +77,7 @@ type RootQuery {
     getMostRecentFullyVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentBoosterVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [[DailyVaccData!]!]
-    countryVaccMapData(startDate: String!, endDate: String!): [CountryVaccMapData!]!
-    countryFullyVaccMapData(startDate: String!, endDate: String!): [CountryFullyVaccMapData!]!
-    countryBoosterVaccMapData(startDate: String!, endDate: String!): [CountryBoosterVaccMapData!]!
+    ${mapDataRootQuery}
 }
 
 type RootMutation {

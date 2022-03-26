@@ -1,28 +1,41 @@
-import React from 'react'
-import MapContainer from './mapComponents/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import React from 'react';
+import Loading from '../elements/Loading';
+import VaccinationMap from './VaccinationMap';
 
 interface Props {
 }
 
+// todo make the range dynamic here
+const startDate = '2021-01-01';
+const endDate = '2022-03-17';
+
+const GET_BOOSTER_VACC_COUNTRY_MAP_DATA = gql`
+  query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
+    countryBoosterVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      totalBoostersPerHundred
+    }
+  }
+`;
+
+const GET_BOOSTER_VACC_CONTINENT_MAP_DATA = gql`
+  query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
+    countryBoosterVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      totalBoostersPerHundred
+    }
+  }
+`;
+
+const mapName = 'BoosterVaccMap';
+const featureValueName = 'totalBoostersPerHundred';
+
+let featureData;
+
 const BoosterVaccMap: React.FC<Props> = () => {
 
-  // todo make the range dynamic here
-	const startDate = '2021-01-01';
-	const endDate = '2022-03-17';
-  let featureData;
-
-	const GET_BOOSTER_VACC_MAP_DATA = gql`
-    query CountryBoosterVaccMapData($startDate: String!, $endDate: String!){
-      countryBoosterVaccMapData(startDate: $startDate, endDate: $endDate) {
-        isoCode
-        totalBoostersPerHundred
-      }
-    }
-  `;
-  
-  //todo create interfaces for the data
-  const { loading, error, data } = useQuery(GET_BOOSTER_VACC_MAP_DATA,
+  const { loading, error, data } = useQuery(GET_BOOSTER_VACC_COUNTRY_MAP_DATA,
     {
       variables: {
         startDate,
@@ -31,21 +44,16 @@ const BoosterVaccMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
+  // todo add error component
+  if (loading) return <Loading />;
   if (error) return null;
 
   if (data) {
-    featureData = data.countryBoosterVaccMapData.map(dataRow => {
-      return {
-        isoCode: dataRow.isoCode,
-        value: dataRow.totalBoostersPerHundred,
-      }
-    })
+    featureData = data.countryBoosterVaccMapData;
   }
 
   return (
-    <MapContainer featureData={featureData} />
+    <VaccinationMap mapName={mapName} binaryFeatureStyling={true} featureData={featureData} featureValueName={featureValueName}/>
   )
 }
 
