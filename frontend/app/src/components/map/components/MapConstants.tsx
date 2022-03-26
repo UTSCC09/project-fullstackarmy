@@ -2,6 +2,8 @@ export type MapLegend = [string, string, number][] | null;
 
 export type FeatureData = [isoCode: string, value: number][];
 
+export type MapQueryType = 'countryMapQuery' | 'continentMapQuery';
+
 export const ScaledLegend: MapLegend = [
     ['#010a19', '91% - 100%', 91],
     ['#021e4b', '81% - 90%', 81],
@@ -23,3 +25,7 @@ export const BinaryLegend: MapLegend = [
 export const isoCodeProperty: string = 'isoCode';
 
 export const isoCodeNameProperty: string = 'isoCodeName';
+
+
+export const CountryMapQuery = 'countryMapQuery';
+export const ContinentMapQuery = 'continentMapQuery';
