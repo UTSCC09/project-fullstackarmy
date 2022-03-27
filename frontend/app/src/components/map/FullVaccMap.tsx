@@ -1,5 +1,5 @@
-import { gql, useLazyQuery } from '@apollo/client';
-import React, { useEffect } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
 import Loading from '../elements/Loading';
 import VaccinationMap from './VaccinationMap';
 
@@ -32,42 +32,44 @@ const GET_FULL_VACC_CONTINENT_MAP_DATA = gql`
 const mapName: string = 'FullVacMap';
 const featureValueName: string = 'peopleFullyVaccinatedPerHundred';
 
-let featureData;
-
 const FullVacMap: React.FC<Props> = () => {
-  const [getCountryData, countryData] = useLazyQuery(GET_FULL_VACC_COUNTRY_MAP_DATA);
-  const [getContinentData, continentData] = useLazyQuery(GET_FULL_VACC_CONTINENT_MAP_DATA);
-  
+
+  const [featureData, setFeatureData] = useState(null);
+
+  // Get both data at once, even though some of it may not be used by the user
+  // this is to ensure the user experience is fast and high quality
+  const countryData = useQuery(GET_FULL_VACC_COUNTRY_MAP_DATA, 
+    {
+      variables: {
+        startDate,
+        endDate,
+      },
+      onCompleted: (data) => {
+        setFeatureData(data.countryFullyVaccMapData);
+      }
+    }
+  );
+
+  const continentData = useQuery(GET_FULL_VACC_CONTINENT_MAP_DATA, {
+      variables: {
+        startDate,
+        endDate,
+      }
+    }
+  );
+    
   /** 
   * Makes the backend call to get the associated map data for country/continent
   * @param {boolean} isContinentCall
   */
   const continentDataCall = (isContinentCall: boolean) => {
+
     if (isContinentCall) {
-      getContinentData({
-        variables: {
-          startDate,
-          endDate,
-        }
-      });
+      setFeatureData(continentData.data.continentFullyVaccMapData);
     } else {
-      getCountryData({
-        variables: {
-          startDate,
-          endDate,
-        }
-      });
+      setFeatureData(countryData.data.countryFullyVaccMapData);
     }
   }
-
-  useEffect(() => {
-    getCountryData({
-      variables: {
-        startDate,
-        endDate,
-      }
-    })
-  }, [])
 
   // add error component
   if (countryData && countryData.loading) return <Loading />;
@@ -75,16 +77,11 @@ const FullVacMap: React.FC<Props> = () => {
   if (countryData && countryData.error) return null;
   if (continentData && continentData.error) return null;
 
-  if (countryData && countryData.data) featureData = countryData.data.countryFullyVaccMapData;
-  if (continentData && continentData.data) featureData = continentData.data.continentFullyVaccMapData;
-
-  // use context here so that it communicates directly with the map
-  // about the toggle button
- 
   return (
     <VaccinationMap 
       mapName={mapName} 
-      binaryFeatureStyling={true} 
+      binaryFeatureStyling={true}
+      continentToggle={true}
       featureData={featureData} 
       featureValueName={featureValueName}
       continentDataCall={continentDataCall}
