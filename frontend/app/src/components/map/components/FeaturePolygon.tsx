@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import countryFeatures from '../featureData/countryFeatures.json';
-import continentFeatures from '../featureData/continentFeatures.json';
-import { MapLegend, isoCodeProperty, isoCodeNameProperty } from './MapConstants';
+import React from 'react'
+import { MapLegend, isoCodeProperty, isoCodeNameProperty, CountryFeaturesURL, ContinentFeaturesURL } from './MapConstants';
 
 interface Props {
   map: google.maps.Map | null;
@@ -11,17 +9,13 @@ interface Props {
   isContinentFeatures: boolean;
 }
 
+let areFeaturesAdded: boolean = false;
+
 const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend, isContinentFeatures}) => {
 
-  // * State
-  const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow | null>(null);
+  const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
 
-  useEffect(() => {
-    const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
-    setInfoWindow(infoWindow)
-  }, []);
-
-  if (!(map && mapLegend && infoWindow)) return null;
+  if (!(map && mapLegend)) return null;
 
   // * Prop dependent helpers
   /** 
@@ -38,13 +32,24 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     const value = feature.getProperty(valueName);
   
     if (map) {
-      const content: string = `
-        <div style="font-size: 14px; display: flex; flex-direction: column;">
-          <div>Region: ${country}</div>
-          <div>Percentage: ${value}%</div>
-        </div>
-      `;
-  
+      let content: string;
+
+      if (value) {
+        content = `
+          <div style="font-size: 14px; display: flex; flex-direction: column;">
+            <div>Region: ${country}</div>
+            <div>Percentage: ${value}%</div>
+          </div>
+        `;
+      } else {
+        content = `
+          <div style="font-size: 14px; display: flex; flex-direction: column;">
+            <div>Region: ${country}</div>
+            <div>Percentage: N/A</div>
+          </div>
+        `;
+      }
+      
       infoWindow.setContent(content);
       infoWindow.setPosition(e.latLng);
       infoWindow.open({
@@ -55,7 +60,6 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
   
   /** 
   * Mouse closes the infoWindow when the mouse leaves the polygon
-  * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
   * @param {google.maps.Data.MouseEvent} e - mouseEvent
   * @param {google.maps.InfoWindow} infoWindow - the open info window
   */
@@ -125,31 +129,65 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
 
   map.data.setStyle(styleFeature);
 
-  map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
-  map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
+  // Modifies the Event prototype so it will affect how the Google Library behaves.
+  // Otherwise non-passive event listener violations will appear in the console.
+  // Credits: https://stackoverflow.com/questions/47799388/javascript-google-maps-api-non-passive-event-handlers
+  (function () {
+    if (typeof EventTarget !== "undefined") {
+      let func = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (type, fn, capture) {
+        this.func = func;
+        if(typeof capture !== "boolean"){
+          capture = capture || {};
+          capture.passive = false;
+        }
+        this.func(type, fn, capture);
+      };
+    };
+  }());
 
   // No features then add the features needed once, and not removed in case of toggle
   // then there is no ned to keep adding and removing
+  if (!areFeaturesAdded) {
 
-  const firstFeatureId: string = continentFeatures['features'][0]['properties']['isoCode'];
+    map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
+    map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
 
-  if (!map.data.getFeatureById(firstFeatureId)) {
-    map.data.addGeoJson(continentFeatures, {
-      idPropertyName: isoCodeProperty
+    const addContinentFeatures = fetch(ContinentFeaturesURL);
+    const addCountryFeatures = fetch(CountryFeaturesURL);
+
+    Promise.all([addContinentFeatures, addCountryFeatures]).then(responses => {
+      return Promise.all(responses.map(response => response.json()));
+    }).then(data => { 
+      // ! this is a heavy task so i should probably do it in a seperate thread
+      // might be fine here but i need to think about it
+      
+      console.log(data[0]);
+      console.log(data[1]);
+
+      map.data.addGeoJson(data[0], {
+        idPropertyName: isoCodeProperty 
+      });
+
+      map.data.addGeoJson(data[1], {
+        idPropertyName: isoCodeProperty 
+      });
+
+      featureData.forEach(isoCodeData => {
+        const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
+    
+        if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
+      })
+
+      areFeaturesAdded = true;
+    }).catch(error => {
+      console.log(error);
     });
-  
-    map.data.addGeoJson(countryFeatures, {
-      idPropertyName: isoCodeProperty
-    });
-  }
-
-  if (featureData) {  
+  } else{
     featureData.forEach(isoCodeData => {
       const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
-
-      if (isoCodeFeature) {
-        isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
-      }
+  
+      if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
     })
   }
 
