@@ -34,11 +34,7 @@ header {
 
 /* Logo */
 .logo {
-  align-self: center;
-  font-family: "Coda";
   font-size: 20px;
-  margin: 10px;
-  color: white;
 }
 .logo:first-child span:first-child {
   color: #00acea;
@@ -136,4 +132,9 @@ footer a:hover{
 .credits{
   margin-left: 10px;
   font-size: 12px;
+}
+
+.chart-title {
+  margin-left: 48px;
+  color: #1f74f9;
 }
