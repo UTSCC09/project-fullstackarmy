@@ -1,5 +1,5 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { BinaryLegend, FeatureData, ScaledLegend } from './components/MapConstants';
 import MapContainer from './components/MapContainer';
 import './styles/VaccinationMap.css';
@@ -7,12 +7,13 @@ import './styles/VaccinationMap.css';
 interface Props {
   mapName: string, 
   binaryFeatureStyling: boolean, 
+  continentToggle: boolean, 
   featureData: FeatureData,
   featureValueName: string,
   continentDataCall?: Function,
 }
 
-let mapLegend;
+let mapLegend = ScaledLegend;
 
 type MapState = {
   binary: boolean,
@@ -28,31 +29,31 @@ const initMapState: MapState = {
 const binaryEventName: string = 'binary';
 const continentEventName: string = 'continents';
 
-const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, featureData, featureValueName, continentDataCall}) => {
+const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, continentToggle, featureData, featureValueName, continentDataCall}) => {
+
+
   const [mapState, setMapState] = useState<MapState>(initMapState)
 
-  useEffect(() => {
-    mapLegend = ScaledLegend;
-  }, [])
+  // useEffect(() => {
+  //   mapLegend = ScaledLegend;
+  // }, [])
 
   const handleMapState = (event: ChangeEvent<HTMLInputElement>) => {
     const eventName: string = event.target.name;
+    const checked = event.target.checked;
 
-    if (eventName === binaryEventName && event.target.checked) {
+    if (eventName === binaryEventName && checked) {
       mapLegend = BinaryLegend;
-    } else if (eventName === binaryEventName && !event.target.checked) {
+    } else if (eventName === binaryEventName && !checked) {
       mapLegend = ScaledLegend;
     } else if (eventName === continentEventName) {
-      if(continentDataCall) continentDataCall(event.target.checked);
+      if(continentDataCall) continentDataCall(checked);
     } 
 
     setMapState({
       ...mapState,
-      [eventName]: event.target.checked,
+      [eventName]: checked,
     })
-
-    console.log('VaccinationMap')
-    console.log(mapState)
   }
 
   return (
@@ -67,17 +68,21 @@ const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, feature
             label="Binary" 
           />
         }
-        <FormControlLabel control={
-            <Switch checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
-          } 
-          label="Continents" 
-        />
+        {
+          continentToggle 
+          && 
+          <FormControlLabel control={
+              <Switch checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
+            }
+            label="Continents" 
+          />
+        }
       </FormGroup>
       <MapContainer featureData={featureData} mapLegend={mapLegend} mapName={mapName} featureValueName={featureValueName} isContinentFeatures={mapState.continents}/>
     </div>
   )
 }
 
-export default React.memo(VaccinationMap)
+export default React.memo(VaccinationMap);
 
 
