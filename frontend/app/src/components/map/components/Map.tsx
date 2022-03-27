@@ -24,7 +24,6 @@ const Map: React.FC<Props> = ({center, zoom, height, children, mapName}) => {
   // Creates the map once on render
   // we dont want this component to render again since it's pointless for it to
   useEffect(() => {
-    console.log('i get created')
     const newMap = new window.google.maps.Map(ref.current!, mapOptions)
     setMap(newMap);
   }, []);
@@ -46,6 +45,4 @@ const Map: React.FC<Props> = ({center, zoom, height, children, mapName}) => {
   );
 }
 
-// memo so that it is only rendered the first time and when the props
-// change
-export default React.memo(Map)
+export default Map;
