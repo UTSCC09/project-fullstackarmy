@@ -53,7 +53,13 @@ const VaccMap: React.FC<Props> = () => {
   }
   
   return (
-    <VaccinationMap mapName={mapName} binaryFeatureStyling={false} featureData={featureData} featureValueName={featureValueName}/>
+    <VaccinationMap 
+      mapName={mapName} 
+      binaryFeatureStyling={false} 
+      continentToggle={true} 
+      featureData={featureData} 
+      featureValueName={featureValueName}
+    />
   )
 }
 
