@@ -26,6 +26,8 @@ export const isoCodeProperty: string = 'isoCode';
 
 export const isoCodeNameProperty: string = 'isoCodeName';
 
+export const CountryFeaturesURL = 'https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/countryFeatures.json';
+export const ContinentFeaturesURL = 'https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.json';
 
 export const CountryMapQuery = 'countryMapQuery';
 export const ContinentMapQuery = 'continentMapQuery';
