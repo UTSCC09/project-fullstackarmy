@@ -29,17 +29,10 @@ const render = (status) => {
   }
 };
 
-const MapContainer: React.FC<Props> = ({featureData, mapLegend, mapName, featureValueName, isContinentFeatures}) => {
+const MapContainer: React.FC<Props> = ({mapName, mapLegend, featureData, featureValueName, isContinentFeatures}) => {
   
-  //todo needs to be store in .env file
-  console.log('MapContainer')
-  console.log(isContinentFeatures)
-
-
   // here the children are created everytime, therefore they need to be memo'ed to ensure that they are not
   // causing a rendering of the map everytime and only change when the features change
-
-
   return (
     <Wrapper 
       apiKey={'AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA'}
@@ -53,4 +46,4 @@ const MapContainer: React.FC<Props> = ({featureData, mapLegend, mapName, feature
   )
 }
 
-export default React.memo(MapContainer)
+export default MapContainer;
