@@ -6,9 +6,9 @@
     "@apollo/client": "^3.5.10",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@faker-js/faker": "^6.0.0",
     "@googlemaps/react-wrapper": "^1.1.28",
     "@mui/material": "^5.5.2",
-    "@faker-js/faker": "^6.0.0",
     "@react-spring/parallax": "^9.4.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -22,6 +22,7 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-annotation": "^1.4.0",
     "graphql": "^16.3.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "randomcolor": "^0.6.2",
     "react": "^17.0.2",
@@ -35,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -max-old-space-size=8000 start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
