@@ -1,37 +1,59 @@
-import { useState } from "react"
-import Logo from "./Logo"
-import Icon from "./Icon"
-import Button from "./Button"
-import TabHeader from "./TabHeader"
-import {GoGear} from 'react-icons/go'
-import {BiInfoSquare} from 'react-icons/bi'
-import {BiWorld} from 'react-icons/bi'
-import {AiOutlineLineChart} from 'react-icons/ai'
-import {BiBarChartSquare} from 'react-icons/bi'
+// Adapted from:
+// https://codesandbox.io/s/k1wuo0?file=/demo.tsx
+// https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Settings from '@mui/icons-material/Settings';
+import Translate from '@mui/icons-material/Translate';
+import Logo from './Logo';
+import {ConfigBar} from './ConfigBar';
 
 export const Header = () => {
-  const currentPath = window.location.pathname
+  const [configBarOpen, setOpen] = React.useState(false);
+  const handleDrawerOpen = () => {
+    setOpen(!configBarOpen);
+  };
+
   return (
-    <header>
-      <div className="nav-bar">
-        <div className="top-bar">
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="relative">
+        <Toolbar>
           <Logo />
-          <div className="top-bar-btns">
-            <Icon icon={GoGear}/>
-            <Button text="Login" color="#FFFFFF"/>
-            <Button text="Sign Up" color="#00ACEA"/>
-          </div>
-        </div>
-        <div className="bottom-bar">
-          <div className="tabs">
-            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/' ? true : false} path="/"/>
-            <TabHeader title="Vaccination Status " icon={BiWorld} selected={currentPath === '/vaccination-status' ? true : false} path="/vaccination-status"/>
-            <TabHeader title="Vaccination Rates " icon={AiOutlineLineChart} selected={currentPath === '/vaccination-rates' ? true : false} path="/vaccination-rates"/>
-            <TabHeader title="Vaccination Distribution " icon={BiBarChartSquare} selected={currentPath === '/vaccination-distribution' ? true : false} path="/vaccination-distribution"/>
-          </div>
-        </div>
-      </div>
-    </header>
-  )
+          <Typography component="div" sx={{ flexGrow: 1 }}>
+          </Typography>
+          {/* to be used for sign-in/sign-up
+          <Button color="inherit">Sign In</Button>
+          <Button color="secondary">Sign Up</Button>
+          */}
+          <IconButton
+              size="large"
+              color="inherit"
+            >
+              <Translate />
+          </IconButton>
+          <IconButton
+              size="large"
+              color="inherit"
+            >
+              <AccountCircle />
+          </IconButton>
+          <IconButton
+              size="large"
+              color="inherit"
+              onClick={handleDrawerOpen}
+            >
+              <Settings />
+          </IconButton>
+          </Toolbar>
+      </AppBar>
+      <ConfigBar open={configBarOpen} />
+    </Box>
+  );
 }
 
