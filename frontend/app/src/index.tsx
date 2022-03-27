@@ -12,14 +12,14 @@ import reportWebVitals from './reportWebVitals';
 
 const reactAPIEnv = process.env.REACT_APP_API_URL
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  uri: reactAPIEnv,
+  // uri: reactAPIEnv,
+  uri: 'http://localhost:3001/api',
   cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      {console.log(reactAPIEnv)}
       <App />
     </ApolloProvider>
   </React.StrictMode>,

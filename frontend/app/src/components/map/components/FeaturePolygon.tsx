@@ -161,9 +161,6 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     }).then(data => { 
       // ! this is a heavy task so i should probably do it in a seperate thread
       // might be fine here but i need to think about it
-      
-      console.log(data[0]);
-      console.log(data[1]);
 
       map.data.addGeoJson(data[0], {
         idPropertyName: isoCodeProperty 
@@ -181,7 +178,7 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
 
       areFeaturesAdded = true;
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
   } else{
     featureData.forEach(isoCodeData => {
