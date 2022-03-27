@@ -132,7 +132,6 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
     helpers.updateDataPipelineLogs('IsoCodeVaccSupplyDataPipeline', true, isoCodeVaccSupplyDataInput.length, res.updateIsoCodeVaccSupplyData.number);
     fs.writeFile(StoredFileName, JSON.stringify(prevData), errCallback);
   }).catch(err => {
-    // Fail silently since it it records in the DB
     helpers.updateDataPipelineLogs('IsoCodeVaccSupplyDataPipeline', false, isoCodeVaccSupplyDataInput.length, 0);
   });
 
