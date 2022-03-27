@@ -53,7 +53,13 @@ const BoosterVaccMap: React.FC<Props> = () => {
   }
 
   return (
-    <VaccinationMap mapName={mapName} binaryFeatureStyling={true} featureData={featureData} featureValueName={featureValueName}/>
+    <VaccinationMap 
+      mapName={mapName} 
+      binaryFeatureStyling={true} 
+      continentToggle={true} 
+      featureData={featureData} 
+      featureValueName={featureValueName}
+    />
   )
 }
 
