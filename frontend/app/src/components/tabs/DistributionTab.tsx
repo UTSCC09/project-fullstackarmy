@@ -5,7 +5,7 @@ import VaccDoseDemand from '../charts/VaccDoseDemand'
 export const DistributionTab = () => {
   return (
     <div>
-        <VaccDoseDemand />
+      <VaccDoseDemand /> 
     </div>
   )
 }
