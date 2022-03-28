@@ -1,6 +1,6 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
-import { BinaryLegend, FeatureData, ScaledLegend } from './components/MapConstants';
+import { BinaryLegend, FeatureData, MapLegend, ScaledLegend } from './components/MapConstants';
 import MapContainer from './components/MapContainer';
 import './styles/VaccinationMap.css';
 
@@ -13,7 +13,7 @@ interface Props {
   continentDataCall?: Function,
 }
 
-let mapLegend = ScaledLegend;
+let mapLegend: MapLegend = ScaledLegend;
 
 type MapState = {
   binary: boolean,
@@ -31,12 +31,7 @@ const continentEventName: string = 'continents';
 
 const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, continentToggle, featureData, featureValueName, continentDataCall}) => {
 
-
   const [mapState, setMapState] = useState<MapState>(initMapState)
-
-  // useEffect(() => {
-  //   mapLegend = ScaledLegend;
-  // }, [])
 
   const handleMapState = (event: ChangeEvent<HTMLInputElement>) => {
     const eventName: string = event.target.name;

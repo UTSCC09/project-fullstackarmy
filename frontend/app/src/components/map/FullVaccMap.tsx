@@ -11,7 +11,7 @@ const startDate = '2021-01-01';
 const endDate = '2022-03-17';
 
 // move to separate file
-const GET_FULL_VACC_COUNTRY_MAP_DATA = gql`
+const GET_FULL_VACC_MAP_COUNTRY_DATA = gql`
   query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
     countryFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
       isoCode
@@ -20,7 +20,7 @@ const GET_FULL_VACC_COUNTRY_MAP_DATA = gql`
   }
 `;
 
-const GET_FULL_VACC_CONTINENT_MAP_DATA = gql`
+const GET_FULL_VACC_MAP_CONTINENT_DATA = gql`
   query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
     continentFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
       isoCode
@@ -38,7 +38,7 @@ const FullVacMap: React.FC<Props> = () => {
 
   // Get both data at once, even though some of it may not be used by the user
   // this is to ensure the user experience is fast and high quality
-  const countryData = useQuery(GET_FULL_VACC_COUNTRY_MAP_DATA, 
+  const countryData = useQuery(GET_FULL_VACC_MAP_COUNTRY_DATA, 
     {
       variables: {
         startDate,
@@ -50,7 +50,7 @@ const FullVacMap: React.FC<Props> = () => {
     }
   );
 
-  const continentData = useQuery(GET_FULL_VACC_CONTINENT_MAP_DATA, {
+  const continentData = useQuery(GET_FULL_VACC_MAP_CONTINENT_DATA, {
       variables: {
         startDate,
         endDate,
