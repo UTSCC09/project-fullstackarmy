@@ -1,5 +1,11 @@
-import React from 'react'
-import { MapLegend, isoCodeProperty, isoCodeNameProperty, CountryFeaturesURL, ContinentFeaturesURL } from './MapConstants';
+import React from 'react';
+import {
+  ContinentFeaturesURL, CountryFeaturesURL, hoverProperty,
+  isoCodeContinentType, isoCodeCountryType, isoCodeNameProperty,
+  isoCodeProperty, isoCodeTypeProperty, MapLegend,
+  mapStrokeColor
+} from './MapConstants';
+
 
 interface Props {
   map: google.maps.Map | null;
@@ -9,13 +15,13 @@ interface Props {
   isContinentFeatures: boolean;
 }
 
-let areFeaturesAdded: boolean = false;
+let firstFeatureAdded: google.maps.Data.Feature | null = null;
 
 const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend, isContinentFeatures}) => {
 
   const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
 
-  if (!(map && mapLegend)) return null;
+  if(!(map && (mapLegend !== null))) return null;
 
   // * Prop dependent helpers
   /** 
@@ -29,16 +35,16 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     feature.setProperty('hover', true); // setting hover state to change style
     
     const country = feature.getProperty(isoCodeNameProperty);
-    const value = feature.getProperty(valueName);
+    const metric = feature.getProperty(valueName);
   
     if (map) {
       let content: string;
 
-      if (value) {
+      if (metric) {
         content = `
           <div style="font-size: 14px; display: flex; flex-direction: column;">
             <div>Region: ${country}</div>
-            <div>Percentage: ${value}%</div>
+            <div>Percentage: ${metric}%</div>
           </div>
         `;
       } else {
@@ -73,9 +79,9 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
   * @param {google.maps.Data.Feature} feature - polygon to be styled
   */
   const styleFeature = (feature: google.maps.Data.Feature) =>  {
-    const hover = feature.getProperty('hover'); 
+    const hover = feature.getProperty(hoverProperty); 
     const metric = feature.getProperty(valueName);
-    const isoCodeType = feature.getProperty('isoCodeType')
+    const isoCodeType = feature.getProperty(isoCodeTypeProperty)
 
     let fillColor: string = '';
     let fillOpacity: number;
@@ -105,16 +111,16 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       fillOpacity = 0;
     }
  
-    if (isoCodeType === 'continent' && isContinentFeatures) {
+    if (isoCodeType === isoCodeContinentType && isContinentFeatures) {
       visible = true;
-    } else if (isoCodeType === 'country' && !isContinentFeatures) {
+    } else if (isoCodeType === isoCodeCountryType && !isContinentFeatures) {
       visible = true;
     } else {
       visible = false;
     }
 
     const featureStyle: google.maps.Data.StyleOptions = {
-      strokeColor: "#fff",
+      strokeColor: mapStrokeColor,
       strokeOpacity,
       strokeWeight,
       fillOpacity,
@@ -125,31 +131,45 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     return featureStyle;
   }
 
+  const addFeatreData = () => {
+
+    if (!featureData) return;
+
+    // check if the data has already been added here
+    let sameMetricCounter = 0;
+
+    for (let i = 0; (i < featureData.length) && (i < 3); i++) {
+      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(featureData[i].isoCode);
+      
+      let metric;
+      
+      if (isoCodeFeature) metric = isoCodeFeature.getProperty(valueName);
+
+      if (metric === featureData[i][valueName]) {
+        sameMetricCounter++;
+      } else {
+        break;
+      }
+    }
+
+    if (sameMetricCounter === featureData.length || sameMetricCounter === 3) return;
+
+    // add the data
+    featureData.forEach(isoCodeData => {
+      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
+  
+      if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
+    })
+  }
+
   // * Render Logic
-
   map.data.setStyle(styleFeature);
-
-  // Modifies the Event prototype so it will affect how the Google Library behaves.
-  // Otherwise non-passive event listener violations will appear in the console.
-  // Credits: https://stackoverflow.com/questions/47799388/javascript-google-maps-api-non-passive-event-handlers
-  (function () {
-    if (typeof EventTarget !== "undefined") {
-      let func = EventTarget.prototype.addEventListener;
-      EventTarget.prototype.addEventListener = function (type, fn, capture) {
-        this.func = func;
-        if(typeof capture !== "boolean"){
-          capture = capture || {};
-          capture.passive = false;
-        }
-        this.func(type, fn, capture);
-      };
-    };
-  }());
 
   // No features then add the features needed once, and not removed in case of toggle
   // then there is no ned to keep adding and removing
-  if (!areFeaturesAdded) {
+  let areFeaturesAdded: boolean = map.data.contains(firstFeatureAdded);
 
+  if (!areFeaturesAdded && featureData) {
     map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
     map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
 
@@ -159,52 +179,24 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     Promise.all([addContinentFeatures, addCountryFeatures]).then(responses => {
       return Promise.all(responses.map(response => response.json()));
     }).then(data => { 
-      // ! this is a heavy task so i should probably do it in a seperate thread
-      // might be fine here but i need to think about it
-
-      map.data.addGeoJson(data[0], {
+      firstFeatureAdded = map.data.addGeoJson(data[0], {
         idPropertyName: isoCodeProperty 
-      });
+      })[0];
 
       map.data.addGeoJson(data[1], {
         idPropertyName: isoCodeProperty 
       });
 
-      featureData.forEach(isoCodeData => {
-        const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
-    
-        if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
-      })
-
-      areFeaturesAdded = true;
+      addFeatreData()
     }).catch(error => {
       console.error(error);
     });
-  } else{
-    featureData.forEach(isoCodeData => {
-      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
-  
-      if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
-    })
+  } 
+
+  if (areFeaturesAdded) {
+    addFeatreData();
   }
-
-  // Continent
-  // map.data.addGeoJson(continentFeatures, {
-  //   idPropertyName: isoCodeProperty
-  // });
   
-  // map.data.loadGeoJson(
-  //   "https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.js"
-  //   , {
-  //   idPropertyName: isoCodeProperty
-  // });
-
-  // wait for the request to complete by listening for the first feature to be
-  // added
-  // google.maps.event.addListenerOnce(map.data, "addfeature", () => {
-  //   loadFeatures();
-  // });
-
   return null;
 }
 
