@@ -1,9 +1,9 @@
 const { buildSchema } = require('graphql');
+const {dataPipelineTypes, dataPipelineRootQuery, dataPipelineRootMutation} = require('./dataPipelineSchema');
+const {globalTypes} = require('./globalTypes');
 
 module.exports = buildSchema(`
-type Number {
-    number: Int!
-}
+${globalTypes}
 
 type IsoCode {
     _id: ID!
@@ -53,35 +53,7 @@ input isoCodeInput {
     isoCodeName: String!
 }
 
-input IsoCodeDataInput {
-    isoCode: String!
-    isoCodeName: String!
-    isoCodeType: String!
-    year: String
-    incomeLevel: String
-}
-
-input DailyVaccDataInput {
-    date: String!
-    totalVaccinations: Float
-    totalVaccinationsPerHundred: Float
-    peopleVaccinated: Float
-    peopleVaccinatedPerHundred: Float
-    dailyVaccinationsRaw: Float
-    dailyVaccinations: Float
-    dailyVaccinationsPerMillion: Float
-    dailyPeopleVaccinated: Float
-    dailyPeopleVaccinatedPerHundred: Float
-    peopleFullyVaccinated: Float
-    peopleFullyVaccinatedPerHundred: Float
-    totalBoosters: Float
-    totalBoostersPerHundred: Float
-}
-
-input IsoCodeVaccDataInput {
-    isoCode: String!
-    data: [DailyVaccDataInput!]!
-}
+${dataPipelineTypes}
 
 type RootQuery {
     isoCodes(isoCodes:[String!]!): [IsoCode!]!
@@ -92,11 +64,11 @@ type RootQuery {
     countryVaccMapData(startDate: String!, endDate: String!): [CountryVaccMapData!]!
     countryFullyVaccMapData(startDate: String!, endDate: String!): [CountryFullyVaccMapData!]!
     countryBoosterVaccMapData(startDate: String!, endDate: String!): [CountryBoosterVaccMapData!]!
+    ${dataPipelineRootQuery}
 }
 
 type RootMutation {
-    updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput]): Number!
-    updateIsoCodeVaccData(isoCodeVaccDataInput: [IsoCodeVaccDataInput]): Number!
+    ${dataPipelineRootMutation}
 }
 
 schema {
