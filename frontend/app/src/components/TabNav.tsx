@@ -9,6 +9,7 @@ import {BiWorld} from 'react-icons/bi';
 import {AiOutlineLineChart} from 'react-icons/ai';
 import {BiBarChartSquare} from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { t } from 'i18next';
 interface Props {
   selected: string,
 }
@@ -32,7 +33,7 @@ export const TabNav = ({selected}) => {
           icon={<BiInfoSquare />} 
           iconPosition="start" 
           value="one" 
-          label="Information" 
+          label={t('tabnav.infotab')}
           component = {Link}
           to = '/'
         />
@@ -40,7 +41,7 @@ export const TabNav = ({selected}) => {
           icon={<BiWorld />} 
           iconPosition="start" 
           value="two" 
-          label="Vaccination Status" 
+          label={t('tabnav.statustab')} 
           component = {Link}
           to = '/vaccination-status'
         />
@@ -48,7 +49,7 @@ export const TabNav = ({selected}) => {
           icon={<AiOutlineLineChart />} 
           iconPosition="start" 
           value="three" 
-          label="Vaccination Rates" 
+          label={t('tabnav.ratestab')} 
           component = {Link}
           to = '/vaccination-rates'
         />
@@ -56,7 +57,7 @@ export const TabNav = ({selected}) => {
           icon={<BiBarChartSquare style={{transform: `rotate(90deg)`}}/>} 
           iconPosition="start" 
           value="four" 
-          label="Vaccination Distribution" 
+          label={t('tabnav.distributiontab')} 
           component = {Link}
           to = '/vaccination-distribution'
         />

@@ -13,11 +13,19 @@ import Settings from '@mui/icons-material/Settings';
 import Translate from '@mui/icons-material/Translate';
 import Logo from './Logo';
 import {ConfigBar} from './ConfigBar';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
   const [configBarOpen, setOpen] = React.useState(false);
+  
   const handleDrawerOpen = () => {
     setOpen(!configBarOpen);
+  };
+
+  const {i18n} = useTranslation();
+
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
   };
 
   return (
