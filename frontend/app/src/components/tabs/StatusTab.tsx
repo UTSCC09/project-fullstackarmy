@@ -11,10 +11,10 @@ export const StatusTab = () => {
       <HerdImmunityBarChart />
       <h2 className="chart-title">First Vaccination Dose Heat Map</h2>
       <VaccMap /> 
-      <h2 className="chart-title">Second Vaccination Dose Heat Map</h2>
+      {/* <h2 className="chart-title">Second Vaccination Dose Heat Map</h2>
       <FullVacMap />  
       <h2 className="chart-title">Booster Dose Heat Map</h2>
-      <BoosterVaccMap />  
+      <BoosterVaccMap />   */}
     </div>
   )
 }
