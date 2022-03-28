@@ -39,14 +39,6 @@ input isoCodeInput {
     isoCodeName: String!
 }
 
-input IsoCodeDataInput {
-    isoCode: String!
-    isoCodeName: String!
-    isoCodeType: String!
-    year: String
-    incomeLevel: String
-}
-
 ${mapDataTypes}
 ${dataPipelineTypes}
 
