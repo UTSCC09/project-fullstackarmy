@@ -51,7 +51,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use('/', graphqlHTTP({
+app.use('/api', graphqlHTTP({
   schema: schema,
   rootValue: resolvers, 
   pretty: true,
