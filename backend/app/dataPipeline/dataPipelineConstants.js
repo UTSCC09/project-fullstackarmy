@@ -1,3 +1,5 @@
+// *** Gives isoCode a type to be stored in our DB
+
 const world = "world";
 const internationalAggregates = "internationalAggregates";
 const continent = "continent";
