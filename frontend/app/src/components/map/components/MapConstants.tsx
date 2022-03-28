@@ -22,9 +22,16 @@ export const BinaryLegend: MapLegend = [
     ['#ff4d4d', 'Not Herd I/P', 0],
 ];
 
-export const isoCodeProperty: string = 'isoCode';
+export const mapStrokeColor: string = '#fff';
 
+export const isoCodeProperty: string = 'isoCode';
 export const isoCodeNameProperty: string = 'isoCodeName';
+export const hoverProperty: string = 'hover';
+export const isoCodeTypeProperty: string = 'isoCodeType';
+
+
+export const isoCodeCountryType: string = 'country';
+export const isoCodeContinentType: string = 'continent';
 
 export const CountryFeaturesURL = 'https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/countryFeatures.json';
 export const ContinentFeaturesURL = 'https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.json';
