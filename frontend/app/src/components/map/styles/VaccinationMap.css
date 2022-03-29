@@ -1,0 +1,12 @@
+.map-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 48px;
+  margin-top: 0px;
+}
+
+#map-controls {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+}

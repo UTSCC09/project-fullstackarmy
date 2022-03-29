@@ -3,14 +3,23 @@ const IsoCode = require('../../models/IsoCode');
 const IsoCodeVaccData = require('../../models/IsoCodeVaccData');
 
 const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
+const continentIsoCodes = dataPipelineConstants.continentIsoCodes;
 
-// todo see if i can return an object as a result in graphql
-const idToIsoCodeQuery = async (isoCodes) => {
+const idToIsoCodeQuery = async (forCountry) => {
+
+  let isoCodeQuery;
+
+  if (forCountry) {
+    isoCodeQuery = {$nin: nonCountryIsoCodes}
+  } else {
+    isoCodeQuery = {$in: continentIsoCodes}
+  }
+
   const query = await IsoCode.find({
-        isoCode: {$nin: isoCodes}
+      isoCode: isoCodeQuery
     }).select({
-        id: 1,
-        isoCode: 1,
+      id: 1,
+      isoCode: 1,
     }).then( res => {
       let idToIsoCode = {}; 
 
@@ -20,53 +29,56 @@ const idToIsoCodeQuery = async (isoCodes) => {
 
       return idToIsoCode;
     }).catch(err => {
-        console.log('nonCountryIsoCodesIds');
-        throw err;
+      console.log('nonCountryIsoCodesIds');
+      throw err;
     })
     
-    return query; 
+  return query; 
 }
 
 // promises/queries of data
-const mapVaccDataQueries = async(countryIsoCodeIds, startDataFormatted, endDataFormatted) => {
-    // query - each must be unique due property naming
-    const queries = countryIsoCodeIds.map(countryIsoCodeId => {
-      return IsoCodeVaccData.findOne({
-        date: {$gte: startDataFormatted, $lte: endDataFormatted},
-        isoCode: { $eq: countryIsoCodeId },
-        peopleVaccinatedPerHundred: {$ne: null}
-      })
-      .select({
-        isoCode: 1,
-        peopleVaccinatedPerHundred: 1,
-      })
-      .sort({date: -1});
-    });
+const mapVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
+  
+  // query - each must be unique due property naming
+  
+  const queries = isoCodeIds.map(countryIsoCodeId => {
+    return IsoCodeVaccData.findOne({
+      date: {$gte: startDataFormatted, $lte: endDataFormatted},
+      isoCode: { $eq: countryIsoCodeId },
+      peopleVaccinatedPerHundred: {$ne: null}
+    })
+    .select({
+      isoCode: 1,
+      peopleVaccinatedPerHundred: 1,
+    })
+    .sort({date: -1});
+  });
 
-    return queries;
+  return queries;
 }
 
-const mapFullyVaccDataQueries = async(countryIsoCodeIds, startDataFormatted, endDataFormatted) => {
-    // query - each must be unique due property naming
-    const queries = countryIsoCodeIds.map(countryIsoCodeId => {
-      return IsoCodeVaccData.findOne({
-        date: {$gte: startDataFormatted, $lte: endDataFormatted},
-        isoCode: { $eq: countryIsoCodeId },
-        peopleFullyVaccinatedPerHundred: {$ne: null}
-      })
-      .select({
-        isoCode: 1,
-        peopleFullyVaccinatedPerHundred: 1,
-      })
-      .sort({date: -1});
-    });
+const mapFullyVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
+  // query - each must be unique due property naming
+  
+  const queries = isoCodeIds.map(countryIsoCodeId => {
+    return IsoCodeVaccData.findOne({
+      date: {$gte: startDataFormatted, $lte: endDataFormatted},
+      isoCode: { $eq: countryIsoCodeId },
+      peopleFullyVaccinatedPerHundred: {$ne: null}
+    })
+    .select({
+      isoCode: 1,
+      peopleFullyVaccinatedPerHundred: 1,
+    })
+    .sort({date: -1});
+  });
 
-    return queries;
+  return queries;
 }
 
-const mapBoosterVaccDataQueries = async(countryIsoCodeIds, startDataFormatted, endDataFormatted) => {
+const mapBoosterVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
     // query - each must be unique due property naming
-    const queries = countryIsoCodeIds.map(countryIsoCodeId => {
+    const queries = isoCodeIds.map(countryIsoCodeId => {
       return IsoCodeVaccData.findOne({
         date: {$gte: startDataFormatted, $lte: endDataFormatted},
         isoCode: { $eq: countryIsoCodeId },
@@ -112,30 +124,30 @@ const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
   return result;
 }
 
-const countryMapData = async (startDate, endDate, vaccNum) => {
+const mapData = async (startDate, endDate, vaccDose, forCountry) => {
   const startDataFormatted = new Date(startDate);
   const endDataFormatted = new Date(endDate);
 
   // Create map object here rather than populate the query for
   // time efficiency
-  const idToIsoCode = await idToIsoCodeQuery(nonCountryIsoCodes);
+  const idToIsoCode = await idToIsoCodeQuery(forCountry);
 
-  const countryIsoCodeIds = Object.keys(idToIsoCode);
+  const isoCodeIds = Object.keys(idToIsoCode);
 
   let queries;
   let result;
 
-  switch(vaccNum){
+  switch(vaccDose){
     case 'first':
-      queries = await mapVaccDataQueries(countryIsoCodeIds, startDataFormatted, endDataFormatted);
+      queries = await mapVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
       result = await processMapDataQueries(queries, 'peopleVaccinatedPerHundred', idToIsoCode);
       break;
     case 'second':
-      queries = await mapFullyVaccDataQueries(countryIsoCodeIds, startDataFormatted, endDataFormatted);
+      queries = await mapFullyVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
       result = await processMapDataQueries(queries, 'peopleFullyVaccinatedPerHundred', idToIsoCode);
       break;
     case 'booster':
-      queries = await mapBoosterVaccDataQueries(countryIsoCodeIds, startDataFormatted, endDataFormatted);
+      queries = await mapBoosterVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
       result = await processMapDataQueries(queries, 'totalBoostersPerHundred', idToIsoCode);      
       break;
     default:
@@ -147,15 +159,27 @@ const countryMapData = async (startDate, endDate, vaccNum) => {
 
 module.exports = {
   countryVaccMapData: async ({startDate, endDate}) => {
-    const result = await countryMapData(startDate, endDate, 'first');
+    const result = await mapData(startDate, endDate, vaccDose='first', forCountry=true);
     return result; 
   },
   countryFullyVaccMapData: async ({startDate, endDate}) => {
-    const result = await countryMapData(startDate, endDate, 'second');
+    const result = await mapData(startDate, endDate, vaccDose='second', forCountry=true);
     return result; 
   },
   countryBoosterVaccMapData: async ({startDate, endDate}) => {
-    const result = await countryMapData(startDate, endDate, 'booster');
+    const result = await mapData(startDate, endDate, vaccDose='booster', forCountry=true);
+    return result; 
+  },
+  continentVaccMapData: async ({startDate, endDate}) => {
+    const result = await mapData(startDate, endDate, vaccDose='first', forCountry=false);
+    return result; 
+  },
+  continentFullyVaccMapData: async ({startDate, endDate}) => {
+    const result = await mapData(startDate, endDate, vaccDose='second', forCountry=false);
+    return result; 
+  },
+  continentBoosterVaccMapData: async ({startDate, endDate}) => {
+    const result = await mapData(startDate, endDate, vaccDose='booster', forCountry=false);
     return result; 
   }
 };

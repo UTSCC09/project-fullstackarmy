@@ -19,7 +19,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      {console.log(reactAPIEnv)}
       <App />
     </ApolloProvider>
   </React.StrictMode>,
