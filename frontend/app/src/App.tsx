@@ -35,24 +35,25 @@ const theme = createTheme({
   },
 });
 
-function App() {
-
-  // Modifies the Event prototype so it will affect how the Google Library behaves.
-  // Otherwise non-passive event listener violations will appear in the console.
-  // Credits: https://stackoverflow.com/questions/47799388/javascript-google-maps-api-non-passive-event-handlers
-  (function () {
-    if (typeof EventTarget !== "undefined") {
-        let func = EventTarget.prototype.addEventListener;
-        EventTarget.prototype.addEventListener = function (type, fn, capture) {
-            this.func = func;
-            if(typeof capture !== "boolean"){
-                capture = capture || {};
-                capture.passive = false;
-            }
-            this.func(type, fn, capture);
-        };
+// Modifies the Event prototype so it will affect how the Google Library behaves.
+// Otherwise non-passive event listener violations will appear in the console.
+// Credits: https://stackoverflow.com/questions/47799388/javascript-google-maps-api-non-passive-event-handlers
+const modifyEventListenerOptions = () => {
+  if (typeof EventTarget !== "undefined") {
+    let func = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function (type, fn, capture) {
+        this.func = func;
+        if(typeof capture !== "boolean"){
+            capture = capture || {};
+            capture.passive = false;
+        }
+        this.func(type, fn, capture);
     };
-  }())
+  };
+};
+
+function App() {
+  modifyEventListenerOptions();
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,7 +61,6 @@ function App() {
         <div className="container">
           <Header />
           <Routes>
-            {/* <Route path= "/" element={<><Header /></>}></Route> */}
             <Route path= "/" element={<><TabNav selected="one"/> <InfoTab /></>}></Route>
             <Route path= "/vaccination-status" element={<><TabNav selected="two"/> <StatusTab /></>}></Route>
             <Route path= "/vaccination-rates" element={<><TabNav selected="three" /> <RatesTab /></>}></Route>

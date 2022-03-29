@@ -1,0 +1,39 @@
+{
+    "tabnav": {
+        "infotab": "Information",
+        "statustab": "Vaccination Status",
+        "ratestab": "Vaccination Rates",
+        "distributiontab": "Vaccination Distribution"
+    },
+    "configbar": {
+        "region": "Filter by Region",
+        "date": "Filter by Date Range"
+    },
+    "infotab": {
+        "p1": {
+            "title": "Vaccination and Herd Immunity",
+            "question": "WHAT IS HERD IMMUNITY ?",
+            "scroll": "Scroll Down"
+        },
+        "p2": {
+            "def": "Herd Immunity occurs when a sufficient proportion of the population develops immunity to a disease.",
+            "next": "Towards Herd Immunity"
+        },
+        "p3": {
+            "part1": "If herd immunity is achieved",
+            "part2": "the disease will stop circulating and ",
+            "part3": "all of the population",
+            "part4": "including those who have immunity and those who do not will be protected "
+        },
+        "p4": {
+            "title": "For COVID-19",
+            "desc": "the percentage of the population that needs to be vaccinated to achieve herd immunity is speculated by experts to be around ",
+            "percent": "80%  -  90%",
+            "scroll": "Scroll Down"
+        },
+        "p5": {
+            "vaccine": "Vaccination is key for providing prolonged lasting immunity and ahcieving herd immunity",
+            "next": "To learn more about the progress towards herd immunity against COVID-19, browse the data models in the tabs above"
+        }
+    }
+}

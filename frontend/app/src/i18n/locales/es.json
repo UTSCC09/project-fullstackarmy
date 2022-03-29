@@ -1,0 +1,12 @@
+{
+    "tabnav": {
+        "infotab": "Información",
+        "statustab": "Estado de Vacunación",
+        "ratestab": "Tasas de Vacunación",
+        "distributiontab": "Distribución de Vacunas"
+    },
+    "configbar": {
+        "region": "Filtrar por Región",
+        "date": "Filtrar por Rango de Fechas"
+    }
+}
