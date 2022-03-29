@@ -29,11 +29,15 @@ const numberObj = (number) => {
     return {number};
 }
 
+const boolObj = (bool) => {
+    return {bool};
+}
+
 const dateToString = (date) => {
     return new Date(date).toISOString();
 }
 
 exports.transformIsoCode = transformIsoCode;
 exports.numberObj = numberObj;
+exports.boolObj = boolObj;
 exports.dateToString = dateToString;
-exports.numberObj = numberObj;

@@ -68,7 +68,7 @@ mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     http.createServer(app).listen(PORT, function (err) {
       if (err) console.log(err);
-      else console.log("Running server");
+      else console.log("Running server on port " + PORT);
     });
   })
   .catch(err => {
