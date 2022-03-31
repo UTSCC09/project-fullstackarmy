@@ -35,5 +35,15 @@
             "vaccine": "Vaccination is key for providing prolonged lasting immunity and ahcieving herd immunity",
             "next": "To learn more about the progress towards herd immunity against COVID-19, browse the data models in the tabs above"
         }
+    },
+    "maptabs": {
+        "firstdosemap": "First Vaccination Dose Heat Map",
+        "seconddosemap": "Second Vaccination Dose Heat Map",
+        "boosterdosemap": "Booster Dose Heat Map"
+    },
+    "mapinfo": {
+        "firstdoseinfo": "Lorem ipsum",
+        "seconddoseinfo": "hello world",
+        "boosterdoseinfo": "..."
     }
 }

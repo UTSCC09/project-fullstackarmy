@@ -1,20 +1,68 @@
 import React from 'react'
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import HerdImmunityBarChart from "../charts/HerdImmunityBarChart";
 import BoosterVaccMap from '../map/BoosterVaccMap';
 import FullVacMap from '../map/FullVaccMap';
 import VaccMap from '../map/VaccMap';
+import { t } from 'i18next';
+import StatusTabPanel from './components/StatusTabPanel';
+import StatusTabPanelHeader from './components/StatusTabPanelHeader';
 
-export const StatusTab = () => {
+// From https://mui.com/components/tabs/ example
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
+export const StatusTab:React.FC = () => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   return (
-    <div>
+    <div className='status-tab'>
       <HerdImmunityBarChart />
-      <h2 className="chart-title">First Vaccination Dose Heat Map</h2>
-      <VaccMap /> 
-      {/* <h2 className="chart-title">Second Vaccination Dose Heat Map</h2>
-      <FullVacMap />  
-      <h2 className="chart-title">Booster Dose Heat Map</h2>
-      <BoosterVaccMap />   */}
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="map tabs"
+            textColor="secondary"
+            indicatorColor="secondary"
+            centered
+          >
+            <Tab 
+              label={t('maptabs.firstdosemap')}
+              {...a11yProps(0)}
+            />
+            <Tab 
+              label={t('maptabs.seconddosemap')}
+              {...a11yProps(1)}
+            />
+            <Tab 
+              label={t('maptabs.boosterdosemap')}
+              {...a11yProps(2)}
+            />
+          </Tabs>
+        </Box>
+        <StatusTabPanel value={value} index={0}>
+          <StatusTabPanelHeader type='firstdose' />
+          <VaccMap /> 
+        </StatusTabPanel>
+        <StatusTabPanel value={value} index={1}>
+          <StatusTabPanelHeader type='seconddose' />
+          <FullVacMap />  
+        </StatusTabPanel>
+        <StatusTabPanel value={value} index={2}>
+          <StatusTabPanelHeader type='boosterdose' />
+          <BoosterVaccMap />
+        </StatusTabPanel>
+      </Box>
     </div>
   )
 }
