@@ -34,3 +34,11 @@ exports.incomeLevel = incomeLevel;
 exports.subRegion = subRegion;
 exports.country = country;
 exports.isoCodeToTypes = isoCodeToTypes;
+exports.continentIsoCodes = [
+  "OWID_AFR",
+  "OWID_ASI",
+  "OWID_EUR",
+  "OWID_NAM",
+  "OWID_OCE",
+  "OWID_SAM",
+]

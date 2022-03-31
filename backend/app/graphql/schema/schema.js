@@ -1,4 +1,5 @@
 const { buildSchema } = require('graphql');
+const { mapDataTypes, mapDataRootQuery } = require('./mapDataSchema');
 const {dataPipelineTypes, dataPipelineRootQuery, dataPipelineRootMutation} = require('./dataPipelineSchema');
 const {globalTypes} = require('./globalTypes');
 
@@ -33,26 +34,12 @@ type DailyVaccData {
     totalBoostersPerHundred: Float
 }
 
-type CountryVaccMapData {
-    isoCode: String
-    peopleVaccinatedPerHundred: Float
-}
-
-type CountryFullyVaccMapData {
-    isoCode: String
-    peopleFullyVaccinatedPerHundred: Float
-}
-
-type CountryBoosterVaccMapData {
-    isoCode: String
-    totalBoostersPerHundred: Float
-}
-
 input isoCodeInput {
     isoCode: String!
     isoCodeName: String!
 }
 
+${mapDataTypes}
 ${dataPipelineTypes}
 
 type RootQuery {
@@ -61,9 +48,7 @@ type RootQuery {
     getMostRecentFullyVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentBoosterVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [[DailyVaccData!]!]
-    countryVaccMapData(startDate: String!, endDate: String!): [CountryVaccMapData!]!
-    countryFullyVaccMapData(startDate: String!, endDate: String!): [CountryFullyVaccMapData!]!
-    countryBoosterVaccMapData(startDate: String!, endDate: String!): [CountryBoosterVaccMapData!]!
+    ${mapDataRootQuery}
     ${dataPipelineRootQuery}
 }
 

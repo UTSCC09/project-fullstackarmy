@@ -1,29 +1,55 @@
-import React from 'react'
-import MapContainer from './mapComponents/MapContainer';
 import { gql, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import Loading from '../elements/Loading';
+import VaccinationMap from './VaccinationMap';
 
 interface Props {
 }
 
-const VaccMap: React.FC<Props> = () => {
-  
-  // todo make the range dynamic here
-	const startDate = '2021-01-01';
-	const endDate = '2022-03-17';
-  let featureData;
+// todo make the range dynamic here
+const startDate = '2021-01-01';
+const endDate = '2022-03-17';
 
-	const GET_VACC_MAP_DATA = gql`
-    query CountryVaccMapData($startDate: String!, $endDate: String!){
-      countryVaccMapData(startDate: $startDate, endDate: $endDate) {
-        isoCode
-        peopleVaccinatedPerHundred
+const GET_VACC_MAP_COUNTRY_DATA = gql`
+  query CountryVaccMapData($startDate: String!, $endDate: String!){
+    countryVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleVaccinatedPerHundred
+    }
+  }
+`;
+
+const GET_VACC_MAP_CONTINENT_DATA = gql`
+  query ContinentVaccMapData($startDate: String!, $endDate: String!){
+    continentVaccMapData(startDate: $startDate, endDate: $endDate) {
+      isoCode
+      peopleVaccinatedPerHundred
+    }
+  }
+`;
+
+const mapName = 'FirstDoseVaccMap';
+const featureValueName = 'peopleVaccinatedPerHundred';
+
+const VaccMap: React.FC<Props> = () => {
+ 
+  const [featureData, setFeatureData] = useState(null);
+
+  // Get both data at once, even though some of it may not be used by the user
+  // this is to ensure the user experience is fast and high quality
+  const countryData = useQuery(GET_VACC_MAP_COUNTRY_DATA, 
+    {
+      variables: {
+        startDate,
+        endDate,
+      },
+      onCompleted: (data) => {
+        setFeatureData(data.countryVaccMapData);
       }
     }
-  `;
-  
-  //todo create interfaces for the data
-  const { loading, error, data } = useQuery(GET_VACC_MAP_DATA,
-    {
+  );
+
+  const continentData = useQuery(GET_VACC_MAP_CONTINENT_DATA, {
       variables: {
         startDate,
         endDate,
@@ -31,21 +57,34 @@ const VaccMap: React.FC<Props> = () => {
     }
   );
   
-  //todo should make loading and error map components
-  if (loading) return null;
-  if (error) return null;
+  /** 
+  * Makes the backend call to get the associated map data for country/continent
+  * @param {boolean} isContinentCall
+  */
+  const continentDataCall = (isContinentCall: boolean) => {
 
-  if (data) {
-    featureData = data.countryVaccMapData.map(dataRow => {
-      return {
-        isoCode: dataRow.isoCode,
-        value: dataRow.peopleVaccinatedPerHundred,
-      }
-    })
+    if (isContinentCall) {
+      setFeatureData(continentData.data.continentVaccMapData);
+    } else {
+      setFeatureData(countryData.data.countryVaccMapData);
+    }
   }
 
+  // add error component
+  if (countryData && countryData.loading) return <Loading />;
+  if (continentData && continentData.loading) return <Loading />;
+  if (countryData && countryData.error) return null;
+  if (continentData && continentData.error) return null;
+  
   return (
-    <MapContainer featureData={featureData} />
+    <VaccinationMap 
+      mapName={mapName} 
+      binaryFeatureStyling={true}
+      continentToggle={true}
+      featureData={featureData} 
+      featureValueName={featureValueName}
+      continentDataCall={continentDataCall}
+    />
   )
 }
 

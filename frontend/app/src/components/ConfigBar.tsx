@@ -6,12 +6,16 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import {CountriesFilter} from './CountriesFilter';
 import {DateFilter} from './DateFilter';
+import { useTranslation } from "react-i18next";
 
 interface Props {
     open: boolean,
 }
 
 export const ConfigBar = ({open}) => {
+
+    const {t} = useTranslation();
+
     return (
         <Drawer
         
@@ -26,10 +30,10 @@ export const ConfigBar = ({open}) => {
             anchor="left"
             open={open}
         >   
-            <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>Filter Data by Countries</Typography>
+            <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>{t('configbar.region')}</Typography>
             <CountriesFilter />
             <Divider />
-            <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>Filter Data by Date Range</Typography>
+            <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>{t('configbar.date')}</Typography>
             <DateFilter />
         </Drawer>
     );
