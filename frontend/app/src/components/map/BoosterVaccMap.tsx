@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import Loading from '../elements/Loading';
+import QueryError from '../elements/QueryError';
 import VaccinationMap from './VaccinationMap';
 
 interface Props {
@@ -70,11 +71,10 @@ const BoosterVaccMap: React.FC<Props> = () => {
     }
   }
 
-  // add error component
   if (countryData && countryData.loading) return <Loading />;
   if (continentData && continentData.loading) return <Loading />;
-  if (countryData && countryData.error) return null;
-  if (continentData && continentData.error) return null;
+  if (countryData && countryData.error) return <QueryError message={countryData.error.message}/>;
+  if (continentData && continentData.error) return <QueryError message={continentData.error.message}/>;
 
   return (
     <VaccinationMap 

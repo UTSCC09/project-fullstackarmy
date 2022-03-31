@@ -22,6 +22,9 @@ import {
   gql, 
   useQuery
 } from "@apollo/client";
+import Loading from '../elements/Loading';
+import QueryError from '../elements/QueryError';
+
 
 const HerdImmunityTimeSeriesChart = () => {
     ChartJS.register(
@@ -50,7 +53,7 @@ const HerdImmunityTimeSeriesChart = () => {
   const startDate = "2020-12-12"
   const endDate = "2022-03-17"
 
-  const { error: err, data: chartData } = useQuery(GET_DATA,
+  const { error, loading, data: chartData } = useQuery(GET_DATA,
     {
       variables: {
         startDate: startDate,
@@ -59,9 +62,8 @@ const HerdImmunityTimeSeriesChart = () => {
       }
     }
   );
-
-  if (err) return <h1>Error {err.message}</h1>
-  // Something causes this to print 2x
+  if (error) return <QueryError message={error.message}/>
+  if (loading) return <Loading />
   if (chartData) {
     const options: ChartOptions<'line'> = {
       responsive: true,
@@ -100,7 +102,9 @@ const HerdImmunityTimeSeriesChart = () => {
     };
 
     // update chart data
-    const res = chartData.getVaccDataByDateRangeAndIsoCode;
+    let res;
+    if (chartData)
+      res = chartData.getVaccDataByDateRangeAndIsoCode;
     let datasets = [];
     for (let i in vars) {
       let data = res[i].map((resObj: { 
@@ -131,8 +135,6 @@ const HerdImmunityTimeSeriesChart = () => {
     };    
   return <Line options={options} data={data} />;
   }
-  // TODO: Figure out why it gets printed out twice
-  return <></>
 }
 
 export default HerdImmunityTimeSeriesChart

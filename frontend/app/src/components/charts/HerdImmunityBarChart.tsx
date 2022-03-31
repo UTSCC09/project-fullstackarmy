@@ -19,7 +19,8 @@ import {
   gql, 
   useQuery
 } from "@apollo/client";
-
+import Loading from '../elements/Loading';
+import QueryError from '../elements/QueryError';
 
 const HerdImmunityBarChart = () => {
   // Register necessary elements from ChartJS
@@ -76,7 +77,7 @@ const HerdImmunityBarChart = () => {
     "PRT"
   ];
 
-  const { error: labelErr, data: labelData } = useQuery(GET_LABELS,
+  const { error: labelErr, loading: labelLoading, data: labelData } = useQuery(GET_LABELS,
     {
       variables: {
         isoCodes: vars
@@ -85,7 +86,7 @@ const HerdImmunityBarChart = () => {
     }
   );
 
-  const { error: firstVaccErr, data: firstVaccData } = useQuery(GET_FIRST_VACC_DATA,
+  const { error: firstVaccErr, loading: firstVaccDataLoading, data: firstVaccData } = useQuery(GET_FIRST_VACC_DATA,
     {
       variables: {
         isoCodes: vars
@@ -94,7 +95,7 @@ const HerdImmunityBarChart = () => {
     }
   );
 
-  const { error: secondVaccErr, data: secondVaccData } = useQuery(GET_SECOND_VACC_DATA,
+  const { error: secondVaccErr, loading: secondVaccDataLoading, data: secondVaccData } = useQuery(GET_SECOND_VACC_DATA,
     {
       variables: {
         isoCodes: vars
@@ -103,7 +104,7 @@ const HerdImmunityBarChart = () => {
     }
   );
 
-  const { error: boosterVaccErr, data: boosterVaccData } = useQuery(GET_BOOSTER_VACC_DATA,
+  const { error: boosterVaccErr, loading: boosterVaccDataLoading, data: boosterVaccData } = useQuery(GET_BOOSTER_VACC_DATA,
     {
       variables: {
         isoCodes: vars
@@ -112,26 +113,20 @@ const HerdImmunityBarChart = () => {
     }
   );
   let err = labelErr || firstVaccErr || secondVaccErr || boosterVaccErr;
-  if (err) return <h1>Error {err.message}</h1>
-
-  // For debugging
-  // console.log(labelData)
-  // console.log('-')
-  // console.log(firstVaccData)
-  // console.log('-')
-  // console.log(secondVaccData)
-  // console.log('-')
-  // console.log(boosterVaccData)
+  let loading = labelLoading || firstVaccDataLoading || secondVaccDataLoading || boosterVaccDataLoading;
+  let data = labelData && firstVaccData && secondVaccData && boosterVaccData
+  if (err) return <QueryError message={err.message} />
+  if (loading) return <Loading />
 
   // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
-  if (labelData && firstVaccData && secondVaccData && boosterVaccData) {
+  if (data) {
     // update label and chart data.
     let labels: string[] = []
     let vaccData: number[] = []
     let fullyVaccData: number[] = []
     let boosterData: number[] = []
     let maxTot: number = 0
-    let maxFirstVal =0
+    let maxFirstVal = 0
     for (let i in vars) {
       labels.push(labelData.isoCodes[i].isoCodeName + " (" + labelData.isoCodes[i].isoCode + ")");
       vaccData.push(firstVaccData.getMostRecentFirstVaccDataByIsoCode[i].peopleVaccinatedPerHundred);
@@ -226,8 +221,6 @@ const HerdImmunityBarChart = () => {
 
     return <Bar options={options} data={data} />;
   }
-    // In some instances where the data returned by the queries are undefined
-    return <></>;
 }
 
 export default HerdImmunityBarChart
