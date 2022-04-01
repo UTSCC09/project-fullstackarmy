@@ -42,8 +42,15 @@
         "boosterdosemap": "Booster Dose Heat Map"
     },
     "mapinfo": {
-        "firstdoseinfo": "Lorem ipsum",
-        "seconddoseinfo": "hello world",
-        "boosterdoseinfo": "..."
+        "title": {
+            "firstdose": "First Dose Information",
+            "seconddose": "Second Dose Information",
+            "boosterdose": "Booster Dose Information"
+        },
+        "content": {
+            "firstdose": "Lorem ipsum",
+            "seconddose": "hello world",
+            "boosterdose": "..."
+        }
     }
 }

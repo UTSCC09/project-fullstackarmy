@@ -7,8 +7,7 @@ import BoosterVaccMap from '../map/BoosterVaccMap';
 import FullVacMap from '../map/FullVaccMap';
 import VaccMap from '../map/VaccMap';
 import { t } from 'i18next';
-import StatusTabPanel from './components/StatusTabPanel';
-import StatusTabPanelHeader from './components/StatusTabPanelHeader';
+import StatusTabPanel from './components/statusbar/StatusTabPanel';
 
 // From https://mui.com/components/tabs/ example
 function a11yProps(index: number) {
@@ -18,6 +17,11 @@ function a11yProps(index: number) {
   };
 }
 
+/**
+ * Status tab containing the herd immunity bar chart plus tabs
+ * that help a user choose which heat map to display.
+ * Only one heat map is displayed at a time.
+ */
 export const StatusTab:React.FC = () => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -25,7 +29,9 @@ export const StatusTab:React.FC = () => {
   };
   return (
     <div className='status-tab'>
+      {/* First is the bar chart */}
       <HerdImmunityBarChart />
+      {/* Then is the tabs for the heat maps, which are displayed one at a time */}
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
@@ -50,16 +56,13 @@ export const StatusTab:React.FC = () => {
             />
           </Tabs>
         </Box>
-        <StatusTabPanel value={value} index={0}>
-          <StatusTabPanelHeader type='firstdose' />
+        <StatusTabPanel value={value} index={0} type='firstdose'>
           <VaccMap /> 
         </StatusTabPanel>
-        <StatusTabPanel value={value} index={1}>
-          <StatusTabPanelHeader type='seconddose' />
+        <StatusTabPanel value={value} index={1} type='seconddose'>
           <FullVacMap />  
         </StatusTabPanel>
-        <StatusTabPanel value={value} index={2}>
-          <StatusTabPanelHeader type='boosterdose' />
+        <StatusTabPanel value={value} index={2} type='boosterdose'>
           <BoosterVaccMap />
         </StatusTabPanel>
       </Box>

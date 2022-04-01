@@ -3,52 +3,67 @@ import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Drawer from "@mui/material/Drawer";
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import { t } from 'i18next';
-import StatusInfoBar from './StatusInfoBar'
+
 
 interface Props {
-    type: string
+    type: string,
+    panelHeight: number
 }
-const StatusTabPanelHeader: React.FC<Props> = ({type}) => {
+
+/**
+ * The header of the status tab's map panels
+ * Currently includes an info button that toggles the info panel
+ * Height of info panel is currently dependent on the panel height, but
+ * may change depending on the write-up
+ */
+const StatusTabPanelHeader: React.FC<Props> = ({type, panelHeight}) => {
   const [height, setHeight] = useState(0);
   const [infoOpen, setOpen] = useState(false);
-  const containerRef = useRef(null);
+  const headerContainerRef = useRef(null);
+
   useEffect(() => {
     if (infoOpen) {
-      setHeight(containerRef.current.clientHeight - 64);
+      setHeight(panelHeight);
     } else {
       setHeight(0);
     }
-  }, [infoOpen]);
+  }, [infoOpen, panelHeight]);
   const handleDrawerOpen = () => {
     setOpen(!infoOpen);
   };
 
   let title
+  let captionTitle
   let caption
   switch(type) {
       case 'firstdose':
         title = t('maptabs.firstdosemap')
-        caption = t('mapinfo.firstdoseinfo')
+        captionTitle = t('mapinfo.title.firstdose')
+        caption = t('mapinfo.content.firstdose')
         break;
       case 'seconddose':
         title = t('maptabs.seconddosemap')
-        caption = t('mapinfo.seconddoseinfo')
+        captionTitle = t('mapinfo.title.seconddose')
+        caption = t('mapinfo.content.seconddose')
         break;
       case 'boosterdose':
         title = t('maptabs.boosterdosemap')
-        caption = t('mapinfo.boosterdoseinfo')
+        captionTitle = t('mapinfo.title.boosterdose')
+        caption = t('mapinfo.content.boosterdose')
         break;
       default:
         title = ''
+        captionTitle = ''
         caption=''
         break;
   }
 
   return (
-    <div className="status-tab-panel-header" ref={containerRef} style={{ position: "relative" }}>
+    <div className="status-tab-panel-header" ref={headerContainerRef} style={{ position: "relative" }}>
       <Toolbar>
         <h2 className="chart-title">{title}</h2>
         <IconButton
@@ -59,20 +74,25 @@ const StatusTabPanelHeader: React.FC<Props> = ({type}) => {
           <InfoIcon />
         </IconButton>
       </Toolbar>
+      {/* Drawer needs to stay here for the height to stay within the panel */}
       <Drawer
         sx={{ 
             zIndex: 1300,
-            '& .MuiDrawer-root': {
-                position: 'absolute'
-            },
-            '& .MuiPaper-root': {
-                position: 'absolute'
-            },
+            // position: 'relative',
+            width: '40%',
+            marginLeft: "auto",
+            "& .MuiDrawer-paper": {
+                width: '40%',
+                position: "absolute",
+                height: height
+            }
         }}
         variant="persistent"
         anchor="right"
         open={infoOpen}
-      >   
+      >
+      <Typography variant="h5" align="left" sx={{marginLeft:'14px'}}>{captionTitle}</Typography>
+      <Divider/>
       <Typography variant="body1" align="left" sx={{marginLeft:'14px'}}>{caption}</Typography>
     </Drawer>
     </div>
