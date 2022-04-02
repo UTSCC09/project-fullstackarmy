@@ -13,7 +13,7 @@ import './i18n/i18n';
 
 const reactAPIEnv = process.env.REACT_APP_API_URL
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  uri: 'http://localhost:3000/api',
+  uri: reactAPIEnv,
   cache: new InMemoryCache(),
 });
 
