@@ -8,6 +8,8 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import Loading from './elements/Loading';
+import QueryError from './elements/QueryError';
 import { CountriesFilterContext } from "./context/CountriesFilterContext";
 import { 
   DocumentNode,
@@ -37,14 +39,15 @@ export const CountriesFilter = () => {
         }
       }
     `;
-    const { error: countryNamesFilterErr, data: countryNamesData } = useQuery(GET_COUNTRY_NAMES,
+    const { error: countryNamesFilterErr, loading: countryNamesLoading, data: countryNamesData } = useQuery(GET_COUNTRY_NAMES,
       {
         variables: {
       },
         notifyOnNetworkStatusChange: true
       }
     );
-    if (countryNamesFilterErr) return <h1>Error {countryNamesFilterErr.message}</h1>
+    if (countryNamesFilterErr) return <QueryError message={countryNamesFilterErr.message} /> 
+    if (countryNamesLoading) return <Loading />
     if (countryNamesData){  
       return (
           <FormControl sx={{ m: 2, width: 230 }} size="small">
@@ -67,5 +70,4 @@ export const CountriesFilter = () => {
         </FormControl>
       );
     }
-    return <></>;
 }
