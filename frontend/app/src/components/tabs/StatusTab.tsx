@@ -7,7 +7,7 @@ import BoosterVaccMap from '../map/BoosterVaccMap';
 import FullVacMap from '../map/FullVaccMap';
 import VaccMap from '../map/VaccMap';
 import { t } from 'i18next';
-import StatusTabPanel from './components/statusbar/StatusTabPanel';
+import StatusTabPanel from './components/StatusTabPanel';
 
 // From https://mui.com/components/tabs/ example
 function a11yProps(index: number) {
@@ -56,13 +56,13 @@ export const StatusTab:React.FC = () => {
             />
           </Tabs>
         </Box>
-        <StatusTabPanel value={value} index={0} type='firstdose'>
+        <StatusTabPanel value={value} index={0} title={t('maptabs.firstdosemap')}>
           <VaccMap /> 
         </StatusTabPanel>
-        <StatusTabPanel value={value} index={1} type='seconddose'>
+        <StatusTabPanel value={value} index={1} title={t('maptabs.seconddosemap')}>
           <FullVacMap />  
         </StatusTabPanel>
-        <StatusTabPanel value={value} index={2} type='boosterdose'>
+        <StatusTabPanel value={value} index={2} title={t('maptabs.boosterdosemap')}>
           <BoosterVaccMap />
         </StatusTabPanel>
       </Box>
