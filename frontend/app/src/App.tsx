@@ -11,6 +11,7 @@ import { RatesTab } from "./components/tabs/RatesTab";
 import { DistributionTab } from "./components/tabs/DistributionTab";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from "./components/context/ColorModeContext";
+import { CountriesFilterContext} from "./components/context/CountriesFilterContext";
 import { LanguageContext} from "./components/context/LanguageContext";
 import { useTranslation } from 'react-i18next';
 
@@ -102,6 +103,10 @@ function App() {
     },
   });
 
+  // Filter countries included in the charts based on the selectedCountries state
+  const [selectedCountries, setSelectedCountries] = React.useState([]);
+  const updateSelectedCountries = (countries: Array<String>) => {setSelectedCountries(countries)}
+
   // Handle translation 
   const {i18n} = useTranslation();
   const changeLanguage = (lang: string) => {
@@ -113,18 +118,20 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <LanguageContext.Provider value={{changeLanguage}}>
-            <div style={{backgroundColor: darkMode ? '#303030': 'white'}}>
-              <Header />
-              <Routes>
-                <Route path= "/" element={<><TabNav selected="one"/> <InfoTab /></>}></Route>
-                <Route path= "/vaccination-status" element={<><TabNav selected="two"/> <StatusTab /></>}></Route>
-                <Route path= "/vaccination-rates" element={<><TabNav selected="three" /> <RatesTab /></>}></Route>
-                <Route path= "/vaccination-distribution" element={<> <TabNav selected="four" /> <DistributionTab /></>}></Route>
-                <Route path= "/datasources" element={<DataSources/>}></Route>
-                <Route path= "/credits" element={<Credits/>}></Route>
-              </Routes>
-              <Footer />
-            </div>
+            <CountriesFilterContext.Provider value={{selectedCountries, updateSelectedCountries}}>
+              <div style={{backgroundColor: darkMode ? '#303030': 'white'}}>
+                <Header />
+                <Routes>
+                  <Route path= "/" element={<><TabNav selected="one"/> <InfoTab /></>}></Route>
+                  <Route path= "/vaccination-status" element={<><TabNav selected="two"/> <StatusTab /></>}></Route>
+                  <Route path= "/vaccination-rates" element={<><TabNav selected="three" /> <RatesTab /></>}></Route>
+                  <Route path= "/vaccination-distribution" element={<> <TabNav selected="four" /> <DistributionTab /></>}></Route>
+                  <Route path= "/datasources" element={<DataSources/>}></Route>
+                  <Route path= "/credits" element={<Credits/>}></Route>
+                </Routes>
+                <Footer />
+              </div>
+            </CountriesFilterContext.Provider>
           </LanguageContext.Provider>
         </Router>
       </ThemeProvider>

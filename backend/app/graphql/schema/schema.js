@@ -44,6 +44,7 @@ ${dataPipelineTypes}
 
 type RootQuery {
     isoCodes(isoCodes:[String!]!): [IsoCode!]!
+    countryIsoCodes: [IsoCode!]!
     getMostRecentFirstVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentFullyVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentBoosterVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]

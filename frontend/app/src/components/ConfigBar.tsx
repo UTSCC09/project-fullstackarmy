@@ -13,13 +13,12 @@ interface Props {
     open: boolean,
 }
 
-export const ConfigBar = ({open}) => {
+const ConfigBar: React.FC<Props>  = ({open}) => {
 
     const {t} = useTranslation();
 
     return (
         <Drawer
-        
             sx={{
                 width: 260,
                 flexShrink: 0,
@@ -46,3 +45,4 @@ export const ConfigBar = ({open}) => {
         </Drawer>
     );
 }
+export default ConfigBar 

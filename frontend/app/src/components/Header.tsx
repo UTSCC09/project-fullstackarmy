@@ -12,7 +12,7 @@ import Settings from '@mui/icons-material/Settings';
 import Translate from '@mui/icons-material/Translate';
 import Logo from './Logo';
 import TranslationDropdown from './TranslationDropdown';
-import {ConfigBar} from './ConfigBar';
+import ConfigBar from './ConfigBar';
 import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
