@@ -7,6 +7,7 @@
     },
     "configbar": {
         "region": "Filtrar por Região",
-        "date": "Filtrar por Período"
+        "date": "Filtrar por Período",
+        "mode": "Aplicar Modo Escuro"
     }
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { Header } from "./components/Header";
 import {TabNav} from "./components/TabNav";
@@ -9,6 +10,7 @@ import { StatusTab } from "./components/tabs/StatusTab";
 import { RatesTab } from "./components/tabs/RatesTab";
 import { DistributionTab } from "./components/tabs/DistributionTab";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ColorModeContext } from "./components/context/ColorModeContext";
 
 const theme = createTheme({
   components:{
@@ -55,23 +57,68 @@ const modifyEventListenerOptions = () => {
 function App() {
   modifyEventListenerOptions();
 
+  // Set theme attributes based on darkMode state 
+  const [darkMode, setDarkMode] = React.useState(false);
+  const toggleDarkMode = () => {setDarkMode(!darkMode)}
+  const theme = createTheme({
+    components:{
+      MuiButton:{
+        styleOverrides: {
+          root: {
+            color:'#00acea'
+          }
+        }
+      },
+      MuiTabs:{
+        styleOverrides: {
+          root: {
+            backgroundColor: darkMode ? '#303030': 'white'
+          }
+        }
+      },
+      MuiTypography:{
+        styleOverrides: {
+          root: {
+            color: darkMode ? 'white': 'black'
+          }
+        }
+      }
+    },
+    palette: {
+      mode: darkMode ? 'dark': 'light',
+      primary: {
+        main: '#ffffff',
+      },
+      secondary: {
+        main: '#00acea',
+      },
+    },
+    typography: {
+      button:{
+        textTransform: 'none',
+      }, 
+    },
+  });
+
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <div className="container">
-          <Header />
-          <Routes>
-            <Route path= "/" element={<><TabNav selected="one"/> <InfoTab /></>}></Route>
-            <Route path= "/vaccination-status" element={<><TabNav selected="two"/> <StatusTab /></>}></Route>
-            <Route path= "/vaccination-rates" element={<><TabNav selected="three" /> <RatesTab /></>}></Route>
-            <Route path= "/vaccination-distribution" element={<> <TabNav selected="four" /> <DistributionTab /></>}></Route>
-            <Route path= "/datasources" element={<DataSources/>}></Route>
-            <Route path= "/credits" element={<Credits/>}></Route>
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
-    </ThemeProvider>
+    <ColorModeContext.Provider value={{darkMode, toggleDarkMode}}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div style={{backgroundColor: darkMode ? '#303030': 'white'}}>
+            <Header />
+            <Routes>
+              <Route path= "/" element={<><TabNav selected="one"/> <InfoTab /></>}></Route>
+              <Route path= "/vaccination-status" element={<><TabNav selected="two"/> <StatusTab /></>}></Route>
+              <Route path= "/vaccination-rates" element={<><TabNav selected="three" /> <RatesTab /></>}></Route>
+              <Route path= "/vaccination-distribution" element={<> <TabNav selected="four" /> <DistributionTab /></>}></Route>
+              <Route path= "/datasources" element={<DataSources/>}></Route>
+              <Route path= "/credits" element={<Credits/>}></Route>
+            </Routes>
+            <Footer />
+          </div>
+        </Router>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

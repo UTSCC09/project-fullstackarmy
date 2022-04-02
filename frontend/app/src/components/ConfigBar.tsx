@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import {CountriesFilter} from './CountriesFilter';
 import {DateFilter} from './DateFilter';
 import { useTranslation } from "react-i18next";
+import {ColorModeToggle} from './ColorModeToggle';
 
 interface Props {
     open: boolean,
@@ -32,9 +33,16 @@ export const ConfigBar = ({open}) => {
         >   
             <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>{t('configbar.region')}</Typography>
             <CountriesFilter />
+            
             <Divider />
+            
             <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>{t('configbar.date')}</Typography>
             <DateFilter />
+
+            <Divider sx={{marginTop: '14px'}} />
+            
+            <Typography variant="subtitle1" align="left" sx={{marginLeft:'14px'}}>{t('configbar.mode')}</Typography>
+            <ColorModeToggle />
         </Drawer>
     );
 }

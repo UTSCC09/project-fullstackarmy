@@ -7,6 +7,7 @@
     },
     "configbar": {
         "region": "Filtrer par Région",
-        "date": "Filtrer par Plage de Dates"
+        "date": "Filtrer par Plage de Dates",
+        "mode": "Appliquer le Mode Sombre"
     }
 }
