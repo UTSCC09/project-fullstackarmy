@@ -40,17 +40,5 @@
         "firstdosemap": "First Vaccination Dose Heat Map",
         "seconddosemap": "Second Vaccination Dose Heat Map",
         "boosterdosemap": "Booster Dose Heat Map"
-    },
-    "mapinfo": {
-        "title": {
-            "firstdose": "First Dose Information",
-            "seconddose": "Second Dose Information",
-            "boosterdose": "Booster Dose Information"
-        },
-        "content": {
-            "firstdose": "Lorem ipsum",
-            "seconddose": "hello world",
-            "boosterdose": "..."
-        }
     }
 }
