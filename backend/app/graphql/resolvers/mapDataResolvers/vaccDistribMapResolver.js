@@ -3,7 +3,6 @@ const mapDataHelpers = require('./mapDataHelper');
 
 const distribMapData = async () => {
 
-
   // ! have to check if this is true for this query
   // Create map object here rather than populate the query for
   // time efficiency
