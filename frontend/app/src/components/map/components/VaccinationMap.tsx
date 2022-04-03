@@ -59,7 +59,7 @@ const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, contine
           binaryFeatureStyling 
           && 
           <FormControlLabel control={
-              <Switch checked={mapState.binary} onChange={handleMapState} name={binaryEventName}/>
+              <Switch color="secondary" checked={mapState.binary} onChange={handleMapState} name={binaryEventName}/>
             }
             label="Binary" 
           />
@@ -68,7 +68,7 @@ const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, contine
           continentToggle 
           && 
           <FormControlLabel control={
-              <Switch checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
+              <Switch color="secondary" checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
             }
             label="Continents" 
           />
