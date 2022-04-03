@@ -1,11 +1,20 @@
 import React from 'react'
 import VaccDoseDemand from '../charts/VaccDoseDemand'
+import VaccDistribDeliveredMap from '../map/VaccDistribDeliveredMap'
+import VaccDistribExpectedMap from '../map/VaccDistribExpectedMap'
 
-// TODO: Post Beta
-export const DistributionTab = () => {
+interface Props {
+} 
+
+const DistributionTab: React.FC<Props> = () => {
+  
   return (
     <div>
       <VaccDoseDemand /> 
-    </div>
+      <VaccDistribDeliveredMap />
+      {/* <VaccDistribExpectedMap /> */}
+    </div> 
   )
 }
+
+export default DistributionTab;
