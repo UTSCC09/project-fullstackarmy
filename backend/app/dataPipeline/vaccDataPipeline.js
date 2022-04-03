@@ -15,6 +15,9 @@ const IsoCodesVaccDataURL = 'https://raw.githubusercontent.com/owid/covid-19-dat
 const StoredIsoCodeData = 'IsoCodeData.txt';
 const StoredVaccData = 'VaccData.txt';
 
+const VaccDataPipelineName = 'vacDataPipelineName';
+const VaccDataPipelineTxt = 'vacDataPipelineLogs.txt';
+
 let isoCodesUpdatePayload = [];
 let vaccDataPayload = [];
 
@@ -30,7 +33,10 @@ let prevDataVaccData;
 * @return {NodeJS.ErrnoException | null} the error or null
 */
 const errCallback = (err) => {
-  if (err) throw err; // ideally should write to the db saying that there was an error
+  if (err) {
+    helpers.updateDataPipelineLogs(VaccDataPipelineName, false, 0, 0, err.message);
+    helpers.updateDataPipelineTxt(VaccDataPipelineTxt, false, 0, 0, err.message);
+  }
   return null;
 }
 
@@ -104,7 +110,6 @@ const getDataSets = async () => {
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
   let isoCodesVaccDataJSON = await isoCodesVaccData.json();
-  isoCodesVaccDataJSON = isoCodesVaccDataJSON.slice(0, 5);
   
   isoCodesVaccDataJSON.forEach(isoCodeVaccData => {
     
@@ -212,13 +217,13 @@ const getDataSets = async () => {
         date,
         ...newData
       })
-    })
+    });
 
     vaccDataPayload.push({
       isoCode,
       data
-    })
-  })
+    });
+  });
 
 }
 
@@ -247,9 +252,9 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
   const req = graphQLClient.request(query, variables);
 
   req.then(res => {
-    helpers.updateDataPipelineLogs('IsoCodeDataPipeline', true, isoCodeDataInput.length, res.updateIsoCodeData.number);
+    helpers.updateDataPipelineLogs(VaccDataPipelineName, true, isoCodeDataInput.length, res.updateIsoCodeData.number, '');
   }).catch(err => {
-    helpers.updateDataPipelineLogs('IsoCodeDataPipeline', false, isoCodeDataInput.length, 0);
+    helpers.updateDataPipelineLogs(VaccDataPipelineTxt, false, isoCodeDataInput.length, 0, err.message);
   });
 
   return req;
@@ -317,17 +322,15 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
   let result = Promise.all(allQueries).then(allRes => {
     let recordsAdded = allRes.reduce((a, b) => a + b.updateIsoCodeVaccData.number, 0);
 
-    helpers.updateDataPipelineLogs('IsoCodeVaccDataPipeline', true, recordsSent, recordsAdded);
+    helpers.updateDataPipelineLogs(VaccDataPipelineName, true, recordsSent, recordsAdded, '');
+    helpers.updateDataPipelineTxt(VaccDataPipelineTxt, true, recordsSent, recordsAdded, '');
 
     // Serialize the data here only when the call is successful
     fs.writeFile(StoredIsoCodeData, JSON.stringify(prevDataIsoCodeData), errCallback);
     fs.writeFile(StoredVaccData, JSON.stringify(prevDataVaccData), errCallback);
-
-    return recordsAdded;
   }).catch(err => {
-    console.log('addIsoCodeVaccData');
-    helpers.updateDataPipelineLogs('IsoCodeVaccDataPipeline', false, records, 0);
-    throw err;
+    helpers.updateDataPipelineLogs(VaccDataPipelineName, false, records, 0, err.message);
+    helpers.updateDataPipelineTxt(VaccDataPipelineTxt, false, records, 0, err.message);
   })
 
   return result;
