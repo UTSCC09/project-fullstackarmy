@@ -1,8 +1,11 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery, QueryResult } from '@apollo/client';
 import React, { useState } from 'react';
 import Loading from '../elements/Loading';
 import QueryError from '../elements/QueryError';
-import VaccinationMap from './VaccinationMap';
+import { ScaledLegend } from './components/MapConstants';
+import VaccinationMap from './components/VaccinationMap';
+import { GET_FULL_VACC_MAP_CONTINENT_DATA, GET_FULL_VACC_MAP_COUNTRY_DATA } from './queries/mapDataQueries';
+import { ContinentFullyVaccMapData, CountryFullyVaccMapData, TimePeriodVars } from './types/types';
 
 interface Props {
 }
@@ -10,25 +13,6 @@ interface Props {
 // make the range dynamic here
 const startDate = '2021-01-01';
 const endDate = '2022-03-17';
-
-// move to separate file
-const GET_FULL_VACC_MAP_COUNTRY_DATA = gql`
-  query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
-    countryFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
-      isoCode
-      peopleFullyVaccinatedPerHundred
-    }
-  }
-`;
-
-const GET_FULL_VACC_MAP_CONTINENT_DATA = gql`
-  query CountryFullyVaccMapData($startDate: String!, $endDate: String!){
-    continentFullyVaccMapData(startDate: $startDate, endDate: $endDate) {
-      isoCode
-      peopleFullyVaccinatedPerHundred
-    }
-  }
-`;
 
 const mapName: string = 'FullVacMap';
 const featureValueName: string = 'peopleFullyVaccinatedPerHundred';
@@ -39,7 +23,7 @@ const FullVacMap: React.FC<Props> = () => {
 
   // Get both data at once, even though some of it may not be used by the user
   // this is to ensure the user experience is fast and high quality
-  const countryData = useQuery(GET_FULL_VACC_MAP_COUNTRY_DATA, 
+  const countryData: QueryResult<CountryFullyVaccMapData, TimePeriodVars> = useQuery(GET_FULL_VACC_MAP_COUNTRY_DATA, 
     {
       variables: {
         startDate,
@@ -51,7 +35,7 @@ const FullVacMap: React.FC<Props> = () => {
     }
   );
 
-  const continentData = useQuery(GET_FULL_VACC_MAP_CONTINENT_DATA, {
+  const continentData: QueryResult<ContinentFullyVaccMapData, TimePeriodVars> = useQuery(GET_FULL_VACC_MAP_CONTINENT_DATA, {
       variables: {
         startDate,
         endDate,
@@ -85,6 +69,7 @@ const FullVacMap: React.FC<Props> = () => {
       featureData={featureData} 
       featureValueName={featureValueName}
       continentDataCall={continentDataCall}
+      initMapLegend={ScaledLegend}
     />
   )
 }
