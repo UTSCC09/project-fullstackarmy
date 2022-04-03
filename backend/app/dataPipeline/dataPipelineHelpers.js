@@ -1,5 +1,6 @@
 const constants = require('./dataPipelineConstants');
 const graphqlRequest = require('graphql-request');
+const fs = require('fs');
 
 const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
 
@@ -53,8 +54,9 @@ const createESTDate = () => {
 * @param {Number} recordsSent 
 * @param {Number} recordsSuccessfullyAdded 
 * @return {Request Promise}
+* @note this is not awaited
 */
-const updateDataPipelineLogs = (pipelineName, successStatus, recordsSent, recordsSuccessfullyAdded) => {
+const updateDataPipelineLogs = (pipelineName, successStatus, recordsSent, recordsSuccessfullyAdded, msg) => {
   
   let date = createESTDate();
 
@@ -72,13 +74,29 @@ const updateDataPipelineLogs = (pipelineName, successStatus, recordsSent, record
       pipelineName, 
       successStatus, 
       recordsSent, 
-      recordsSuccessfullyAdded
+      recordsSuccessfullyAdded,
+      msg
     }
   }
+  
+  // If there is an error it shouldn't crash the program
+  graphQLClient.request(query, variables).catch((err) => {
+    console.log(err);
+  });
+}
 
-  return graphQLClient.request(query, variables);
+const updateDataPipelineTxt = (pipelineLogs, successStatus, recordsSent, recordsSuccessfullyAdded, msg) => {
+  let date = createESTDate();
+
+  let text = `${date.toLocaleString()} ${pipelineLogs} successStatus: ${successStatus} recordsSent: ${recordsSent} recordsSuccessfullyAdded: ${recordsSuccessfullyAdded} errorMsg: ${msg} \n`;
+  
+  fs.appendFile(pipelineLogs, text,  function(err) {
+    if(err) return console.log(err);
+    return;
+  });
 }
 
 exports.isoCodeToType = isoCodeToType;
 exports.modifiedParseFloat = modifiedParseFloat;
 exports.updateDataPipelineLogs = updateDataPipelineLogs;
+exports.updateDataPipelineTxt = updateDataPipelineTxt;
