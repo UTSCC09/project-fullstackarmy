@@ -1,5 +1,7 @@
 const IsoCode = require('../../models/IsoCode');
 const { transformIsoCode } = require('./helper');
+const dataPipelineConstants = require('../../dataPipeline/dataPipelineConstants');
+const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
 
 module.exports = {
     /** 
@@ -13,6 +15,23 @@ module.exports = {
             const pipeline = [
                 {$match: {isoCode: {$in: args.isoCodes}}},
                 {$addFields: {"__order": {$indexOfArray: [args.isoCodes, "$isoCode" ]}}},
+                {$sort: {"__order": 1}}
+            ];
+            const isoCodes = await IsoCode.aggregate(pipeline).exec()
+            return isoCodes.map(isoCode => {
+                return transformIsoCode(isoCode);
+            });
+        } catch (err) {
+            throw err;
+        }
+    },
+    /** 
+    * @return {[IsoCode!]!} all IsoCode data corresponding to country ISO Codes
+    */
+     countryIsoCodes: async () => {
+        try {
+            const pipeline = [
+                {$match: {isoCode: {$nin: nonCountryIsoCodes}}},
                 {$sort: {"__order": 1}}
             ];
             const isoCodes = await IsoCode.aggregate(pipeline).exec()

@@ -1,11 +1,13 @@
-import React from 'react'
+import Typography from '@mui/material/Typography';
 
 export const DataSources = () => {
   return (
     <div className="credits">
-        <h1>Data Sources</h1>
-        <h2>Background Information Tab</h2>
-        <li><a href="https://youtu.be/J0RuJpGtgls">Video by Houston Methodist</a></li>
+        <Typography variant="h5" sx={{marginTop: 2, marginBottom: 2}}>Data Sources</Typography>
+        <Typography variant="h6" sx={{textDecoration:'underline'}}>Information Tab</Typography>
+        <Typography variant="body2">
+          <li><a href="https://youtu.be/J0RuJpGtgls">Video by Houston Methodist</a></li>
+        </Typography>
     </div>
   )
 }

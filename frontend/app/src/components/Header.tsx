@@ -6,16 +6,17 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Settings from '@mui/icons-material/Settings';
 import Translate from '@mui/icons-material/Translate';
 import Logo from './Logo';
-import {ConfigBar} from './ConfigBar';
+import TranslationDropdown from './TranslationDropdown';
+import ConfigBar from './ConfigBar';
 import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
+  // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
   
   const handleDrawerOpen = () => {
@@ -26,6 +27,17 @@ export const Header = () => {
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
+  };
+
+  // State for handling translation dropdown
+  // Adapted from: https://codesandbox.io/s/j01dyc?file=/demo.tsx:2589-2600
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleTranslationMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -42,6 +54,7 @@ export const Header = () => {
           <IconButton
               size="large"
               color="inherit"
+              onClick={handleTranslationMenu}
             >
               <Translate />
           </IconButton>
@@ -60,6 +73,7 @@ export const Header = () => {
           </IconButton>
           </Toolbar>
       </AppBar>
+      <TranslationDropdown anchorEl={anchorEl} handleClose={handleClose} />
       <ConfigBar open={configBarOpen} />
     </Box>
   );
