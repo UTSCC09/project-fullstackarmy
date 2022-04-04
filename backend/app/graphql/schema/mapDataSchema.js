@@ -13,6 +13,12 @@ const mapDataTypes = `
         isoCode: String
         totalBoostersPerHundred: Float
     }
+
+    type VaccDistribMapData {
+        isoCode: String
+        dosesDeliveredRequiredPercent: Float
+        dosesExpectedRequiredPercent: Float
+    }
 `;
 
 const mapDataRootQuery =`
@@ -22,6 +28,7 @@ const mapDataRootQuery =`
     continentVaccMapData(startDate: String!, endDate: String!): [VaccMapData!]!
     continentFullyVaccMapData(startDate: String!, endDate: String!): [FullyVaccMapData!]!
     continentBoosterVaccMapData(startDate: String!, endDate: String!): [BoosterVaccMapData!]!
+    countryVaccDistribMapData: [VaccDistribMapData!]!
 `;
 
 const mapDataRootMutation = ``;

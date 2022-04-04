@@ -79,13 +79,13 @@ const getDataSets = async () => {
     let dosesRequiredFor85 = Math.ceil((dosesRequiredFor70 / 70) * 85);
     
     // Supply it has gotten so far from promised
-    let dosesDeliveredExpectedPercent = dosesDelivered/dosesExpected;
+    let dosesDeliveredExpectedPercent = Math.round((dosesDelivered/dosesExpected) * 10000) / 100;
 
     // How much supply the country has to reach herd immunity/protection
-    let dosesDeliveredRequiredPercent = dosesDelivered/dosesRequiredFor85;
+    let dosesDeliveredRequiredPercent = Math.round((dosesDelivered/dosesRequiredFor85) * 10000) / 100;
 
     // How much Supply it needs to secure to reach heard immuntiy
-    let dosesExpectedRequiredPercent = dosesExpected/dosesRequiredFor85;
+    let dosesExpectedRequiredPercent = Math.round((dosesExpected/dosesRequiredFor85) * 10000) / 100;
     
     prevData[isoCode] = {
       dosesRequiredFor70,

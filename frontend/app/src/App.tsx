@@ -8,7 +8,7 @@ import { Credits } from "./components/Credits";
 import { InfoTab } from "./components/tabs/InfoTab";
 import { StatusTab } from "./components/tabs/StatusTab";
 import { RatesTab } from "./components/tabs/RatesTab";
-import { DistributionTab } from "./components/tabs/DistributionTab";
+import DistributionTab from "./components/tabs/DistributionTab";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from "./components/context/ColorModeContext";
 import { CountriesFilterContext} from "./components/context/CountriesFilterContext";

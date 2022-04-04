@@ -17,10 +17,25 @@ export const ScaledLegend: MapLegend = [
     ['#e6f0fe', '0% - 10%', 0]
 ];
 
+export const ScaledPlusLegend: MapLegend = [
+    ['#000015', '100+ % ', 100],
+    ['#00006a', '91% - 100%', 91],
+    ['#000095', '81% - 90%', 81],
+    ['#0000bf', '71% - 80%', 71],
+    ['#0000ea', '61% - 70%', 61],
+    ['#1515ff', '51% - 60%', 51],
+    ['#4040ff', '41% - 50%', 41],
+    ['#6a6aff', '31% - 40%', 31],
+    ['#9595ff', '21% - 30%', 21],
+    ['#bfbfff', '11% - 20%', 11],
+    ['#eaeaff', '0% - 10%', 0]
+];
+
 export const BinaryLegend: MapLegend = [
     ['#80ff80', 'Herd I/P (>85%)', 85],
     ['#ff4d4d', 'Not Herd I/P', 0],
 ];
+
 
 export const mapStrokeColor: string = '#fff';
 
@@ -28,7 +43,6 @@ export const isoCodeProperty: string = 'isoCode';
 export const isoCodeNameProperty: string = 'isoCodeName';
 export const hoverProperty: string = 'hover';
 export const isoCodeTypeProperty: string = 'isoCodeType';
-
 
 export const isoCodeCountryType: string = 'country';
 export const isoCodeContinentType: string = 'continent';

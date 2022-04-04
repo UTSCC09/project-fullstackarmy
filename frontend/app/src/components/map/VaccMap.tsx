@@ -1,8 +1,11 @@
-import { gql, useQuery } from '@apollo/client';
+import { QueryResult, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import Loading from '../elements/Loading';
 import QueryError from '../elements/QueryError';
-import VaccinationMap from './VaccinationMap';
+import { ScaledLegend } from './components/MapConstants';
+import VaccinationMap from './components/VaccinationMap';
+import { GET_VACC_MAP_CONTINENT_DATA, GET_VACC_MAP_COUNTRY_DATA } from './queries/mapDataQueries';
+import { ContinentVaccMapData, CountryVaccMapData, TimePeriodVars } from './types/types';
 
 interface Props {
 }
@@ -10,24 +13,6 @@ interface Props {
 // todo make the range dynamic here
 const startDate = '2021-01-01';
 const endDate = '2022-03-17';
-
-const GET_VACC_MAP_COUNTRY_DATA = gql`
-  query CountryVaccMapData($startDate: String!, $endDate: String!){
-    countryVaccMapData(startDate: $startDate, endDate: $endDate) {
-      isoCode
-      peopleVaccinatedPerHundred
-    }
-  }
-`;
-
-const GET_VACC_MAP_CONTINENT_DATA = gql`
-  query ContinentVaccMapData($startDate: String!, $endDate: String!){
-    continentVaccMapData(startDate: $startDate, endDate: $endDate) {
-      isoCode
-      peopleVaccinatedPerHundred
-    }
-  }
-`;
 
 const mapName = 'FirstDoseVaccMap';
 const featureValueName = 'peopleVaccinatedPerHundred';
@@ -38,7 +23,7 @@ const VaccMap: React.FC<Props> = () => {
 
   // Get both data at once, even though some of it may not be used by the user
   // this is to ensure the user experience is fast and high quality
-  const countryData = useQuery(GET_VACC_MAP_COUNTRY_DATA, 
+  const countryData: QueryResult<CountryVaccMapData, TimePeriodVars> = useQuery(GET_VACC_MAP_COUNTRY_DATA, 
     {
       variables: {
         startDate,
@@ -50,7 +35,7 @@ const VaccMap: React.FC<Props> = () => {
     }
   );
 
-  const continentData = useQuery(GET_VACC_MAP_CONTINENT_DATA, {
+  const continentData: QueryResult<ContinentVaccMapData, TimePeriodVars> = useQuery(GET_VACC_MAP_CONTINENT_DATA, {
       variables: {
         startDate,
         endDate,
@@ -84,6 +69,7 @@ const VaccMap: React.FC<Props> = () => {
       featureData={featureData} 
       featureValueName={featureValueName}
       continentDataCall={continentDataCall}
+      initMapLegend={ScaledLegend}
     />
   )
 }

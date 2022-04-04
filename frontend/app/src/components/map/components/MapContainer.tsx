@@ -31,11 +31,11 @@ const render = (status) => {
 
 const MapContainer: React.FC<Props> = ({mapName, mapLegend, featureData, featureValueName, isContinentFeatures}) => {
   
-  // here the children are created everytime, therefore they need to be memo'ed to ensure that they are not
+  // Here the children are created everytime, therefore they need to be memo'ed to ensure that they are not
   // causing a rendering of the map everytime and only change when the features change
   return (
     <Wrapper 
-      apiKey={'AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA'}
+      apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
       render={render}
     >
       <Map zoom={deafultZoom} center={defaultCenter} height={defaultHeight} mapName={mapName}>
