@@ -110,7 +110,7 @@ const getDataSets = async () => {
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
   let isoCodesVaccDataJSON = await isoCodesVaccData.json();
-  
+
   isoCodesVaccDataJSON.forEach(isoCodeVaccData => {
     
     let isoCode = isoCodeVaccData["iso_code"];
@@ -134,14 +134,21 @@ const getDataSets = async () => {
         let cond1 = prevDataRow.isoCodeName === isoCodeName;
         let cond2 = prevDataRow.isoCodeType === isoCodeType;
 
-        if (cond1 && cond2) return;
-      }
+        if (!(cond1 && cond2)) {
+          prevDataIsoCodeData[isoCode] = newData;
+          isoCodesUpdatePayload.push({
+            ...newData,
+            isoCode
+          });
+        }
 
-      prevDataIsoCodeData[isoCode] = newData;
-      isoCodesUpdatePayload.push({
-        ...newData,
-        isoCode
-      });
+      } else {
+        prevDataIsoCodeData[isoCode] = newData;
+        isoCodesUpdatePayload.push({
+          ...newData,
+          isoCode
+        });
+      }
     }
 
     let data = [];
@@ -319,8 +326,12 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
     index++;
   })
 
+  console.log(`${recordsSent} records sent`);
+
   let result = Promise.all(allQueries).then(allRes => {
     let recordsAdded = allRes.reduce((a, b) => a + b.updateIsoCodeVaccData.number, 0);
+    
+    console.log(`${recordsAdded} records added`);
 
     helpers.updateDataPipelineLogs(VaccDataPipelineName, true, recordsSent, recordsAdded, '');
     helpers.updateDataPipelineTxt(VaccDataPipelineTxt, true, recordsSent, recordsAdded, '');
@@ -329,8 +340,8 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
     fs.writeFile(StoredIsoCodeData, JSON.stringify(prevDataIsoCodeData), errCallback);
     fs.writeFile(StoredVaccData, JSON.stringify(prevDataVaccData), errCallback);
   }).catch(err => {
-    helpers.updateDataPipelineLogs(VaccDataPipelineName, false, records, 0, err.message);
-    helpers.updateDataPipelineTxt(VaccDataPipelineTxt, false, records, 0, err.message);
+    helpers.updateDataPipelineLogs(VaccDataPipelineName, false, recordsSent, 0, err.message);
+    helpers.updateDataPipelineTxt(VaccDataPipelineTxt, false, recordsSent, 0, err.message);
   })
 
   return result;
@@ -342,12 +353,14 @@ const dataPipeline = async () => {
   await isoCodeVaccDataUpdateReq(vaccDataPayload);
 }
 
-let scheduledJob = new CronJob(
-	'00 00 09 * * *',
-	dataPipeline,
-	null,
-	false,
-	'America/Toronto'
-);
+dataPipeline();
 
-scheduledJob.start();
+// let scheduledJob = new CronJob(
+// 	'00 00 09 * * *',
+// 	dataPipeline,
+// 	null,
+// 	false,
+// 	'America/Toronto'
+// );
+
+// scheduledJob.start();
