@@ -1,6 +1,7 @@
 const constants = require('./dataPipelineConstants');
 const graphqlRequest = require('graphql-request');
 const fs = require('fs');
+const moment = require('moment');
 
 const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
 
@@ -36,14 +37,12 @@ const modifiedParseFloat = (number) => {
 * @note credits: https://stackoverflow.com/questions/36206260/how-to-set-date-always-to-eastern-time-regardless-of-users-time-zone
 */
 const createESTDate = () => {
-  let dt = new Date();
+  let d = new Date();
+  let myTimezone = "America/Toronto";
+  let myDatetimeFormat= "YYYY-MM-DD hh:mm:ss a z";
+  let myDatetimeString = moment(d).tz(myTimezone).format(myDatetimeFormat);
 
-  dt.setTime(dt.getTime()+dt.getTimezoneOffset()*60*1000);
-
-  let offset = -300; //Timezone offset for EST in minutes.
-  let estDate = new Date(dt.getTime() + offset*60*1000);
-
-  return estDate;
+  return myDatetimeString;
 }
 
 /** 
@@ -80,9 +79,11 @@ const updateDataPipelineLogs = (pipelineName, successStatus, recordsSent, record
   }
   
   // If there is an error it shouldn't crash the program
-  graphQLClient.request(query, variables).catch((err) => {
+  const req = graphQLClient.request(query, variables).catch(err => {
     console.log(err);
   });
+
+  return req;
 }
 
 const updateDataPipelineTxt = (pipelineLogs, successStatus, recordsSent, recordsSuccessfullyAdded, msg) => {
