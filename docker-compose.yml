@@ -30,6 +30,7 @@ services:
       context: ./frontend
       args:
         REACT_APP_API_URL: https://api.covid19vaxtracker.live
+        REACT_APP_GOOGLE_MAPS_API_KEY: AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA
     container_name: projectfrontend
     restart: always
     expose:
