@@ -39,7 +39,8 @@ services:
       LETSENCRYPT_HOST: www.covid19vaxtracker.live
   backend:
     image: projectbackend:latest
-    build: ./backend
+    build:
+      context: ./backend
     container_name: projectbackend
     restart: always
     expose:
@@ -47,6 +48,27 @@ services:
     environment:
       MONGO_USER: admin
       MONGO_PASSWORD: CEZHrExc5aMCcp5s
-      MONGO_DB: VaccDataDev
+      MONGO_DB: DataPipelineDev
       VIRTUAL_HOST: api.covid19vaxtracker.live
       LETSENCRYPT_HOST: api.covid19vaxtracker.live
+  # Adapted from https://lukashermann.dev/writing/cron-in-nodejs-docker-image/
+  # The following two containers run vaccDataPipeline.js and vaccSupplyDataPipeline.js
+  # These node scripts use a scheduler to pull data from a repo
+  vacc-data-pipeline:
+    image: vaccdatapipeline:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dataPipeline
+    container_name: vacc-data-pipeline
+    # volumes:
+    #   - ./backend/app:/home/node/app
+    command: node dataPipeline/vaccDataPipeline.js
+  vacc-supply-data-pipeline:
+    image: vaccsupplydatapipeline:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dataPipeline
+    container_name: vacc-supply-data-pipeline
+    # volumes:
+    #   - ./backend/app:/home/node/app
+    command: node dataPipeline/vaccSupplyDataPipeline.js
