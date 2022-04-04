@@ -89,6 +89,8 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             script: |
               docker-compose build backend
+              docker-compose build vacc-data-pipeline
+              docker-compose build vacc-supply-data-pipeline
         - name: Deploy in Container
           uses: appleboy/ssh-action@master
           with:
