@@ -353,14 +353,12 @@ const dataPipeline = async () => {
   await isoCodeVaccDataUpdateReq(vaccDataPayload);
 }
 
-dataPipeline();
+let scheduledJob = new CronJob(
+	'00 00 09 * * *',
+	dataPipeline,
+	null,
+	false,
+	'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-// 	'00 00 09 * * *',
-// 	dataPipeline,
-// 	null,
-// 	false,
-// 	'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();
