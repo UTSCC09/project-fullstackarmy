@@ -2,7 +2,7 @@ import { QueryResult, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import Loading from '../elements/Loading';
 import QueryError from '../elements/QueryError';
-import { ScaledPlusLegend } from './components/MapConstants';
+import { BinaryLegend, ScaledLegend, ScaledLegendName, ScaledPlusLegend, TernaryLegend } from './components/MapConstants';
 import VaccinationMap from './components/VaccinationMap';
 import { GET_VACC_DISTRIB_COUNTRY_DATA } from './queries/mapDataQueries';
 import { CountryVaccDistribMapData, TimePeriodVars } from './types/types';
@@ -31,11 +31,13 @@ const VaccDistribExpectedMap: React.FC<Props> = () => {
   return (
     <VaccinationMap 
       mapName={mapName} 
-      binaryFeatureStyling={true}
-      continentToggle={false}
-      featureData={featureData} 
       featureValueName={featureValueName}
-      initMapLegend={ScaledPlusLegend}
+      featureData={featureData} 
+      primaryLegend={TernaryLegend}
+      secondaryLegendToggle={true}
+      secondaryLegendName={ScaledLegendName}
+      secondaryLegend={ScaledPlusLegend}
+      continentToggle={false}
     />
   )
 }

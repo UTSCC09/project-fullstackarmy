@@ -1,4 +1,12 @@
-.errorMsg {
-  margin-left: 46px;
-  color: red;
+.alertContainer {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+
+    display: grid;
+    place-items: center;
+}
+
+Alert {
+    max-width: 400;
 }

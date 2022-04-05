@@ -110,7 +110,6 @@ const getDataSets = async () => {
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
   let isoCodesVaccDataJSON = await isoCodesVaccData.json();
-
   isoCodesVaccDataJSON.forEach(isoCodeVaccData => {
     
     let isoCode = isoCodeVaccData["iso_code"];
