@@ -85,34 +85,19 @@ const getDataSets = async () => {
     .fromString(csvData)
     .then((jsonData) => {
       jsonData.forEach((dataPoint) => {
-        // Get current data
         let isoCode = dataPoint.Code;
-        let isoCodeName = dataPoint.Country;
-        let isoCodeType = helpers.isoCodeToType(dataPoint.Code);
-        let incomeLevel = dataPoint['Income group'];
-        let year = dataPoint.Year;
+
+        // Get current data
+        let newData = {
+          isoCodeName: dataPoint.Country,
+          isoCodeType: helpers.isoCodeToType(dataPoint.Code),
+          incomeLevel: dataPoint['Income group'],
+          year: dataPoint.Year,
+        };
 
         // Check if same as previous data
         let prevDataRow = prevDataIsoCodeData[isoCode];
-
-        // Newly added isoCode
-        if (prevDataRow) {
-          let cond1 = prevDataRow.isoCodeName === isoCodeName;
-          let cond2 = prevDataRow.isoCodeType === isoCodeType;
-          let cond3 = prevDataRow.incomeLevel === incomeLevel;
-          let cond4 = prevDataRow.year === year;
-
-          if (cond1 && cond2 && cond3 && cond4) {
-            return;
-          }
-        }
-
-        let newData = {
-          isoCodeName,
-          isoCodeType,
-          incomeLevel,
-          year,
-        };
+        if (prevDataRow && lodash.isEqual(prevDataRow, newData)) return;
 
         prevDataIsoCodeData[isoCode] = newData;
 
@@ -125,12 +110,12 @@ const getDataSets = async () => {
       });
     })
     .catch((err) => {
-      // ! add sentry capture here
       console.log(err);
     });
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
   let isoCodesVaccDataJSON = await isoCodesVaccData.json();
+
   isoCodesVaccDataJSON.forEach((isoCodeVaccData) => {
     let isoCode = isoCodeVaccData.iso_code;
 
@@ -143,15 +128,7 @@ const getDataSets = async () => {
 
       // Check if same as previous data (conds are different)
       let prevDataRow = prevDataIsoCodeData[isoCode];
-
-      // Previously added isoCode
-      if (prevDataRow && !lodash.isEqual(prevDataRow, newData)) {
-        prevDataIsoCodeData[isoCode] = newData;
-        isoCodesUpdatePayload.push({
-          ...newData,
-          isoCode,
-        });
-      } else {
+      if (!lodash.isEqual(prevDataRow, newData)) {
         prevDataIsoCodeData[isoCode] = newData;
         isoCodesUpdatePayload.push({
           ...newData,
@@ -209,7 +186,7 @@ const getDataSets = async () => {
 
       // Check if same as previous data
       let prevDataRow = prevDataVaccData[vaccDataKey];
-      if (prevDataRow && lodash.isEqual(newData, prevDataRow)) return;
+      if (lodash.isEqual(newData, prevDataRow)) return;
 
       prevDataVaccData[vaccDataKey] = newData;
 
@@ -332,16 +309,12 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
     index += 1;
   });
 
-  console.log(`${recordsSent} records sent`);
-
   let result = Promise.all(allQueries)
     .then((allRes) => {
       let recordsAdded = allRes.reduce(
         (a, b) => a + b.updateIsoCodeVaccData.number,
         0
       );
-
-      console.log(`${recordsAdded} records added`);
 
       helpers.updateDataPipelineLogs(
         VaccDataPipelineName,
@@ -396,12 +369,14 @@ const dataPipeline = async () => {
   await isoCodeVaccDataUpdateReq(vaccDataPayload);
 };
 
-let scheduledJob = new CronJob(
-  '00 00 09 * * *',
-  dataPipeline,
-  null,
-  false,
-  'America/Toronto'
-);
+dataPipeline();
 
-scheduledJob.start();
+// let scheduledJob = new CronJob(
+//   '00 00 09 * * *',
+//   dataPipeline,
+//   null,
+//   false,
+//   'America/Toronto'
+// );
+
+// scheduledJob.start();

@@ -30,11 +30,11 @@ module.exports = {
     const result = newLog
       .save()
       .then((record) => {
-        return helper.boolObj(true);
+        return resolverHelpers.boolObj(true);
       })
       .catch((err) => {
         resolverHelpers.logError(err);
-        return helper.boolObj(false);
+        return resolverHelpers.boolObj(false);
       });
 
     return result;

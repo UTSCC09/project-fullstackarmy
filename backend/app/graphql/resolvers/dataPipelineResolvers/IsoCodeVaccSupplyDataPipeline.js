@@ -69,7 +69,7 @@ module.exports = {
 
     let result = Promise.all(isoCodeVaccSupplyDataQueries)
       .then((res) => {
-        return helper.numberObj(res.length);
+        return resolverHelpers.numberObj(res.length);
       })
       .catch((err) => {
         resolverHelpers.unexpectedError(err);
