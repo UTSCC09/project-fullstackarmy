@@ -14,6 +14,8 @@ import { ColorModeContext } from "./components/context/ColorModeContext";
 import { CountriesFilterContext} from "./components/context/CountriesFilterContext";
 import { LanguageContext} from "./components/context/LanguageContext";
 import { useTranslation } from 'react-i18next';
+import * as Sentry from "@sentry/react";
+
 
 const theme = createTheme({
   components:{
@@ -139,4 +141,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
