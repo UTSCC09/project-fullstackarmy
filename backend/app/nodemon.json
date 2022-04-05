@@ -3,6 +3,7 @@
     "MONGO_USER": "moh",
     "MONGO_PASSWORD": "mohamedtayeh2000",
     "MONGO_DB": "dataPipelineTest",
-    "BACKEND_SENTRY_URL": "https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833"
+    "BACKEND_SENTRY_URL": "https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833",
+    "BACKEND_API_URL": "http://localhost:3000/api"
   }
 }

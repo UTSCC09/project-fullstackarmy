@@ -2,13 +2,12 @@ const fetch = require('node-fetch');
 const graphqlRequest = require('graphql-request');
 const csvtojson = require('csvtojson');
 const lodash = require('lodash');
-const constants = require('./dataPipelineConstants');
 const helpers = require('./dataPipelineHelpers');
 const fs = require('fs');
 const { CronJob } = require('cron');
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
-  'http://localhost:3000/api'
+  process.env.BACKEND_API_URL
 );
 
 const CountryIncomeLevelDataURL =
@@ -369,14 +368,12 @@ const dataPipeline = async () => {
   await isoCodeVaccDataUpdateReq(vaccDataPayload);
 };
 
-dataPipeline();
+let scheduledJob = new CronJob(
+  '00 00 09 * * *',
+  dataPipeline,
+  null,
+  false,
+  'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-//   '00 00 09 * * *',
-//   dataPipeline,
-//   null,
-//   false,
-//   'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();

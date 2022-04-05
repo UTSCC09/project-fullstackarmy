@@ -4,7 +4,7 @@ const fs = require('fs');
 const moment = require('moment');
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
-  'http://localhost:3000/api'
+  process.env.BACKEND_API_URL
 );
 
 /**

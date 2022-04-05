@@ -5,9 +5,8 @@ const helpers = require('./dataPipelineHelpers');
 const fs = require('fs');
 const { CronJob } = require('cron');
 
-// ! add using env variables + an api key to add data or an account to add data
 const graphQLClient = new graphqlRequest.GraphQLClient(
-  'http://localhost:3000/api'
+  process.env.BACKEND_API_URL
 );
 
 const VaccSupplyDataURL =
