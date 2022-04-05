@@ -30,6 +30,10 @@ services:
       context: ./frontend
       args:
         REACT_APP_API_URL: https://api.covid19vaxtracker.live
+        REACT_APP_GOOGLE_MAPS_API_KEY: AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA
+        REACT_APP_COUNTRY_FEATURES_URL: https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/countryFeatures.json
+        REACT_APP_CONTINENT_FEATURES_URL: https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.json
+        REACT_APP_SENTRY_URL: https://99576e366624422f8ce74c04cfa45f69@o1189409.ingest.sentry.io/6309791
     container_name: projectfrontend
     restart: always
     expose:
@@ -47,6 +51,6 @@ services:
     environment:
       MONGO_USER: admin
       MONGO_PASSWORD: CEZHrExc5aMCcp5s
-      MONGO_DB: VaccDataDev
+      MONGO_DB: DataPipelineDev
       VIRTUAL_HOST: api.covid19vaxtracker.live
       LETSENCRYPT_HOST: api.covid19vaxtracker.live

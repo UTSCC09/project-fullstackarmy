@@ -9,7 +9,7 @@ const { graphqlHTTP } = require('express-graphql');
 const http = require('http');
 
 // For security
-// const bcrypt = require('bcrypt');
+const helmet = require('helmet');
 
 // For uploads 
 // const path = require('path');
@@ -31,10 +31,12 @@ let allowedOrigins = [
     `http://localhost:3001`,
     `http://localhost:80`,
     `http://localhost`,
-    'https://covid19vaxtracker.live',
     'https://api.covid19vaxtracker.live',
     'https://www.covid19vaxtracker.live'
 ];
+
+// Set the proper headers
+app.use(helmet());
 
 app.use(cors({
   origin: function(origin, callback){

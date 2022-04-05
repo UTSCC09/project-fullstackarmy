@@ -6,6 +6,11 @@ type Number {
 type Bool {
     bool: Boolean!
 }
+
+type DateRange {
+    startDate: String!
+    endDate: String!
+}
 `;
 
 exports.globalTypes = globalTypes;
