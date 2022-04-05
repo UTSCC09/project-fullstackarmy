@@ -7,23 +7,25 @@ const resolvers = require('./graphql/resolvers/rootResolver');
 const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
 const http = require('http');
-
-// For security
-// const bcrypt = require('bcrypt');
-
-// For uploads 
-// const path = require('path');
-// const fs = require('fs');
-// const multer  = require('multer');
+const Sentry = require('@sentry/node');
+const Tracing = require("@sentry/tracing");
 
 const app = express();
 
+process.env.NODE_ENV === "production" && Sentry.init({
+  dsn: process.env.BACKEND_SENTRY_URL,
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+  tracesSampleRate: 0.3,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const PORT = 3000;
-
-// For uploads 
-// let upload = multer({ dest: path.join(__dirname, 'uploads')});
-// app.use(bodyParser.urlencoded({ extended: false }));
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
@@ -59,10 +61,12 @@ app.use('/', graphqlHTTP({
 }));
 
 app.use(session({
-    secret: 'this is a secure secret amirite?',
+    secret: '8281ae58cbfab3f53b51a8289cdc47fb',
     resave: false,
     saveUninitialized: true,
 }));
+
+app.use(Sentry.Handlers.errorHandler());
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
