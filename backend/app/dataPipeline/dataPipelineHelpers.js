@@ -3,7 +3,7 @@ const graphqlRequest = require('graphql-request');
 const fs = require('fs');
 const moment = require('moment');
 
-const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
+const graphQLClient = new graphqlRequest.GraphQLClient(process.env.PIPELINE_API_URL);
 
 /** 
 * Returns the isoCodeType based on the isoCode

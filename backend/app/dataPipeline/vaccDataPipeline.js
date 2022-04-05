@@ -7,7 +7,7 @@ const helpers = require('./dataPipelineHelpers');
 const fs = require('fs');
 const { CronJob } = require('cron');
 
-const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
+const graphQLClient = new graphqlRequest.GraphQLClient(process.env.PIPELINE_API_URL);
 
 const CountryIncomeLevelDataURL = 'https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv';
 const IsoCodesVaccDataURL = 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json';

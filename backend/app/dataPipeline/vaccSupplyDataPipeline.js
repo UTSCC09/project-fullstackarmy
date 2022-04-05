@@ -6,7 +6,7 @@ const fs = require('fs');
 const { CronJob } = require('cron');
 
 // ! add using env variables + an api key to add data or an account to add data
-const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/api');
+const graphQLClient = new graphqlRequest.GraphQLClient(process.env.PIPELINE_API_URL);
 
 const VaccSupplyDataURL = 'https://data.covid19taskforce.com/covax-api/getCovaxDashboardData';
 const StoredFileName = 'VaccSupplyData.txt';
