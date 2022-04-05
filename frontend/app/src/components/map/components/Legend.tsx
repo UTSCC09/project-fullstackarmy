@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { MapLegend } from '../components/MapConstants';
 
 interface Props {
@@ -6,12 +6,11 @@ interface Props {
   mapLegend: MapLegend;
 }
 
-const Legend: React.FC<Props> = ({map, mapLegend}) => {
-  
-  if(!(map && mapLegend)) return null;
+const Legend: React.FC<Props> = ({ map, mapLegend }) => {
+  if (!(map && mapLegend)) return null;
 
   const legend = document.createElement('div');
-  
+
   legend.style.marginLeft = '7px';
   legend.style.backgroundColor = 'white';
   legend.style.opacity = '0.7';
@@ -20,12 +19,12 @@ const Legend: React.FC<Props> = ({map, mapLegend}) => {
   legend.style.boxShadow = 'rgb(0 0 0 / 30%) 0px 1px 4px -1px';
   legend.style.userSelect = 'none';
 
-  mapLegend.forEach(rangeToColor => {
+  mapLegend.forEach((rangeToColor) => {
     let legendItem = document.createElement('div');
 
     legendItem.style.display = 'flex';
 
-    legendItem.innerHTML= `
+    legendItem.innerHTML = `
       <div
         style="background-color:${rangeToColor[0]}; height: 20px; width: 20px; 
         border-radius: 3px; margin: 5px 10px 5px 13px;"
@@ -34,23 +33,24 @@ const Legend: React.FC<Props> = ({map, mapLegend}) => {
         margin: 5px 13px 5px 10px;font-size: 14px;">
         ${rangeToColor[1]}
       </div>
-    `
+    `;
     legend.append(legendItem);
-  })
+  });
 
   legend.addEventListener('mouseenter', (e) => {
     legend.style.opacity = '1';
-  })
+  });
 
   legend.addEventListener('mouseleave', (e) => {
     legend.style.opacity = '0.7';
-  })
+  });
 
-  const leftBottomControls = map.controls[google.maps.ControlPosition.LEFT_BOTTOM];
+  const leftBottomControls =
+    map.controls[google.maps.ControlPosition.LEFT_BOTTOM];
   leftBottomControls.clear();
-  leftBottomControls.push(legend); 
+  leftBottomControls.push(legend);
 
   return null;
-}
+};
 
-export default Legend
+export default Legend;

@@ -16,7 +16,7 @@ const rootResolver = {
   ...IsoCodeVaccDataPipeline,
   ...IsoCodeVaccSupplyDataPipeline,
   ...DataPipelineLogs,
-  
+
   // Exposed API's
   ...IsoCodeResolver,
   ...DailyVaccDataResolver,

@@ -6,60 +6,63 @@ const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
 const continentIsoCodes = dataPipelineConstants.continentIsoCodes;
 
 const idToIsoCodeQuery = async (forCountry) => {
+  let isoCodeQuery;
 
-    let isoCodeQuery;
+  if (forCountry) {
+    isoCodeQuery = { $nin: nonCountryIsoCodes };
+  } else {
+    isoCodeQuery = { $in: continentIsoCodes };
+  }
 
-    if (forCountry) {
-        isoCodeQuery = {$nin: nonCountryIsoCodes}
-    } else {
-        isoCodeQuery = {$in: continentIsoCodes}
-    }
+  const query = await IsoCode.find({
+    isoCode: isoCodeQuery,
+  })
+    .select({
+      id: 1,
+      isoCode: 1,
+    })
+    .then((res) => {
+      let idToIsoCode = {};
 
-    const query = await IsoCode.find({
-            isoCode: isoCodeQuery
-        }).select({
-            id: 1,
-            isoCode: 1,
-        }).then( res => {
-            let idToIsoCode = {}; 
+      res.forEach((isoCodeData) => {
+        idToIsoCode[isoCodeData.id] = isoCodeData.isoCode;
+      });
 
-            res.forEach(isoCodeData => {
-                idToIsoCode[isoCodeData.id] = isoCodeData.isoCode;
-            })
+      return idToIsoCode;
+    })
+    .catch((err) => {
+      resolverHelpers.unexpectedError(err);
+    });
 
-            return idToIsoCode;
-        }).catch(err => {
-            resolverHelpers.unexpectedError(err);
-        })
-        
-    return query; 
-}
+  return query;
+};
 
 // process the result of the promises/queries
 const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
+  const result = await Promise.all(mapDataQueries)
+    .then((res) => {
+      let result = [];
+      res.forEach((isoCodeData) => {
+        if (isoCodeData) {
+          // Some isoCodes will not have any data in the date range
+          let row = {
+            isoCode: idToIsoCode[isoCodeData.isoCode], // isoCode here is the foreign key id
+          };
 
-    const result = await Promise.all(mapDataQueries).then(res => {
-            let result = [];
-            res.forEach(isoCodeData => {
-                
-                if (isoCodeData) { // Some isoCodes will not have any data in the date range
-                    let row = {
-                        isoCode: idToIsoCode[isoCodeData.isoCode], // isoCode here is the foreign key id
-                    }
+          row[metric] = isoCodeData[metric];
 
-                    row[metric] = isoCodeData[metric];
-                    
-                    result.push(row);
-                    }
-                })
+          result.push(row);
+        }
+      });
 
-            return result;
-        }).catch(err => {
-            resolverHelpers.unexpectedError(err);
-        });
+      return result;
+    })
+    .catch((err) => {
+      resolverHelpers.unexpectedError(err);
+    });
 
-    return result;
-}
+  return result;
+};
 
 exports.idToIsoCodeQuery = idToIsoCodeQuery;
 exports.processMapDataQueries = processMapDataQueries;

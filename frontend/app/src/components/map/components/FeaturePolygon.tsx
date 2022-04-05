@@ -1,11 +1,14 @@
 import React from 'react';
 import {
   hoverProperty,
-  isoCodeContinentType, isoCodeCountryType, isoCodeNameProperty,
-  isoCodeProperty, isoCodeTypeProperty, MapLegend,
-  mapStrokeColor
+  isoCodeContinentType,
+  isoCodeCountryType,
+  isoCodeNameProperty,
+  isoCodeProperty,
+  isoCodeTypeProperty,
+  MapLegend,
+  mapStrokeColor,
 } from './MapConstants';
-
 
 interface Props {
   map: google.maps.Map | null;
@@ -17,26 +20,36 @@ interface Props {
 
 let firstFeatureAdded: google.maps.Data.Feature | null = null;
 
-const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend, isContinentFeatures}) => {
+const FeaturePolygon: React.FC<Props> = ({
+  map,
+  featureData,
+  valueName,
+  mapLegend,
+  isContinentFeatures,
+}) => {
+  const infoWindow: google.maps.InfoWindow =
+    new window.google.maps.InfoWindow();
 
-  const infoWindow: google.maps.InfoWindow = new window.google.maps.InfoWindow();
-
-  if(!(map && (mapLegend !== null))) return null;
+  if (!(map && mapLegend !== null)) return null;
 
   // * Prop dependent helpers
-  /** 
-  * Mouse goes in the geometry of the feature name
-  * @param {google.maps.Data.MouseEvent} e - mouse event
-  * @param {google.maps.Map | null} map - map parent component
-  * @param {google.maps.InfoWindow} infoWindow
-  */
-  const mouseInFeature = (e: google.maps.Data.MouseEvent, map: google.maps.Map | null, infoWindow: google.maps.InfoWindow) => {
+  /**
+   * Mouse goes in the geometry of the feature name
+   * @param {google.maps.Data.MouseEvent} e - mouse event
+   * @param {google.maps.Map | null} map - map parent component
+   * @param {google.maps.InfoWindow} infoWindow
+   */
+  const mouseInFeature = (
+    e: google.maps.Data.MouseEvent,
+    map: google.maps.Map | null,
+    infoWindow: google.maps.InfoWindow
+  ) => {
     const feature: google.maps.Data.Feature = e.feature;
     feature.setProperty('hover', true); // setting hover state to change style
-    
+
     const country = feature.getProperty(isoCodeNameProperty);
     const metric = feature.getProperty(valueName);
-  
+
     if (map) {
       let content: string;
 
@@ -55,33 +68,36 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
           </div>
         `;
       }
-      
+
       infoWindow.setContent(content);
       infoWindow.setPosition(e.latLng);
       infoWindow.open({
-        map: map
-      })
+        map: map,
+      });
     }
-  }
-  
-  /** 
-  * Mouse closes the infoWindow when the mouse leaves the polygon
-  * @param {google.maps.Data.MouseEvent} e - mouseEvent
-  * @param {google.maps.InfoWindow} infoWindow - the open info window
-  */
-  const mouseOutOfFeature = (e: google.maps.Data.MouseEvent, infoWindow: google.maps.InfoWindow) => {
+  };
+
+  /**
+   * Mouse closes the infoWindow when the mouse leaves the polygon
+   * @param {google.maps.Data.MouseEvent} e - mouseEvent
+   * @param {google.maps.InfoWindow} infoWindow - the open info window
+   */
+  const mouseOutOfFeature = (
+    e: google.maps.Data.MouseEvent,
+    infoWindow: google.maps.InfoWindow
+  ) => {
     e.feature.setProperty('hover', false); // resetting hover state
     infoWindow.close();
-  }
+  };
 
-  /** 
-  * Function to style the google maps feature
-  * @param {google.maps.Data.Feature} feature - polygon to be styled
-  */
-  const styleFeature = (feature: google.maps.Data.Feature) =>  {
-    const hover = feature.getProperty(hoverProperty); 
+  /**
+   * Function to style the google maps feature
+   * @param {google.maps.Data.Feature} feature - polygon to be styled
+   */
+  const styleFeature = (feature: google.maps.Data.Feature) => {
+    const hover = feature.getProperty(hoverProperty);
     const metric = feature.getProperty(valueName);
-    const isoCodeType = feature.getProperty(isoCodeTypeProperty)
+    const isoCodeType = feature.getProperty(isoCodeTypeProperty);
 
     let fillColor: string = '';
     let fillOpacity: number;
@@ -94,10 +110,10 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       strokeOpacity = 1;
       strokeWeight = 2;
     } else {
-      fillOpacity =  0.7;
+      fillOpacity = 0.7;
       strokeOpacity = 0.7;
       strokeWeight = 1;
-    }  
+    }
 
     if (metric) {
       for (let i = 0; i < mapLegend.length; i++) {
@@ -110,7 +126,7 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       fillColor = '';
       fillOpacity = 0;
     }
- 
+
     if (isoCodeType === isoCodeContinentType && isContinentFeatures) {
       visible = true;
     } else if (isoCodeType === isoCodeCountryType && !isContinentFeatures) {
@@ -127,22 +143,23 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       fillColor,
       visible,
     };
-    
+
     return featureStyle;
-  }
+  };
 
   const addFeatreData = () => {
-
     if (!featureData) return;
 
     // check if the data has already been added here
     let sameMetricCounter = 0;
 
-    for (let i = 0; (i < featureData.length) && (i < 3); i++) {
-      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(featureData[i].isoCode);
-      
+    for (let i = 0; i < featureData.length && i < 3; i++) {
+      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(
+        featureData[i].isoCode
+      );
+
       let metric;
-      
+
       if (isoCodeFeature) metric = isoCodeFeature.getProperty(valueName);
 
       if (metric === featureData[i][valueName]) {
@@ -152,15 +169,19 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
       }
     }
 
-    if (sameMetricCounter === featureData.length || sameMetricCounter === 3) return;
+    if (sameMetricCounter === featureData.length || sameMetricCounter === 3)
+      return;
 
     // add the data
-    featureData.forEach(isoCodeData => {
-      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(isoCodeData.isoCode);
-  
-      if (isoCodeFeature) isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
-    })
-  }
+    featureData.forEach((isoCodeData) => {
+      const isoCodeFeature: google.maps.Data.Feature = map.data.getFeatureById(
+        isoCodeData.isoCode
+      );
+
+      if (isoCodeFeature)
+        isoCodeFeature.setProperty(valueName, isoCodeData[valueName]);
+    });
+  };
 
   // * Render Logic
   map.data.setStyle(styleFeature);
@@ -170,34 +191,45 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
   let areFeaturesAdded: boolean = map.data.contains(firstFeatureAdded);
 
   if (!areFeaturesAdded && featureData) {
-    map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
-    map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
-
-    const addContinentFeatures = fetch(process.env.REACT_APP_COUNTRY_FEATURES_URL);
-    const addCountryFeatures = fetch(process.env.REACT_APP_CONTINENT_FEATURES_URL);
-
-    Promise.all([addContinentFeatures, addCountryFeatures]).then(responses => {
-      return Promise.all(responses.map(response => response.json()));
-    }).then(data => { 
-      firstFeatureAdded = map.data.addGeoJson(data[0], {
-        idPropertyName: isoCodeProperty 
-      })[0];
-
-      map.data.addGeoJson(data[1], {
-        idPropertyName: isoCodeProperty 
-      });
-
-      addFeatreData()
-    }).catch(error => {
-      console.error(error);
+    map.data.addListener('mouseover', (e) => {
+      mouseInFeature(e, map, infoWindow);
     });
-  } 
+    map.data.addListener('mouseout', (e) => {
+      mouseOutOfFeature(e, infoWindow);
+    });
+
+    const addContinentFeatures = fetch(
+      process.env.REACT_APP_COUNTRY_FEATURES_URL
+    );
+    const addCountryFeatures = fetch(
+      process.env.REACT_APP_CONTINENT_FEATURES_URL
+    );
+
+    Promise.all([addContinentFeatures, addCountryFeatures])
+      .then((responses) => {
+        return Promise.all(responses.map((response) => response.json()));
+      })
+      .then((data) => {
+        firstFeatureAdded = map.data.addGeoJson(data[0], {
+          idPropertyName: isoCodeProperty,
+        })[0];
+
+        map.data.addGeoJson(data[1], {
+          idPropertyName: isoCodeProperty,
+        });
+
+        addFeatreData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   if (areFeaturesAdded) {
     addFeatreData();
   }
-  
-  return null;
-}
 
-export default FeaturePolygon
+  return null;
+};
+
+export default FeaturePolygon;

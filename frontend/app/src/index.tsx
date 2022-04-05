@@ -13,7 +13,7 @@ import './i18n/i18n';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from "@sentry/tracing";
 
-process.env.NODE_ENV === "production" && Sentry.init({
+Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_URL,
   integrations: [new BrowserTracing()],
   tracesSampleRate: 0.3,
