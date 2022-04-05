@@ -45,6 +45,7 @@ input DataPipelineLogsInput {
     successStatus: Boolean!
     recordsSent: Int!
     recordsSuccessfullyAdded: Int!
+    msg: String
 }
 `;
 

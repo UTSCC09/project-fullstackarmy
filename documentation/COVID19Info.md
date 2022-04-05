@@ -1,5 +1,3 @@
-## COVID 19 INFO from JHU FAQ Website
-
 ### Herd Immunity and Protection
 
 We are still learning how the current Covid-19 vaccines reduce transmission of SARS-CoV-2. It is likely they reduce the risk of virus transmission but probably not completely. Vaccines prime the body into a better position to fight off viruses. However, this does not mean a person cannot transmit the virus. It just means the period they are infectious is significantly reduced. The hope is that the period of infectivity is so low, it would significantly reduce possibility of transmission, however we still don’t know how well the current vaccines can accomplish this. This is one of the reasons why it is still imperative for people to continue wearing masks and practice physical distancing, even if they are vaccinated.
@@ -29,6 +27,9 @@ Functionality: they all have a switch button to turn them into a binary heat map
 ### Vaccination Distribution
 
 When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. Since if there is low supply at that country, it will not be possible to distribute as many vaccines are possible.
+
+When looking at facts and figures about countries, specifically, about number of vaccine doses. It is important to look at percentages instead of raw values. For example, if a country has a very high population count, that means it will need a very high number of vaccines doses. This means comparing the number vaccine doeses with another country that has a low population count is pointless since it's guaranteed to be lower! Instead we look at a simple percentage:
+number of doses / number of doses required to reach 85% of the population.
 
 This allows us to see which countries are have an under supply of vaccines, thus require more donations from countries that have an over supply of vaccines.
 
