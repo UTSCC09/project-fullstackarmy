@@ -9,14 +9,17 @@ const helper = require('../helper');
 */
 module.exports = {
     updateDataPipelineLogs: async ({dataPipelineLogsInput}) => {
-        const { date, pipelineName, successStatus, recordsSent, recordsSuccessfullyAdded } = dataPipelineLogsInput;
+        const { date, pipelineName, successStatus,
+                recordsSent, recordsSuccessfullyAdded, 
+                msg } = dataPipelineLogsInput;
 
         const newLog = new DataPipelineLogs({
             date,
             pipelineName,
             recordsSent,
             recordsSuccessfullyAdded,
-            successStatus
+            successStatus,
+            msg
         }) 
 
         const result = newLog.save().then((record) => {
