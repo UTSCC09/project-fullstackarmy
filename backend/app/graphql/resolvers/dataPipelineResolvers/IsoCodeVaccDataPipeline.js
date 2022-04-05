@@ -1,6 +1,6 @@
 const IsoCode = require('../../../models/IsoCode');
 const IsoCodeVaccData = require('../../../models/IsoCodeVaccData');
-const helper = require('../helper');
+const resolverHelpers = require('../helper');
 
 /** 
 * Returns all the db queries needed to update the vaccine info
@@ -72,9 +72,7 @@ module.exports = {
 
             return isoCodeToID;
         }).catch(err => {
-            console.log('updateIsoCodeQueries');
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         }) 
 
         let isoCodeVaccDataQueries = updateIsoCodeVaccDataQueries(
@@ -85,9 +83,7 @@ module.exports = {
         let result = Promise.all(isoCodeVaccDataQueries).then(res => {
             return helper.numberObj(res.length);
         }).catch(err => {
-            console.log('updateIsoCodeVaccDataQueries');
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
         
         // Returning a promise that resolves on its own

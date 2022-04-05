@@ -2,7 +2,7 @@ const IsoCode = require('../../../models/IsoCode');
 const IsoCodeType = require('../../../models/IsoCodeType');
 const IncomeLevel = require('../../../models/IncomeLevel');
 const IsoCodeToIncomeLevel = require('../../../models/IsoCodeToIncomeLevel');
-const helper = require('../helper');
+const resolverHelpers = require('../helper');
 
 /** 
 * Returns queries for updating the different types of isoCodes
@@ -38,6 +38,7 @@ const updateIsoCodeTypes = (isoCodeTypes) => {
         const query = {
             isoCodeType
         };
+        
         const update = {};
         const options = {
             upsert: true,
@@ -147,8 +148,7 @@ module.exports = {
 
             return incomeToID;
         }).catch(err => {
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
 
         let isoCodeTypeQueries = updateIsoCodeTypes(isoCodeTypes);
@@ -163,8 +163,7 @@ module.exports = {
 
             return isoCodeTypeToID;
         }).catch(err => {
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
         
         isoCodeTypeToID = await isoCodeTypeToID;
@@ -181,9 +180,7 @@ module.exports = {
 
             return isoCodeToID;
         }).catch(err => {
-            console.log('updateIsoCodeQueries');
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
 
         // Waits for the actual value of the promises
@@ -200,9 +197,7 @@ module.exports = {
         let result = Promise.all(isoCodeIncomeLevelQuries).then(res => {
             return helper.numberObj(res.length);
         }).catch(err => {
-            console.log('updateIsoCodeIncomeLevelQueries');
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
         
         // Returning a promise that resolves on its own

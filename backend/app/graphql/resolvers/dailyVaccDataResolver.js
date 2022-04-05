@@ -1,14 +1,14 @@
 const DailyVaccData = require('../../models/IsoCodeVaccData');
 const IsoCode = require('../../models/IsoCode');
 const { transformIsoCode, dateToString } = require('./helper');
-
+const resolverHelpers = require('./helper');
 
 const isoCode = async isoCodeId => {
     try {
       const isoCode = await IsoCode.findById(isoCodeId);
       return transformIsoCode(isoCode);
     } catch (err) {
-      throw err;
+      resolverHelpers.unexpectedError(err);
     }
 };
 
@@ -53,15 +53,13 @@ module.exports = {
             // Then call them all at once with a single await.
             const firstVaccData = await Promise.all(firstVaccQueries)
                 .catch(err => {
-                    console.log('Retrieving first vaccination data')
-                    console.log(err)
-                    throw err
+                    resolverHelpers.unexpectedError(err);
                 });
             return firstVaccData.map(firstVaccData => {
                 return transformDailyVaccData(firstVaccData);
             });
         } catch (err) {
-            throw err;
+          resolverHelpers.unexpectedError(err);
         }
     },
     /** 
@@ -90,15 +88,13 @@ module.exports = {
             // Then call them all at once with a single await.
             const fullyVaccData = await Promise.all(fullyVaccQueries)
                 .catch(err => {
-                    console.log('Retrieving fully vaccinated data')
-                    console.log(err)
-                    throw err
+                  resolverHelpers.unexpectedError(err);
                 });
             return fullyVaccData.map(fullyVaccData => {
                 return transformDailyVaccData(fullyVaccData);
             });
         } catch (err) {
-            throw err;
+          resolverHelpers.unexpectedError(err);
         }
     },
     /** 
@@ -127,15 +123,13 @@ module.exports = {
             // Then call them all at once with a single await.
             const boosterVaccData = await Promise.all(boosterVaccQueries)
                 .catch(err => {
-                    console.log('Retrieving booster data')
-                    console.log(err)
-                    throw err
+                  resolverHelpers.unexpectedError(err);
                 });
             return boosterVaccData.map(boosterVaccData => {
                 return transformDailyVaccData(boosterVaccData);
             });
         } catch (err) {
-            throw err;
+          resolverHelpers.unexpectedError(err);
         }
     },
     /** 
@@ -144,7 +138,7 @@ module.exports = {
     */
      getVaccDataByDateRangeAndIsoCode: async (args) => {
         try {
-            // convert the dates
+            // Convert the dates
             const startDate = new Date(args.startDate);
             const endDate = new Date(args.endDate);
 
@@ -155,7 +149,9 @@ module.exports = {
                 {$sort: {"__order": 1}},
                 {$project: {_id: 1}}
             ];
+
             const isoCodeIds = await IsoCode.aggregate(pipeline).exec()
+            
             // Gather the promise-like queries
             const dailyFullyVaccQueries = isoCodeIds.map(isoCodeId => {
                 return DailyVaccData
@@ -166,24 +162,24 @@ module.exports = {
                         {'date': {$gte: startDate, $lte: endDate}},
                     ]})
             });
+            
             // Then call them all at once with a single await.
             const dailyFullyVaccData = await Promise.all(dailyFullyVaccQueries)
-                .catch(err => {
-                    console.log('Retrieving daily fully vaccinated data')
-                    console.log(err)
-                    throw err
-                });
-            // each array is the data for one isoCode, so need to transform per data
+              .catch(err => {
+                resolverHelpers.unexpectedError(err);
+              });
+          
+            // Each array is the data for one isoCode, so need to transform per data
             let dailyFullyVaccDataTransformed = []
             for (let i in dailyFullyVaccData){
-                let dailyFullyVaccEntry = dailyFullyVaccData[i].map(dailyFullyVaccData => {
-                    return transformDailyVaccData(dailyFullyVaccData)
-                })
-                dailyFullyVaccDataTransformed.push(dailyFullyVaccEntry)
+              let dailyFullyVaccEntry = dailyFullyVaccData[i].map(dailyFullyVaccData => {
+                return transformDailyVaccData(dailyFullyVaccData);
+              })
+              dailyFullyVaccDataTransformed.push(dailyFullyVaccEntry);
             }
             return dailyFullyVaccDataTransformed;
         } catch (err) {
-            throw err;
+          resolverHelpers.unexpectedError(err);
         }
     },
 };

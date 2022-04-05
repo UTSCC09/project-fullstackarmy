@@ -1,5 +1,6 @@
 const IsoCodeVaccSupplyData = require('../../../models/IsoCodeVaccSupplyData');
 const mapDataHelpers = require('./mapDataHelper');
+const resolverHelpers = require('../helper');
 
 const distribMapData = async () => {
 
@@ -8,26 +9,28 @@ const distribMapData = async () => {
   // time efficiency
   const idToIsoCode = await mapDataHelpers.idToIsoCodeQuery(forCountry = true);
 
-  const query = await IsoCodeVaccSupplyData.find({}).select({
+  const query = IsoCodeVaccSupplyData.find({}).select({
     isoCode: 1,
     dosesDeliveredRequiredPercent: 1,
     dosesExpectedRequiredPercent: 1,
+  }).then(res => {
+    res.map(isoCodeData => {
+      return {
+        isoCode: idToIsoCode[isoCodeData.isoCode],
+        dosesDeliveredRequiredPercent: isoCodeData.dosesDeliveredRequiredPercent,
+        dosesExpectedRequiredPercent: isoCodeData.dosesExpectedRequiredPercent,
+      };
+    });
+  }).catch(err => {
+    resolverHelpers.unexpectedError(err);
   });
 
-  const result = query.map(isoCodeData => {
-    return {
-      isoCode: idToIsoCode[isoCodeData.isoCode],
-      dosesDeliveredRequiredPercent: isoCodeData.dosesDeliveredRequiredPercent,
-      dosesExpectedRequiredPercent: isoCodeData.dosesExpectedRequiredPercent,
-    };
-  });
-
-  return result;
+  return query;
 }
 
 module.exports = {
   countryVaccDistribMapData: async () => {
-    const result = distribMapData();
+    const result = await distribMapData();
     return result;
   }
 };

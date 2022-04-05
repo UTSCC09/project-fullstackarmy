@@ -2,59 +2,56 @@ const IsoCodeVaccData = require('../../../models/IsoCodeVaccData');
 const mapDataHelpers = require('./mapDataHelper');
 
 // promises/queries of data
+
 const mapVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
   
-  // query - each must be unique due property cannot be null
   const queries = isoCodeIds.map(countryIsoCodeId => {
+    
     return IsoCodeVaccData.findOne({
       date: {$gte: startDataFormatted, $lte: endDataFormatted},
       isoCode: { $eq: countryIsoCodeId },
       peopleVaccinatedPerHundred: {$ne: null}
-    })
-    .select({
+    }).select({
       isoCode: 1,
       peopleVaccinatedPerHundred: 1,
-    })
-    .sort({date: -1});
+    }).sort({date: -1});
   });
 
   return queries;
 }
 
-const mapFullyVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
-  // query - each must be unique due property naming
+const mapFullyVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {  
   
   const queries = isoCodeIds.map(countryIsoCodeId => {
+   
     return IsoCodeVaccData.findOne({
       date: {$gte: startDataFormatted, $lte: endDataFormatted},
       isoCode: { $eq: countryIsoCodeId },
       peopleFullyVaccinatedPerHundred: {$ne: null}
-    })
-    .select({
+    }).select({
       isoCode: 1,
       peopleFullyVaccinatedPerHundred: 1,
-    })
-    .sort({date: -1});
+    }).sort({date: -1});
   });
 
   return queries;
 }
 
 const mapBoosterVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
-    // query - each must be unique due property naming
-    const queries = isoCodeIds.map(countryIsoCodeId => {
-      return IsoCodeVaccData.findOne({
-        date: {$gte: startDataFormatted, $lte: endDataFormatted},
-        isoCode: { $eq: countryIsoCodeId },
-        totalBoostersPerHundred: {$ne: null}
-      }).select({
-        isoCode: 1,
-        totalBoostersPerHundred: 1,
-      }).sort({date: -1});
 
-    });
+  const queries = isoCodeIds.map(countryIsoCodeId => {
+    
+    return IsoCodeVaccData.findOne({
+      date: {$gte: startDataFormatted, $lte: endDataFormatted},
+      isoCode: { $eq: countryIsoCodeId },
+      totalBoostersPerHundred: {$ne: null}
+    }).select({
+      isoCode: 1,
+      totalBoostersPerHundred: 1,
+    }).sort({date: -1});
+  });
 
-    return queries;
+  return queries;
 }
 
 const mapData = async (startDate, endDate, vaccDose, forCountry) => {
@@ -83,8 +80,6 @@ const mapData = async (startDate, endDate, vaccDose, forCountry) => {
       queries = await mapBoosterVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
       result = await mapDataHelpers.processMapDataQueries(queries, 'totalBoostersPerHundred', idToIsoCode);      
       break;
-    default:
-      throw Error('vaccBum should be one of: first, second or booster');
   }
 
   return result; 

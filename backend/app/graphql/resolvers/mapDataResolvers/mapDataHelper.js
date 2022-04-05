@@ -1,5 +1,6 @@
 const dataPipelineConstants = require('../../../dataPipeline/dataPipelineConstants');
 const IsoCode = require('../../../models/IsoCode');
+const resolverHelpers = require('../helper');
 
 const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
 const continentIsoCodes = dataPipelineConstants.continentIsoCodes;
@@ -28,8 +29,7 @@ const idToIsoCodeQuery = async (forCountry) => {
 
             return idToIsoCode;
         }).catch(err => {
-            console.log('nonCountryIsoCodesIds');
-            throw err;
+            resolverHelpers.unexpectedError(err);
         })
         
     return query; 
@@ -55,9 +55,7 @@ const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
 
             return result;
         }).catch(err => {
-            console.log('VaccDataQueries')
-            console.log(err);
-            throw err;
+            resolverHelpers.unexpectedError(err);
         });
 
     return result;

@@ -2,6 +2,7 @@ const IsoCode = require('../../models/IsoCode');
 const { transformIsoCode } = require('./helper');
 const dataPipelineConstants = require('../../dataPipeline/dataPipelineConstants');
 const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
+const resolverHelpers = require('./helper');
 
 module.exports = {
     /** 
@@ -22,7 +23,7 @@ module.exports = {
                 return transformIsoCode(isoCode);
             });
         } catch (err) {
-            throw err;
+        	resolverHelpers.unexpectedError(err);
         }
     },
     /** 
@@ -39,7 +40,7 @@ module.exports = {
                 return transformIsoCode(isoCode);
             });
         } catch (err) {
-            throw err;
+					resolverHelpers.unexpectedError(err);
         }
     },
 };

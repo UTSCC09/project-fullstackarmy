@@ -1,5 +1,5 @@
 const DataPipelineLogs = require('../../../models/DataPipelineLogs');
-const helper = require('../helper');
+const resolverHelpers = require('../helper');
 
 /** 
 * Updates the data pipeline logs
@@ -25,6 +25,7 @@ module.exports = {
         const result = newLog.save().then((record) => {
             return helper.boolObj(true);
         }).catch((err) => {
+            resolverHelpers.logError(err);
             return helper.boolObj(false);
         })
 
