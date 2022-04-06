@@ -1,13 +1,48 @@
 {
-    "tabnav": {
-        "infotab": "Informação",
-        "statustab": "Status de Vacinação",
-        "ratestab": "Taxas de Vacinação",
-        "distributiontab": "Distribuição de Vacinação"
+  "tabnav": {
+    "infotab": "Informação",
+    "statustab": "Status de Vacinação",
+    "ratestab": "Taxas de Vacinação",
+    "distributiontab": "Distribuição de Vacinação"
+  },
+  "configbar": {
+    "region": "Filtrar por Região",
+    "date": "Filtrar por Período",
+    "mode": "Aplicar Modo Escuro"
+  },
+  "infotab": {
+    "p1": {
+      "title": "Vaccination and Herd Immunity",
+      "question": "HOW WILL THE COVID-19 PANDEMIC END?"
     },
-    "configbar": {
-        "region": "Filtrar por Região",
-        "date": "Filtrar por Período",
-        "mode": "Aplicar Modo Escuro"
+    "p2": {
+      "title": "What is herd immunity?",
+      "def": "Herd immunity occurs when a sufficient proportion of the population develops immunity to a disease. If herd immunity is achieved, the disease will stop circulating and all of the population including those who have immunity and those who do not will be protected."
+    },
+    "p3": {
+      "title": "What is the vaccination threshold required for herd immunity against COVID-19?",
+      "desc": "The percentage of the population that needs to be vaccinated to achieve herd immunity has been speculated by experts to be around 85%."
+    },
+    "p4": {
+      "title": "However, something to note is that",
+      "desc": "We are still learning how the current Covid-19 vaccines reduce transmission of SARS-CoV-2.  It is likely they reduce the risk of virus transmission but probably not completely. Vaccines prime the body into a better position to fight off viruses. However, this does not mean a person cannot transmit the virus. It just means the period they are infectious is significantly reduced. The hope is that the period of infectivity is so low, it would significantly reduce possibility of transmission, however we still don’t know how well the current vaccines can accomplish this. This is one of the reasons why it is still imperative for people to continue wearing masks and practice physical distancing, even if they are vaccinated."
+    },
+    "p5": {
+      "title": "This means that",
+      "desc": "Until we substantially reduce community transmission of SARS-CoV-2, and hospitalizations and death rates dramatically decrease, we still need to wear masks and practice physical distancing."
+    },
+    "p6": {
+      "title": "Keep in mind that",
+      "desc": "The vaccine is not 100% effective and we still do not know if someone who is vaccinated against SARS-CoV-2 can develop asymptomatic infection and transmit the virus."
+    },
+    "p7": {
+      "title": "But, there is light at the end of the tunnel",
+      "desc": "If a vaccine not only protects against disease but reduces transmission, and continues to do so for many years, we are likely to reach a state of herd protection when masks and physical distancing will no longer be required. To learn more about the global progress in vaccinations, explore the data models in the tabs above."
     }
+  },
+  "maptabs": {
+    "firstdosemap": "First Vaccination Dose Heat Map",
+    "seconddosemap": "Second Vaccination Dose Heat Map",
+    "boosterdosemap": "Booster Dose Heat Map"
+  }
 }
