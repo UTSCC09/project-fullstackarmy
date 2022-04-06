@@ -5,7 +5,6 @@ import Legend from './Legend';
 import FeaturePolygon from './FeaturePolygon';
 import Loading from '../../elements/Loading';
 import MapError from './MapError';
-import '../styles/MapContainer.css';
 import { MapLegend } from './MapConstants';
 
 interface Props {
