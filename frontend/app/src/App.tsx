@@ -111,9 +111,11 @@ function App() {
                   <Route
                     path='/'
                     element={
-                      <>
-                        <TabNav selected='one' /> <InfoTab />
-                      </>
+                      <div id='no-scroll'>
+                        <>
+                          <TabNav selected='one' /> <InfoTab />
+                        </>
+                      </div>
                     }
                   ></Route>
                   <Route

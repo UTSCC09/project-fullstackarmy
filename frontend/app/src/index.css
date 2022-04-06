@@ -62,3 +62,13 @@ footer a:hover{
   margin-left: 48px;
   color: #1f74f9;
 }
+/* For avoiding double scroll bar for parallax feature
+   adapted from: 
+   https://sebhastian.com/hide-scrollbar-css/#:~:text=If%20you%20want%20to%20hide,the%20display%20property%20to%20none%20. 
+*/
+#no-scroll ::-webkit-scrollbar {
+  display: none;
+}
+#no-scroll html {
+  scrollbar-width: none;
+}
