@@ -8,6 +8,7 @@ import FullVacMap from '../map/FullVaccMap';
 import VaccMap from '../map/VaccMap';
 import { t } from 'i18next';
 import StatusTabPanel from './components/StatusTabPanel';
+import './styles/StatusTab.css';
 
 // From https://mui.com/components/tabs/ example
 function a11yProps(index: number) {
@@ -24,16 +25,18 @@ function a11yProps(index: number) {
  */
 export const StatusTab: React.FC = () => {
   const [value, setValue] = React.useState(0);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   return (
     <div className='status-tab'>
       {/* First is the bar chart */}
       <HerdImmunityBarChart />
       {/* Then is the tabs for the heat maps, which are displayed one at a time */}
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box className='box' sx={{ width: '100%' }}>
+        <Box>
           <Tabs
             value={value}
             onChange={handleChange}
