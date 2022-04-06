@@ -46,6 +46,7 @@ const errCallback = (err) => {
       err.message
     );
   }
+  console.log('successfull write');
   return null;
 };
 
