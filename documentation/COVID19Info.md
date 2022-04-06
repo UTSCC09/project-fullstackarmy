@@ -22,7 +22,9 @@ Map # 1 - First Dose Heat map
 Map # 2 - Second Dose Heat map
 Map # 3 - Booster Dose Heat map
 
-Functionality: they all have a switch button to turn them into a binary heat map of whether a country is above the herd immunity / protection threshold or not; also have a switch button to change the polygons from country to continent only
+At a first dose level, 60% of the country out of 218 countries, that we have data on, have reached the herd immunity / protection threshold. A full list of countries can be downloaded here.
+At a second dose level, 50% of the country out of 218 countries, that we have data on, have reached the herd immunity / protection threshold. A full list of countries can be downloaded here.
+At a third dose level, 30% of the country out of 218 countries, that we have data on, have reached the herd immunity / protection threshold. A full list of countries can be downloaded here.
 
 ### Vaccination Rates
 
@@ -34,9 +36,9 @@ For example, Canada's rate of vaccination last month was 3%. This means that eve
 
 When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. If there is a low supply in that country, it will not be possible to distribute as many vaccines as possible to quickly reach herd immunity.
 
-This allows us to see which countries suffer from an undersupply of vaccines and require more donations from countries that have an oversupply of vaccines.
+This allows us to see which countries suffer from an undersupply of vaccines and require more COVID19 vaccine donations.
 
-Map #1 - Delivered/Required doses percentage heat map
-Map #2 - Expected/Required doses percentage heat map
+Map #1 - Delivered/Required Doses Percentage heat map
+Map #2 - Expected/Required Doses Percentage heat map
 
-Functionality: binary heat map switch since there are some countries with an excess number of doses
+The delivered doses that each country has at the moment, about % of the countries have enough doses to fully vaccinate the country's and additional booster shots, % have enough doses to reach herd immunity / protection, while % of countries don't have sufficient doses to reach the threshold. A full list of countries in each category is available for download here.
