@@ -1,89 +1,93 @@
+import React from 'react';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 export const Credits = () => {
+  // Go to top of the page upon rendering 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
-    <div className='credits'>
-      <Typography variant='h5' sx={{ marginTop: 2, marginBottom: 2 }}>
-        Credits
-      </Typography>
-      <Typography variant='h6' sx={{ textDecoration: 'underline' }}>
-        UI Components
-      </Typography>
-      <Typography variant='subtitle1'>
-        Information Tab Images - Sources
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Background GIF:{' '}
-          <a href='https://tenor.com/view/blue-white-gradient-carrd-gif-23556830'>
-            Tenor GIF
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Scroll GIF:{' '}
-          <a href='https://burlingtonhealthja.com/doctors/'>
-            Burlington Health
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          COVID-19 GIF:{' '}
-          <a href='https://www.realsimple.com/health/preventative-health/recover-from-lingering-covid-19-symptoms'>
-            Real Simple
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Population Graphic:{' '}
-          <a href='https://www.gavi.org/vaccineswork/not-so-super-immunity-people-whove-recovered-covid-19-and-vaccinated-can-still-be'>
-            Gavi
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          COVID-19 Vaccine Graphic:{' '}
-          <a href='https://www.wyomingpublicmedia.org/open-spaces/2021-09-10/natrona-county-health-officer-says-vaccinations-would-solve-wyomings-covid-19-problems'>
-            Wyoming Public Media
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Stop COVID-19 Graphic:{' '}
-          <a href='https://medcitynews.com/2020/11/moderna-does-one-better-than-pfizer-biontech-touts-94-5-efficacy-for-its-covid-vaccine/'>
-            MedCity News
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Physical Distancing Graphic:{' '}
-          <a href='https://scopeblog.stanford.edu/2020/12/02/persuading-the-public-to-take-protective-measures-in-the-pandemic/'>
-            Stanford Medicine
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Person in Bubble Graphic:{' '}
-          <a href='https://health.clevelandclinic.org/how-to-fight-coronavirus-caution-fatigue/'>
-            Cleveland Clinic
-          </a>
-        </li>
-      </Typography>
-      <Typography variant='body2'>
-        <li>
-          Raised Hands Graphic:{' '}
-          <a href='https://www.biomatrixsprx.com/news/covid-19-encouragement-and-hope-for-fertility-patients'>
-            BIOMATRIX
-          </a>
-        </li>
-      </Typography>
+    <div>
+      <Paper elevation={2} sx={{display:'flex', justifyContent:'center'}}>
+        <Typography variant='h5' sx={sx.title}>
+          Credits
+        </Typography>
+      </Paper>
+
+      <Paper elevation={3} sx={sx.section}>
+        <Typography variant='h6' sx={sx.heading}>
+          Data Sources
+        </Typography>
+        <Typography variant='subtitle1'>
+          Information Tab
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            <a className='link' href='https://youtu.be/J0RuJpGtgls'>Video </a>
+            by 
+            <a className='link' href='https://www.youtube.com/c/HoustonMethodist/about'> Houston Methodist</a> 
+          </li>
+        </Typography>
+      </Paper>
+
+      <Paper elevation={3} sx={{margin: 5, padding: 5}}>
+        <Typography variant='h6' sx={sx.heading}>
+          User Interface and Design
+        </Typography>
+        <Typography variant='subtitle1'>
+          UI Components (Layout Components, Buttons, Dropdown Menus)
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            From 
+            <a className='link' href='https://mui.com/pricing/'> MUI (open-source Community plan)</a>
+            , licensed under the
+            <a className='link' href='https://github.com/mui/material-ui/blob/master/LICENSE'> MIT License</a> 
+          </li>
+        </Typography>
+
+        <Typography variant='subtitle1'>
+          Charts Layout
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            From 
+            <a className='link' href='https://www.chartjs.org/'> Chart.js</a>
+            , licensed under the
+            <a className='link' href='https://www.chartjs.org/docs/2.9.4/notes/license.html'> MIT License</a> 
+          </li>
+        </Typography>
+
+        <Typography variant='subtitle1'>
+          Information Tab Images
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            Images from 
+            <a className='link' href='https://pixabay.com/'> Pixabay</a>
+            , licensed under the
+            <a className='link' href='https://pixabay.com/service/license/'> Pixabay License</a> 
+          </li>
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            Arrow GIF from 
+            <a className='link' href='https://www.canva.com/'> Canva</a>
+            , licensed under the
+            <a className='link' href='https://www.canva.com/policies/content-license-agreement/'> Canva Free Content License</a> 
+          </li>
+        </Typography>
+      </Paper>
     </div>
   );
 };
+
+// sx values for Typography components
+const sx = {
+  'title' : {marginTop: 2, marginBottom: 2},
+  'section' : {margin: 5, padding: 5},
+  'heading' : {textDecoration: 'underline'},
+  'bullet' : {marginLeft: 2}
+}
