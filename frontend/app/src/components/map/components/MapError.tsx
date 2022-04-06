@@ -1,17 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 interface Props {
-    height: string
+  height: string;
 }
 
 const MapError: React.FC<Props> = (height) => {
   return (
-        <div className="map map-error" style={height}>
-            <div className="error"></div>
-        </div>  
-    )
-}
+    <div className='map map-error' style={height}>
+      <div className='error'></div>
+    </div>
+  );
+};
 
-export default MapError
-
-
+export default MapError;

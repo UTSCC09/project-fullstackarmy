@@ -5,34 +5,33 @@ import { FeatureData, MapLegend } from './MapConstants';
 import MapContainer from './MapContainer';
 
 interface Props {
-  mapName: string,
-  featureValueName: string,
-  featureData: FeatureData,
-  primaryLegend: MapLegend,
-  secondaryLegendToggle: boolean,
-  secondaryLegendName?: string,
-  secondaryLegend?: MapLegend,
-  continentToggle: boolean, 
-  continentDataCall?: Function,
+  mapName: string;
+  featureValueName: string;
+  featureData: FeatureData;
+  primaryLegend: MapLegend;
+  secondaryLegendToggle: boolean;
+  secondaryLegendName?: string;
+  secondaryLegend?: MapLegend;
+  continentToggle: boolean;
+  continentDataCall?: Function;
 }
 
 type MapState = {
-  secondaryLegend: boolean,
-  continents: boolean,
-}
+  secondaryLegend: boolean;
+  continents: boolean;
+};
 
 const initMapState: MapState = {
   secondaryLegend: false,
   continents: false,
-}
+};
 
 // Same as above propertie
 const secondaryLegendEventName: string = 'secondaryLegend';
 const continentEventName: string = 'continents';
 
 const VaccinationMap: React.FC<Props> = (args) => {
-  
-  const [mapState, setMapState] = useState<MapState>(initMapState)
+  const [mapState, setMapState] = useState<MapState>(initMapState);
   const [mapLegend, setMapLegend] = useState<MapLegend>(args.primaryLegend);
 
   const handleMapState = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,42 +43,54 @@ const VaccinationMap: React.FC<Props> = (args) => {
     } else if (eventName === secondaryLegendEventName && !checked) {
       setMapLegend(args.primaryLegend);
     } else if (eventName === continentEventName) {
-      if(args.continentDataCall) args.continentDataCall(checked);
-    } 
+      if (args.continentDataCall) args.continentDataCall(checked);
+    }
 
     setMapState({
       ...mapState,
       [eventName]: checked,
-    })
-  }
+    });
+  };
 
   return (
     <div className='map-wrapper'>
       <FormGroup id='map-controls'>
-        {
-          args.secondaryLegendToggle 
-          && 
-          <FormControlLabel control={
-              <Switch color="secondary" checked={mapState.secondaryLegend} onChange={handleMapState} name={secondaryLegendEventName}/>
+        {args.secondaryLegendToggle && (
+          <FormControlLabel
+            control={
+              <Switch
+                color='secondary'
+                checked={mapState.secondaryLegend}
+                onChange={handleMapState}
+                name={secondaryLegendEventName}
+              />
             }
-            label={args.secondaryLegendName} 
+            label={args.secondaryLegendName}
           />
-        }
-        {
-          args.continentToggle 
-          && 
-          <FormControlLabel control={
-              <Switch color="secondary" checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
+        )}
+        {args.continentToggle && (
+          <FormControlLabel
+            control={
+              <Switch
+                color='secondary'
+                checked={mapState.continents}
+                onChange={handleMapState}
+                name={continentEventName}
+              />
             }
-            label="Continents" 
+            label='Continents'
           />
-        }
+        )}
       </FormGroup>
-      <MapContainer featureData={args.featureData} mapLegend={mapLegend} mapName={args.mapName} featureValueName={args.featureValueName} isContinentFeatures={mapState.continents}/>
+      <MapContainer
+        featureData={args.featureData}
+        mapLegend={mapLegend}
+        mapName={args.mapName}
+        featureValueName={args.featureValueName}
+        isContinentFeatures={mapState.continents}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default React.memo(VaccinationMap);
-
-
