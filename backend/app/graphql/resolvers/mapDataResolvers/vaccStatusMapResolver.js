@@ -2,60 +2,69 @@ const IsoCodeVaccData = require('../../../models/IsoCodeVaccData');
 const mapDataHelpers = require('./mapDataHelper');
 
 // promises/queries of data
-const mapVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
-  
-  // query - each must be unique due property cannot be null
-  const queries = isoCodeIds.map(countryIsoCodeId => {
+
+const mapVaccDataQueries = async (
+  isoCodeIds,
+  startDataFormatted,
+  endDataFormatted
+) => {
+  const queries = isoCodeIds.map((countryIsoCodeId) => {
     return IsoCodeVaccData.findOne({
-      date: {$gte: startDataFormatted, $lte: endDataFormatted},
+      date: { $gte: startDataFormatted, $lte: endDataFormatted },
       isoCode: { $eq: countryIsoCodeId },
-      peopleVaccinatedPerHundred: {$ne: null}
+      peopleVaccinatedPerHundred: { $ne: null },
     })
-    .select({
-      isoCode: 1,
-      peopleVaccinatedPerHundred: 1,
-    })
-    .sort({date: -1});
+      .select({
+        isoCode: 1,
+        peopleVaccinatedPerHundred: 1,
+      })
+      .sort({ date: -1 });
   });
 
   return queries;
-}
+};
 
-const mapFullyVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
-  // query - each must be unique due property naming
-  
-  const queries = isoCodeIds.map(countryIsoCodeId => {
+const mapFullyVaccDataQueries = async (
+  isoCodeIds,
+  startDataFormatted,
+  endDataFormatted
+) => {
+  const queries = isoCodeIds.map((countryIsoCodeId) => {
     return IsoCodeVaccData.findOne({
-      date: {$gte: startDataFormatted, $lte: endDataFormatted},
+      date: { $gte: startDataFormatted, $lte: endDataFormatted },
       isoCode: { $eq: countryIsoCodeId },
-      peopleFullyVaccinatedPerHundred: {$ne: null}
+      peopleFullyVaccinatedPerHundred: { $ne: null },
     })
-    .select({
-      isoCode: 1,
-      peopleFullyVaccinatedPerHundred: 1,
-    })
-    .sort({date: -1});
+      .select({
+        isoCode: 1,
+        peopleFullyVaccinatedPerHundred: 1,
+      })
+      .sort({ date: -1 });
   });
 
   return queries;
-}
+};
 
-const mapBoosterVaccDataQueries = async(isoCodeIds, startDataFormatted, endDataFormatted) => {
-    // query - each must be unique due property naming
-    const queries = isoCodeIds.map(countryIsoCodeId => {
-      return IsoCodeVaccData.findOne({
-        date: {$gte: startDataFormatted, $lte: endDataFormatted},
-        isoCode: { $eq: countryIsoCodeId },
-        totalBoostersPerHundred: {$ne: null}
-      }).select({
+const mapBoosterVaccDataQueries = async (
+  isoCodeIds,
+  startDataFormatted,
+  endDataFormatted
+) => {
+  const queries = isoCodeIds.map((countryIsoCodeId) => {
+    return IsoCodeVaccData.findOne({
+      date: { $gte: startDataFormatted, $lte: endDataFormatted },
+      isoCode: { $eq: countryIsoCodeId },
+      totalBoostersPerHundred: { $ne: null },
+    })
+      .select({
         isoCode: 1,
         totalBoostersPerHundred: 1,
-      }).sort({date: -1});
+      })
+      .sort({ date: -1 });
+  });
 
-    });
-
-    return queries;
-}
+  return queries;
+};
 
 const mapData = async (startDate, endDate, vaccDose, forCountry) => {
   const startDataFormatted = new Date(startDate);
@@ -70,49 +79,101 @@ const mapData = async (startDate, endDate, vaccDose, forCountry) => {
   let queries;
   let result;
 
-  switch(vaccDose){
+  switch (vaccDose) {
     case 'first':
-      queries = await mapVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
-      result = await mapDataHelpers.processMapDataQueries(queries, 'peopleVaccinatedPerHundred', idToIsoCode);
+      queries = await mapVaccDataQueries(
+        isoCodeIds,
+        startDataFormatted,
+        endDataFormatted
+      );
+      result = await mapDataHelpers.processMapDataQueries(
+        queries,
+        'peopleVaccinatedPerHundred',
+        idToIsoCode
+      );
       break;
     case 'second':
-      queries = await mapFullyVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
-      result = await mapDataHelpers.processMapDataQueries(queries, 'peopleFullyVaccinatedPerHundred', idToIsoCode);
+      queries = await mapFullyVaccDataQueries(
+        isoCodeIds,
+        startDataFormatted,
+        endDataFormatted
+      );
+      result = await mapDataHelpers.processMapDataQueries(
+        queries,
+        'peopleFullyVaccinatedPerHundred',
+        idToIsoCode
+      );
       break;
     case 'booster':
-      queries = await mapBoosterVaccDataQueries(isoCodeIds, startDataFormatted, endDataFormatted);
-      result = await mapDataHelpers.processMapDataQueries(queries, 'totalBoostersPerHundred', idToIsoCode);      
+      queries = await mapBoosterVaccDataQueries(
+        isoCodeIds,
+        startDataFormatted,
+        endDataFormatted
+      );
+      result = await mapDataHelpers.processMapDataQueries(
+        queries,
+        'totalBoostersPerHundred',
+        idToIsoCode
+      );
       break;
-    default:
-      throw Error('vaccBum should be one of: first, second or booster');
   }
 
-  return result; 
-}
+  return result;
+};
 
 module.exports = {
-  countryVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='first', forCountry=true);
-    return result; 
+  countryVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'first'),
+      (forCountry = true)
+    );
+    return result;
   },
-  countryFullyVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='second', forCountry=true);
-    return result; 
+  countryFullyVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'second'),
+      (forCountry = true)
+    );
+    return result;
   },
-  countryBoosterVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='booster', forCountry=true);
-    return result; 
+  countryBoosterVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'booster'),
+      (forCountry = true)
+    );
+    return result;
   },
-  continentVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='first', forCountry=false);
-    return result; 
+  continentVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'first'),
+      (forCountry = false)
+    );
+    return result;
   },
-  continentFullyVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='second', forCountry=false);
-    return result; 
+  continentFullyVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'second'),
+      (forCountry = false)
+    );
+    return result;
   },
-  continentBoosterVaccMapData: async ({startDate, endDate}) => {
-    const result = await mapData(startDate, endDate, vaccDose='booster', forCountry=false);
-    return result; 
-  }
+  continentBoosterVaccMapData: async ({ startDate, endDate }) => {
+    const result = await mapData(
+      startDate,
+      endDate,
+      (vaccDose = 'booster'),
+      (forCountry = false)
+    );
+    return result;
+  },
 };

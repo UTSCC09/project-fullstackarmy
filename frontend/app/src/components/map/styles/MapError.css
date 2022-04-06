@@ -1,10 +1,10 @@
 .map-error {
-    width: 100%;
-    background-image: url('../../../media/MapImage.png');
-    color: black;
-    opacity: 0.6;
+  width: 100%;
+  background-image: url('../../../media/MapImage.png');
+  color: black;
+  opacity: 0.6;
 }
 
 .error {
-    color: red;
+  color: red;
 }

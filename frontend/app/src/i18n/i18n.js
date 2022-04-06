@@ -6,22 +6,25 @@ import es from './locales/es.json';
 import pt from './locales/pt.json';
 import fr from './locales/fr.json';
 
-i18n.use(LanguageDetector).use(initReactI18next).init({
-  resources: {
-    en: { translation: en },
-    es: { translation: es },
-    pt: { translation: pt },
-    fr: { translation: fr }
-  },
-  fallbackLng: 'en',
-  debug: true,
-  detection: {
-    order: ['queryString', 'cookie'],
-    cache: ['cookie']
-  },
-  interpolation: {
-    escapeValue: false
-  }
-})
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+      pt: { translation: pt },
+      fr: { translation: fr },
+    },
+    fallbackLng: 'en',
+    debug: true,
+    detection: {
+      order: ['queryString', 'cookie'],
+      cache: ['cookie'],
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 export default i18n;
