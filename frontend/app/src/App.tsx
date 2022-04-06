@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Header } from './components/Header';
+import { Header } from './components/header/Header';
 import TabNav from './components/TabNav';
 import { Footer } from './components/Footer';
 import { DataSources } from './components/DataSources';
@@ -112,7 +112,7 @@ function App() {
                     path='/'
                     element={
                       <>
-                        <TabNav selected='one' /> <InfoTab />
+                        <TabNav selected='info' /> <InfoTab />
                       </>
                     }
                   ></Route>
@@ -120,7 +120,7 @@ function App() {
                     path='/vaccination-status'
                     element={
                       <>
-                        <TabNav selected='two' /> <StatusTab />
+                        <TabNav selected='vaccination-status' /> <StatusTab />
                       </>
                     }
                   ></Route>
@@ -128,7 +128,7 @@ function App() {
                     path='/vaccination-rates'
                     element={
                       <>
-                        <TabNav selected='three' /> <RatesTab />
+                        <TabNav selected='vaccination-rates' /> <RatesTab />
                       </>
                     }
                   ></Route>
@@ -137,7 +137,8 @@ function App() {
                     element={
                       <>
                         {' '}
-                        <TabNav selected='four' /> <DistributionTab />
+                        <TabNav selected='vaccination-distribution' />{' '}
+                        <DistributionTab />
                       </>
                     }
                   ></Route>
