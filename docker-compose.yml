@@ -54,6 +54,7 @@ services:
       MONGO_PASSWORD: CEZHrExc5aMCcp5s
       MONGO_DB: DataPipelineDev
       BACKEND_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+      DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
       VIRTUAL_HOST: api.covid19vaxtracker.live
       LETSENCRYPT_HOST: api.covid19vaxtracker.live
   # Adapted from https://lukashermann.dev/writing/cron-in-nodejs-docker-image/
@@ -66,7 +67,8 @@ services:
       dockerfile: Dockerfile-dataPipeline
     container_name: vacc-data-pipeline
     environment:
-      PIPELINE_API_URL: https://api.covid19vaxtracker.live
+      BACKEND_API_URL: https://api.covid19vaxtracker.live
+      DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
     # volumes:
     #   - ./backend/app:/home/node/app
     command: node dataPipeline/vaccDataPipeline.js
@@ -77,7 +79,8 @@ services:
       dockerfile: Dockerfile-dataPipeline
     container_name: vacc-supply-data-pipeline
     environment:
-      PIPELINE_API_URL: https://api.covid19vaxtracker.live
+      BACKEND_API_URL: https://api.covid19vaxtracker.live
+      DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
     # volumes:
     #   - ./backend/app:/home/node/app
     command: node dataPipeline/vaccSupplyDataPipeline.js
