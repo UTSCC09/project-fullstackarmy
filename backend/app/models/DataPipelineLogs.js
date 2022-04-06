@@ -23,6 +23,9 @@ const dataPipelineLogsSchema = new Schema({
     successStatus:{
         type: Boolean,
         required: true,
+    },
+    msg:{
+        type: String,
     }
 }, {collection: 'DataPipelineLogs'});
 

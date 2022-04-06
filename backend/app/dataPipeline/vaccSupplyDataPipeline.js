@@ -11,6 +11,9 @@ const graphQLClient = new graphqlRequest.GraphQLClient('http://localhost:3000/ap
 const VaccSupplyDataURL = 'https://data.covid19taskforce.com/covax-api/getCovaxDashboardData';
 const StoredFileName = 'VaccSupplyData.txt';
 
+const VaccSupplyDataPipelineName = 'vaccineSupplyPipeline';
+const VaccSupplyDataPipelineTxt = 'vaccineSupplyPipelinelogs.txt';
+
 let vaccSupplyPayload = [];
 
 // Set up key value pair dict to store the data so that data checks can be done
@@ -24,7 +27,11 @@ let prevData;
 * @return {NodeJS.ErrnoException | null} the error or null
 */
 const errCallback = (err) => {
-  if (err) throw err; // ideally should write to the db saying that there was an error
+  if (err) {
+    helpers.updateDataPipelineLogs(VaccSupplyDataPipelineName, false, 0, 0, err.message);
+    helpers.updateDataPipelineTxt(VaccSupplyDataPipelineTxt, false, 0, 0, err.message);
+  }
+  console.log("successfull write")
   return null;
 }
 
@@ -129,10 +136,12 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
 
   req.then(res => {
     // Only write the file when successful
-    helpers.updateDataPipelineLogs('IsoCodeVaccSupplyDataPipeline', true, isoCodeVaccSupplyDataInput.length, res.updateIsoCodeVaccSupplyData.number);
+    helpers.updateDataPipelineLogs(VaccSupplyDataPipelineName, true, isoCodeVaccSupplyDataInput.length, res.updateIsoCodeVaccSupplyData.number, '');
+    helpers.updateDataPipelineTxt(VaccSupplyDataPipelineTxt, true, isoCodeVaccSupplyDataInput.length, res.updateIsoCodeVaccSupplyData.number, '');
     fs.writeFile(StoredFileName, JSON.stringify(prevData), errCallback);
   }).catch(err => {
-    helpers.updateDataPipelineLogs('IsoCodeVaccSupplyDataPipeline', false, isoCodeVaccSupplyDataInput.length, 0);
+    helpers.updateDataPipelineLogs(VaccSupplyDataPipelineName, false, isoCodeVaccSupplyDataInput.length, 0, err.message);
+    helpers.updateDataPipelineTxt(VaccSupplyDataPipelineTxt, false, isoCodeVaccSupplyDataInput.length, 0, err.message);
   });
 
   return req;

@@ -2,7 +2,7 @@ import { QueryResult, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import Loading from '../elements/Loading';
 import QueryError from '../elements/QueryError';
-import { ScaledLegend } from './components/MapConstants';
+import { BinaryLegend, ScaledLegend, ScaledLegendName } from './components/MapConstants';
 import VaccinationMap from './components/VaccinationMap';
 import { GET_BOOSTER_VACC_MAP_CONTINENT_DATA, GET_BOOSTER_VACC_MAP_COUNTRY_DATA } from './queries/mapDataQueries';
 import { ContinentBoosterVaccMapData, CountryBoosterVaccMapData, TimePeriodVars } from './types/types';
@@ -64,12 +64,14 @@ const BoosterVaccMap: React.FC<Props> = () => {
   return (
     <VaccinationMap 
       mapName={mapName} 
-      binaryFeatureStyling={true}
-      continentToggle={true}
-      featureData={featureData} 
       featureValueName={featureValueName}
+      featureData={featureData} 
+      primaryLegend={BinaryLegend}
+      secondaryLegendToggle={true}
+      secondaryLegendName={ScaledLegendName}
+      secondaryLegend={ScaledLegend}
+      continentToggle={true}
       continentDataCall={continentDataCall}
-      initMapLegend={ScaledLegend}
     />
   )
 }

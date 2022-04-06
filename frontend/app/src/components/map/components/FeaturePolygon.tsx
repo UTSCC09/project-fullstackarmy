@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ContinentFeaturesURL, CountryFeaturesURL, hoverProperty,
+  hoverProperty,
   isoCodeContinentType, isoCodeCountryType, isoCodeNameProperty,
   isoCodeProperty, isoCodeTypeProperty, MapLegend,
   mapStrokeColor
@@ -51,7 +51,7 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
         content = `
           <div style="font-size: 14px; display: flex; flex-direction: column;">
             <div>Region: ${country}</div>
-            <div>Percentage: N/A</div>
+            <div>Percentage: No Data</div>
           </div>
         `;
       }
@@ -173,8 +173,8 @@ const FeaturePolygon: React.FC<Props> = ({map, featureData, valueName, mapLegend
     map.data.addListener('mouseover', (e) => {mouseInFeature(e, map, infoWindow)});
     map.data.addListener('mouseout', (e) => {mouseOutOfFeature(e, infoWindow)});
 
-    const addContinentFeatures = fetch(ContinentFeaturesURL);
-    const addCountryFeatures = fetch(CountryFeaturesURL);
+    const addContinentFeatures = fetch(process.env.REACT_APP_COUNTRY_FEATURES_URL);
+    const addCountryFeatures = fetch(process.env.REACT_APP_CONTINENT_FEATURES_URL);
 
     Promise.all([addContinentFeatures, addCountryFeatures]).then(responses => {
       return Promise.all(responses.map(response => response.json()));
