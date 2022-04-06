@@ -10,12 +10,19 @@ import { useTranslation } from 'react-i18next';
 import { ColorModeToggle } from './ColorModeToggle';
 
 interface Props {
-  open: boolean;
+  open: boolean,
+  handleClose: Function,
 }
 
-const ConfigBar: React.FC<Props> = ({ open }) => {
+const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
   const { t } = useTranslation();
-
+  
+  const closeDrawer = () =>{
+    if (open){
+      handleClose();
+    }
+  }
+  
   return (
     <Drawer
       sx={{
@@ -25,9 +32,10 @@ const ConfigBar: React.FC<Props> = ({ open }) => {
           width: 260,
         },
       }}
-      variant='persistent'
+      variant='temporary'
       anchor='left'
       open={open}
+      onBackdropClick={closeDrawer}
     >
       <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
         {t('configbar.region')}
