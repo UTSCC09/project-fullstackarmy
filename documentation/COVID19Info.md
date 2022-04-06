@@ -36,7 +36,10 @@ For example, Canada's rate of vaccination last month was 3%. This means that eve
 
 When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. If there is a low supply in that country, it will not be possible to distribute as many vaccines as possible to quickly reach herd immunity.
 
-This allows us to see which countries suffer from an undersupply of vaccines and require more COVID19 vaccine donations.
+When looking at facts and figures about countries, specifically, about number of vaccine doses. It is important to look at percentages instead of raw values. For example, if a country has a very high population count, that means it will need a very high number of vaccines doses. This means comparing the number vaccine doeses with another country that has a low population count is pointless since it's guaranteed to be lower! Instead we look at a simple percentage:
+number of doses / number of doses required to reach 85% of the population.
+
+This allows us to see which countries are have an under supply of vaccines, thus require more donations from countries that have an over supply of vaccines.
 
 Map #1 - Delivered/Required Doses Percentage heat map
 Map #2 - Expected/Required Doses Percentage heat map

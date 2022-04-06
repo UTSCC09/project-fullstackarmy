@@ -1,15 +1,13 @@
-import React from 'react'
-import './Loading.css'
-interface Props {
-}
+import React from 'react';
+import './Loading.css';
+interface Props {}
 
 const Loading: React.FC<Props> = () => {
-
   return (
-    <div className="dot-load"></div>    
-  )
-}
+    <div className='loadContainer'>
+      <div className='dotLoad'></div>
+    </div>
+  );
+};
 
-export default Loading
-
-
+export default Loading;

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 interface Props {
-    position: google.maps.LatLngLiteral;
-    map?: google.maps.Map;
+  position: google.maps.LatLngLiteral;
+  map?: google.maps.Map;
 }
 
-const Marker: React.FC<Props> = ({position, map}) => {
+const Marker: React.FC<Props> = ({ position, map }) => {
   const [marker, setMarker] = useState<google.maps.Marker | null>(null);
 
   useEffect(() => {
-    setMarker(new google.maps.Marker({})) ;
+    setMarker(new google.maps.Marker({}));
   }, []);
 
   if (marker) {
@@ -18,6 +18,6 @@ const Marker: React.FC<Props> = ({position, map}) => {
   }
 
   return null;
-}
+};
 
-export default Marker
+export default Marker;

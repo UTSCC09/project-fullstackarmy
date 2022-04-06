@@ -1,84 +1,96 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
 import '../styles/VaccinationMap.css';
-import { BinaryLegend, FeatureData, MapLegend } from './MapConstants';
+import { FeatureData, MapLegend } from './MapConstants';
 import MapContainer from './MapContainer';
 
 interface Props {
-  mapName: string, 
-  binaryFeatureStyling: boolean, 
-  continentToggle: boolean, 
-  featureData: FeatureData,
-  featureValueName: string,
-  initMapLegend: MapLegend,
-  continentDataCall?: Function,
+  mapName: string;
+  featureValueName: string;
+  featureData: FeatureData;
+  primaryLegend: MapLegend;
+  secondaryLegendToggle: boolean;
+  secondaryLegendName?: string;
+  secondaryLegend?: MapLegend;
+  continentToggle: boolean;
+  continentDataCall?: Function;
 }
 
 type MapState = {
-  binary: boolean,
-  continents: boolean,
-}
+  secondaryLegend: boolean;
+  continents: boolean;
+};
 
 const initMapState: MapState = {
-  binary: false,
+  secondaryLegend: false,
   continents: false,
-}
+};
 
 // Same as above propertie
-const binaryEventName: string = 'binary';
+const secondaryLegendEventName: string = 'secondaryLegend';
 const continentEventName: string = 'continents';
 
-const VaccinationMap: React.FC<Props> = ({mapName, binaryFeatureStyling, continentToggle, featureData, featureValueName, initMapLegend, continentDataCall}) => {
-  
-  const [mapState, setMapState] = useState<MapState>(initMapState)
-  const [mapLegend, setMapLegend] = useState<MapLegend>(initMapLegend);
-
+const VaccinationMap: React.FC<Props> = (args) => {
+  const [mapState, setMapState] = useState<MapState>(initMapState);
+  const [mapLegend, setMapLegend] = useState<MapLegend>(args.primaryLegend);
 
   const handleMapState = (event: ChangeEvent<HTMLInputElement>) => {
     const eventName: string = event.target.name;
     const checked = event.target.checked;
 
-    if (eventName === binaryEventName && checked) {
-      setMapLegend(BinaryLegend);
-    } else if (eventName === binaryEventName && !checked) {
-      setMapLegend(initMapLegend);
+    if (eventName === secondaryLegendEventName && checked) {
+      setMapLegend(args.secondaryLegend);
+    } else if (eventName === secondaryLegendEventName && !checked) {
+      setMapLegend(args.primaryLegend);
     } else if (eventName === continentEventName) {
-      if(continentDataCall) continentDataCall(checked);
-    } 
+      if (args.continentDataCall) args.continentDataCall(checked);
+    }
 
     setMapState({
       ...mapState,
       [eventName]: checked,
-    })
-  }
+    });
+  };
 
   return (
     <div className='map-wrapper'>
       <FormGroup id='map-controls'>
-        {
-          binaryFeatureStyling 
-          && 
-          <FormControlLabel control={
-              <Switch color="secondary" checked={mapState.binary} onChange={handleMapState} name={binaryEventName}/>
+        {args.secondaryLegendToggle && (
+          <FormControlLabel
+            control={
+              <Switch
+                color='secondary'
+                checked={mapState.secondaryLegend}
+                onChange={handleMapState}
+                name={secondaryLegendEventName}
+              />
             }
-            label="Binary" 
+            label={args.secondaryLegendName}
           />
-        }
-        {
-          continentToggle 
-          && 
-          <FormControlLabel control={
-              <Switch color="secondary" checked={mapState.continents} onChange={handleMapState} name={continentEventName}/>
+        )}
+        {args.continentToggle && (
+          <FormControlLabel
+            control={
+              <Switch
+                color='secondary'
+                checked={mapState.continents}
+                onChange={handleMapState}
+                name={continentEventName}
+              />
             }
-            label="Continents" 
+            label='Continents'
           />
-        }
+        )}
       </FormGroup>
-      <MapContainer featureData={featureData} mapLegend={mapLegend} mapName={mapName} featureValueName={featureValueName} isContinentFeatures={mapState.continents}/>
+      <MapContainer
+        featureData={args.featureData}
+        mapLegend={mapLegend}
+        mapName={args.mapName}
+        featureValueName={args.featureValueName}
+        isContinentFeatures={mapState.continents}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default React.memo(VaccinationMap);
-
-
