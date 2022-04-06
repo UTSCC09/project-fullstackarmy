@@ -2,6 +2,12 @@ const constants = require('./dataPipelineConstants');
 const graphqlRequest = require('graphql-request');
 const fs = require('fs');
 const moment = require('moment');
+const Sentry = require('@sentry/node');
+
+Sentry.init({
+  dsn: process.env.DATA_PIPELINE_SENTRY_URL,
+  tracesSampleRate: 1.0,
+});
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
   process.env.BACKEND_API_URL
@@ -88,7 +94,7 @@ const updateDataPipelineLogs = (
 
   // If there is an error it shouldn't crash the program
   const req = graphQLClient.request(query, variables).catch((err) => {
-    console.log(err);
+    Sentry.captureException(err);
   });
 
   return req;
@@ -106,14 +112,17 @@ const updateDataPipelineTxt = (
   let text = `${date.toLocaleString()} ${pipelineLogs} successStatus: ${successStatus} recordsSent: ${recordsSent} recordsSuccessfullyAdded: ${recordsSuccessfullyAdded} errorMsg: ${msg} \n`;
 
   fs.appendFile(pipelineLogs, text, function (err) {
-    if (err) {
-      return console.log(err);
-    }
+    if (err) Sentry.captureException(err);
     return;
   });
+};
+
+const logError = (err) => {
+  Sentry.captureException(err);
 };
 
 exports.isoCodeToType = isoCodeToType;
 exports.modifiedParseFloat = modifiedParseFloat;
 exports.updateDataPipelineLogs = updateDataPipelineLogs;
 exports.updateDataPipelineTxt = updateDataPipelineTxt;
+exports.logError = logError;

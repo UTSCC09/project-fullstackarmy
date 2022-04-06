@@ -37,6 +37,7 @@ let prevDataVaccData;
  */
 const errCallback = (err) => {
   if (err) {
+    helpers.logError(err);
     helpers.updateDataPipelineLogs(
       VaccDataPipelineName,
       false,
@@ -109,7 +110,7 @@ const getDataSets = async () => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      helpers.logError(err);
     });
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
@@ -236,6 +237,7 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
       );
     })
     .catch((err) => {
+      helpers.logError(err);
       helpers.updateDataPipelineLogs(
         VaccDataPipelineTxt,
         false,
@@ -343,6 +345,7 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
       );
     })
     .catch((err) => {
+      helpers.logError(err);
       helpers.updateDataPipelineLogs(
         VaccDataPipelineName,
         false,

@@ -30,6 +30,7 @@ let prevData;
  */
 const errCallback = (err) => {
   if (err) {
+    helpers.logError(err);
     helpers.updateDataPipelineLogs(
       VaccSupplyDataPipelineName,
       false,
@@ -45,7 +46,6 @@ const errCallback = (err) => {
       err.message
     );
   }
-  console.log('successfull write');
   return null;
 };
 
@@ -177,6 +177,8 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
       fs.writeFile(StoredFileName, JSON.stringify(prevData), errCallback);
     })
     .catch((err) => {
+      helpers.logError(err);
+
       helpers.updateDataPipelineLogs(
         VaccSupplyDataPipelineName,
         false,
@@ -202,7 +204,7 @@ const dataPipeline = async () => {
 };
 
 let scheduledJob = new CronJob(
-  '00 00 09 * * *',
+  '00 30 09 * * *',
   dataPipeline,
   null,
   false,
