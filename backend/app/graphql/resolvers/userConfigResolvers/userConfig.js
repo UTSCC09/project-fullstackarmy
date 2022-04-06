@@ -13,18 +13,21 @@ const user = async (userId) => {
 
 const transformUserConfig = (userConfigData) => {
   if (userConfigData) {
-    let date;
+    let savedStartDate, savedEndDate;
 
-    if (dailyVaccData._doc) {
-      date = dailyVaccData._doc.date;
+    if (userConfigData._doc) {
+      savedStartDate = userConfigData._doc.savedStartDate;
+      savedEndDate = userConfigData._doc.savedEndDate;
     } else {
-      date = dailyVaccData.date;
+      savedStartDate = userConfigData.savedStartDate;
+      savedEndDate = userConfigData.savedEndDate;
     }
 
     return (res = {
-      ...dailyVaccData._doc,
-      _id: dailyVaccData.id,
-      date: dateToString(date),
+      ...userConfigData._doc,
+      _id: userConfigData.id,
+      savedStartDate: dateToString(savedStartDate),
+      savedEndDate: dateToString(savedEndDate),
       user: user.bind(this, userConfigData.user),
     });
   }
@@ -37,7 +40,7 @@ const transformUserConfig = (userConfigData) => {
  */
 const userConfigs = async (user) => {
   try {
-    const userConfigs = await UserConfig.find({ user: user }).exec();
+    const userConfigs = await UserConfig.find({ user }).exec();
     return userConfigs.map((userConfig) => {
       return transformUserConfig(userConfig);
     });
@@ -46,27 +49,73 @@ const userConfigs = async (user) => {
   }
 };
 
-const newUserConfig = async (userConfigDataInput) => {
+const mostRecentSavedIsoCodes = async (user) => {
   try {
-    const { user, savedLanguage, savedIsoCodes, savedDateRange } =
-      userConfigDataInput;
+    const query = await UserConfig.findOne({
+      $and: [{ user }, { savedIsoCodes: { $ne: [] } }],
+    }).sort({ createdAt: -1 });
+    return transformUserConfig(query);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const mostRecentSavedLanguage = async (user) => {
+  try {
+    const query = await UserConfig.findOne({
+      $and: [{ user }, { savedLanguage: { $ne: null } }],
+    }).sort({ createdAt: -1 });
+    return transformUserConfig(query);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const mostRecentSavedDateRange = async (user) => {
+  try {
+    const query = await UserConfig.findOne({
+      $and: [
+        { user },
+        { savedStartDate: { $ne: null } },
+        { savedEndDate: { $ne: null } },
+      ],
+    }).sort({ createdAt: -1 });
+    return transformUserConfig(query);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const newUserConfig = async (userConfigInput) => {
+  try {
+    const { user, savedLanguage, savedIsoCodes, savedStartDate, savedEndDate } =
+      userConfigInput;
     const existingUser = await User.findById(user);
     if (!existingUser) {
       throw new Error("User does not exist.");
+    }
+
+    // check that date range is valid
+    if (
+      (savedStartDate && !savedEndDate) ||
+      (!savedStartDate && savedEndDate)
+    ) {
+      throw new Error("Invalid date range");
     }
     const userConfig = new UserConfig({
       user,
       savedLanguage,
       savedIsoCodes,
-      savedDateRange,
+      savedStartDate,
+      savedEndDate,
     });
 
     const result = userConfig
       .save()
-      .then(() => {
+      .then((res) => {
         return boolObj(true);
       })
-      .catch(() => {
+      .catch((err) => {
         return boolObj(false);
       });
     return result;
@@ -83,10 +132,10 @@ const delUserConfig = async (userConfigId) => {
     }
 
     const result = UserConfig.deleteOne({ _id: userConfigId })
-      .then(() => {
+      .then((res) => {
         return boolObj(true);
       })
-      .catch(() => {
+      .catch((err) => {
         return boolObj(false);
       });
     return result;
@@ -96,12 +145,24 @@ const delUserConfig = async (userConfigId) => {
 };
 
 module.exports = {
-  getUserConfigs: async ({ user }) => {
+  userConfigs: async ({ user }) => {
     const result = userConfigs(user);
     return result;
   },
-  addUserConfig: async ({ userConfigDataInput }) => {
-    const result = newUserConfig(userConfigDataInput);
+  getMostRecentSavedIsoCodes: async ({ user }) => {
+    const result = mostRecentSavedIsoCodes(user);
+    return result;
+  },
+  getMostRecentSavedLanguage: async ({ user }) => {
+    const result = mostRecentSavedLanguage(user);
+    return result;
+  },
+  getMostRecentSavedDateRange: async ({ user }) => {
+    const result = mostRecentSavedDateRange(user);
+    return result;
+  },
+  addUserConfig: async ({ userConfigInput }) => {
+    const result = newUserConfig(userConfigInput);
     return result;
   },
   removeUserConfig: async ({ userConfigId }) => {

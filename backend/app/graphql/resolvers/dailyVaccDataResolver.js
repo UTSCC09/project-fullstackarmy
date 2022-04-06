@@ -1,7 +1,7 @@
-const DailyVaccData = require('../../models/IsoCodeVaccData');
-const IsoCode = require('../../models/IsoCode');
-const { transformIsoCode, dateToString } = require('./helper');
-const resolverHelpers = require('./helper');
+const DailyVaccData = require("../../models/IsoCodeVaccData");
+const IsoCode = require("../../models/IsoCode");
+const { transformIsoCode, dateToString } = require("./helper");
+const resolverHelpers = require("./helper");
 
 const isoCode = async (isoCodeId) => {
   try {
@@ -32,7 +32,6 @@ const transformDailyVaccData = (dailyVaccData) => {
   return {};
 };
 
-// JUSTIFICATION: Can't have inclusive either/or in schema, it's better to split them
 module.exports = {
   /**
    * @param {{"isoCodes": [String!]!}} args   Array of ISO Codes
@@ -45,7 +44,7 @@ module.exports = {
         { $match: { isoCode: { $in: args.isoCodes } } },
         {
           $addFields: {
-            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+            __order: { $indexOfArray: [args.isoCodes, "$isoCode"] },
           },
         },
         { $sort: { __order: 1 } },
@@ -83,7 +82,7 @@ module.exports = {
         { $match: { isoCode: { $in: args.isoCodes } } },
         {
           $addFields: {
-            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+            __order: { $indexOfArray: [args.isoCodes, "$isoCode"] },
           },
         },
         { $sort: { __order: 1 } },
@@ -121,7 +120,7 @@ module.exports = {
         { $match: { isoCode: { $in: args.isoCodes } } },
         {
           $addFields: {
-            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+            __order: { $indexOfArray: [args.isoCodes, "$isoCode"] },
           },
         },
         { $sort: { __order: 1 } },
@@ -165,7 +164,7 @@ module.exports = {
         { $match: { isoCode: { $in: args.isoCodes } } },
         {
           $addFields: {
-            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+            __order: { $indexOfArray: [args.isoCodes, "$isoCode"] },
           },
         },
         { $sort: { __order: 1 } },

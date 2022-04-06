@@ -27,7 +27,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
-const PORT = 3000;
+const PORT = 3001;
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
@@ -59,7 +59,8 @@ app.use(
 );
 
 // Set the proper headers
-app.use(helmet());
+// TODO: This be struggling.
+// app.use(helmet());
 
 app.use(bodyParser.json());
 

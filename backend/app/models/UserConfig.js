@@ -1,34 +1,29 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const userConfigSchema = new Schema({
-    user:{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+const userConfigSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
-    savedLanguage:{
+    savedLanguage: {
+      type: String,
+    },
+    savedIsoCodes: [
+      {
         type: String,
-    },
-    savedIsoCodes:[
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'IsoCode',
-            }
+      },
     ],
-    savedDateRange: {
-        startDate: {
-            type: Date
-        },
-        endDate: {
-            type: Date
-        }
-    }
-  
-}, { collection: 'UserConfig' });
+    savedStartDate: {
+      type: Date,
+    },
+    savedEndDate: {
+      type: Date,
+    },
+  },
+  { collection: "UserConfig", timestamps: true }
+);
 
-isoCodeToIncomeLevelSchema.index({ "user": 1}, { "unique": true, "dropDups": true });
-
-
-module.exports = mongoose.model('UserConfig', userConfigSchema);
+module.exports = mongoose.model("UserConfig", userConfigSchema);

@@ -25,14 +25,18 @@ const signUp = async (username, password) => {
 };
 
 const signIn = async (username, password) => {
-  const user = await User.findOne({ username: username });
+  const user = await User.findOne({ username });
+  // Since it's not good to distinguish where the wrong credentials are.
+  if (!user) {
+    throw new Error("Invalid username/password");
+  }
   const isEqual = await bcrypt.compare(password, user.password);
-  if (!user || !isEqual) {
+  if (!isEqual) {
     throw new Error("Invalid username/password");
   }
   const token = jwt.sign(
     { userId: user.id, username: user.username },
-    "this is a secure secret amirite?",
+    "8281ae58cbfab3f53b51a8289cdc47fb",
     {
       expiresIn: "1h",
     }
