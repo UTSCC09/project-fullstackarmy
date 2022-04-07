@@ -11,6 +11,7 @@ import DistributionTab from './components/tabs/DistributionTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from './components/context/ColorModeContext';
 import { CountriesFilterContext } from './components/context/CountriesFilterContext';
+import { DateFilterContext } from './components/context/DateFilterContext';
 import { LanguageContext } from './components/context/LanguageContext';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
@@ -90,6 +91,12 @@ function App() {
     setSelectedCountries(countries);
   };
 
+  // Filter date based on the selectedDate state
+  const [selectedDate, setSelectedDate] = React.useState([null, null]);
+  const updateSelectedDate = (date) => {
+    setSelectedDate(date);
+  };
+
   // Handle translation
   const { i18n } = useTranslation();
   const changeLanguage = (lang: string) => {
@@ -104,48 +111,52 @@ function App() {
             <CountriesFilterContext.Provider
               value={{ selectedCountries, updateSelectedCountries }}
             >
-              <div style={{ backgroundColor: darkMode ? '#303030' : 'white' }}>
-                <Header />
-                <Routes>
-                  <Route
-                    path='/'
-                    element={
-                      <div id='no-scroll'>
+              <DateFilterContext.Provider
+                value={{ selectedDate, updateSelectedDate }}
+              >
+                <div style={{ backgroundColor: darkMode ? '#303030' : 'white' }}>
+                  <Header />
+                  <Routes>
+                    <Route
+                      path='/'
+                      element={
+                        <div id='no-scroll'>
+                          <>
+                            <TabNav selected='one' /> <InfoTab />
+                          </>
+                        </div>
+                      }
+                    ></Route>
+                    <Route
+                      path='/vaccination-status'
+                      element={
                         <>
-                          <TabNav selected='one' /> <InfoTab />
+                          <TabNav selected='two' /> <StatusTab />
                         </>
-                      </div>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-status'
-                    element={
-                      <>
-                        <TabNav selected='two' /> <StatusTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-rates'
-                    element={
-                      <>
-                        <TabNav selected='three' /> <RatesTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-distribution'
-                    element={
-                      <>
-                        {' '}
-                        <TabNav selected='four' /> <DistributionTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route path='/credits' element={<Credits />}></Route>
-                </Routes>
-                <Footer />
-              </div>
+                      }
+                    ></Route>
+                    <Route
+                      path='/vaccination-rates'
+                      element={
+                        <>
+                          <TabNav selected='three' /> <RatesTab />
+                        </>
+                      }
+                    ></Route>
+                    <Route
+                      path='/vaccination-distribution'
+                      element={
+                        <>
+                          {' '}
+                          <TabNav selected='four' /> <DistributionTab />
+                        </>
+                      }
+                    ></Route>
+                    <Route path='/credits' element={<Credits />}></Route>
+                  </Routes>
+                  <Footer />
+                </div>
+              </DateFilterContext.Provider>
             </CountriesFilterContext.Provider>
           </LanguageContext.Provider>
         </Router>
