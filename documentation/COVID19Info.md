@@ -18,6 +18,8 @@ Each dose administered in the community increases survivability chances against 
 
 Therefore, we view the herd immunity/protection level at each dose.
 
+A stacked bar chart is shown below to easily compare different countries of interest. These countries can be filtered using the filter feature.
+
 Map # 1 - First Dose Heat map
 Map # 2 - Second Dose Heat map
 Map # 3 - Booster Dose Heat map
@@ -28,20 +30,24 @@ At a third dose level, 30% of the country out of 218 countries, that we have dat
 
 ### Vaccination Rates
 
-To estimate when a country will reach herd immunity/protection level, we can learn and extrapolate from the past vaccination rates. There are many factors that could affect the vaccination rate such as vaccination supply, and so a simple average of the last month's vaccination rate is used to predict how long it will take for each country to reach the herd immunity/protection threshold.
+Below we show case the vaccination rate of the currently selected countries. This shows how the vaccination rate of a country changed within the selected time period.
+
+To estimate when a country will reach herd immunity/protection level, we can learn and extrapolate from the past vaccination rates. There are many factors that could affect the vaccination rate such as vaccination supply, and so a simple average of the last 30 days vaccination rate is used to predict how long it will take for each country to reach the herd immunity/protection threshold.
 
 For example, Canada's rate of vaccination last month was 3%. This means that every month, an additional 3% of the population is vaccinated. Given that the current percentage of the population that is fully vaccinated is 78%, this means that at the current rate, it will take 2 months and a half for Canada's entire population to be fully vaccinated.
+
+here the rates estimate depends on the last 30 days of the selected period.
 
 ### Vaccination Distribution
 
 When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. If there is a low supply in that country, it will not be possible to distribute as many vaccines as possible to quickly reach herd immunity.
 
 When looking at facts and figures about countries, specifically, about number of vaccine doses. It is important to look at percentages instead of raw values. For example, if a country has a very high population count, that means it will need a very high number of vaccines doses. This means comparing the number vaccine doeses with another country that has a low population count is pointless since it's guaranteed to be lower! Instead we look at a simple percentage:
-number of doses / number of doses required to reach 85% of the population.
+(number of doses) / (number of doses required to reach a 85% vaccination rate of the population).
 
-This allows us to see which countries are have an under supply of vaccines, thus require more donations from countries that have an over supply of vaccines.
+This allows us to see which countries don't have enough vaccines to reach the herd immunity / protection threshold and thus require more donations.
 
-Map #1 - Delivered/Required Doses Percentage heat map
-Map #2 - Expected/Required Doses Percentage heat map
+Map #1 - Delivered Doses Percentage heat map
+Map #2 - Expected Doses Percentage heat map
 
 The delivered doses that each country has at the moment, about % of the countries have enough doses to fully vaccinate the country's and additional booster shots, % have enough doses to reach herd immunity / protection, while % of countries don't have sufficient doses to reach the threshold. A full list of countries in each category is available for download here.
