@@ -17,9 +17,10 @@ const distribMapData = async () => {
       dosesExpectedRequiredPercent: 1,
     })
     .then((res) => {
-      res.map((isoCodeData) => {
+      return res.map((isoCodeData) => {
         return {
           isoCode: idToIsoCode[isoCodeData.isoCode],
+          isoCodeName: isoCodeData.isoCodeName,
           dosesDeliveredRequiredPercent:
             isoCodeData.dosesDeliveredRequiredPercent,
           dosesExpectedRequiredPercent:
