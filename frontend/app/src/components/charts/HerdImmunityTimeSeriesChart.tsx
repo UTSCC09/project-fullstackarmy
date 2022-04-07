@@ -17,8 +17,8 @@ import {
 import 'chartjs-adapter-moment';
 import { Line } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import Loading from '../elements/Loading';
-import QueryError from '../elements/QueryError';
+import Loading from '../elements/Loading/Loading';
+import Error from '../elements/Error/Error';
 
 const HerdImmunityTimeSeriesChart = () => {
   ChartJS.register(
@@ -66,7 +66,7 @@ const HerdImmunityTimeSeriesChart = () => {
       isoCodes: vars,
     },
   });
-  if (error) return <QueryError message={error.message} />;
+  if (error) return <Error message={error.message} />;
   if (loading) return <Loading />;
   if (chartData) {
     const options: ChartOptions<'line'> = {

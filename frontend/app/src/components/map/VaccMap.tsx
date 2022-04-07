@@ -1,13 +1,15 @@
 import { QueryResult, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import Loading from '../elements/Loading';
-import QueryError from '../elements/QueryError';
+import { useTranslation } from 'react-i18next';
+import Error from '../elements/Error/Error';
+import Loading from '../elements/Loading/Loading';
 import {
   BinaryLegend,
   ScaledLegend,
-  ScaledLegendName,
+  VaccinationThresholds,
 } from './components/MapConstants';
 import VaccinationMap from './components/VaccinationMap';
+import VaccinationWriteUp from './components/VaccinationWriteUp';
 import {
   GET_VACC_MAP_CONTINENT_DATA,
   GET_VACC_MAP_COUNTRY_DATA,
@@ -29,6 +31,8 @@ const featureValueName = 'peopleVaccinatedPerHundred';
 
 const VaccMap: React.FC<Props> = () => {
   const [featureData, setFeatureData] = useState(null);
+  const [excelData, setExcelData] = useState(null);
+  const { t } = useTranslation();
 
   // Get both data at once, even though some of it may not be used by the user
   // this is to ensure the user experience is fast and high quality
@@ -41,6 +45,7 @@ const VaccMap: React.FC<Props> = () => {
       },
       onCompleted: (data) => {
         setFeatureData(data.countryVaccMapData);
+        setExcelData(data.countryVaccMapData);
       },
     }
   );
@@ -68,22 +73,31 @@ const VaccMap: React.FC<Props> = () => {
   if (countryData && countryData.loading) return <Loading />;
   if (continentData && continentData.loading) return <Loading />;
   if (countryData && countryData.error)
-    return <QueryError message={countryData.error.message} />;
+    return <Error message={countryData.error.message} />;
   if (continentData && continentData.error)
-    return <QueryError message={continentData.error.message} />;
+    return <Error message={continentData.error.message} />;
 
   return (
-    <VaccinationMap
-      mapName={mapName}
-      featureValueName={featureValueName}
-      featureData={featureData}
-      primaryLegend={BinaryLegend}
-      secondaryLegendToggle={true}
-      secondaryLegendName={ScaledLegendName}
-      secondaryLegend={ScaledLegend}
-      continentToggle={true}
-      continentDataCall={continentDataCall}
-    />
+    <>
+      <VaccinationMap
+        mapName={mapName}
+        featureValueName={featureValueName}
+        featureData={featureData}
+        primaryLegend={BinaryLegend}
+        secondaryLegendToggle={true}
+        secondaryLegendName={t('mapGeneral.scaledLegend')}
+        secondaryLegend={ScaledLegend}
+        continentToggle={true}
+        continentDataCall={continentDataCall}
+      />
+      <VaccinationWriteUp
+        dosageLevel={t('statusTab.firstDose')}
+        bookName={mapName}
+        featureData={excelData}
+        valueName={featureValueName}
+        thresholds={VaccinationThresholds}
+      />
+    </>
   );
 };
 

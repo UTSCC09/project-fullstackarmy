@@ -1,58 +1,62 @@
 // First Dose Map
 export interface VaccMapDataEl {
-    isoCode: string;
-    peopleVaccinatedPerHundred: number;
+  isoCode: string;
+  isoCodeName: string;
+  peopleVaccinatedPerHundred: number;
 }
-  
+
 export interface CountryVaccMapData {
-    countryVaccMapData: VaccMapDataEl[];
+  countryVaccMapData: VaccMapDataEl[];
 }
-  
+
 export interface ContinentVaccMapData {
-    continentVaccMapData: VaccMapDataEl[];
+  continentVaccMapData: VaccMapDataEl[];
 }
 
 // Second Dose Map
 export interface FullVaccMapDataEl {
-    isoCode: string;
-    peopleFullyVaccinatedPerHundred: number;
+  isoCode: string;
+  isoCodeName: string;
+  peopleFullyVaccinatedPerHundred: number;
 }
 
 export interface CountryFullyVaccMapData {
-    countryFullyVaccMapData: FullVaccMapDataEl[];
+  countryFullyVaccMapData: FullVaccMapDataEl[];
 }
-  
+
 export interface ContinentFullyVaccMapData {
-    continentFullyVaccMapData: FullVaccMapDataEl[];
+  continentFullyVaccMapData: FullVaccMapDataEl[];
 }
 
 // Third Dose Map
 export interface BoosterVaccMapDataEl {
-    isoCode: string;
-    totalBoostersPerHundred: number;
+  isoCode: string;
+  isoCodeName: string;
+  totalBoostersPerHundred: number;
 }
 
 export interface CountryBoosterVaccMapData {
-    countryBoosterVaccMapData: BoosterVaccMapDataEl[];
+  countryBoosterVaccMapData: BoosterVaccMapDataEl[];
 }
-  
+
 export interface ContinentBoosterVaccMapData {
-    continentBoosterVaccMapData: BoosterVaccMapDataEl[];
+  continentBoosterVaccMapData: BoosterVaccMapDataEl[];
 }
 
 // Distribution Map
 export interface DistribVaccMapDataEl {
-    isoCode: string;
-    dosesDeliveredRequiredPercent: number;
-    dosesExpectedRequiredPercent: number;
+  isoCode: string;
+  isoCodeName: string;
+  dosesDeliveredRequiredPercent: number;
+  dosesExpectedRequiredPercent: number;
 }
 
 export interface CountryVaccDistribMapData {
-    countryVaccDistribMapData: DistribVaccMapDataEl[];
+  countryVaccDistribMapData: DistribVaccMapDataEl[];
 }
 
 // Time period params
 export interface TimePeriodVars {
-    startDate: string;
-    endDate: string;
+  startDate: string;
+  endDate: string;
 }

@@ -1,44 +1,40 @@
 // Adapted from:
-// https://codesandbox.io/s/ylmzg0?file=/demo.tsx
+// https://codesandbox.io/s/5y1d9w?file=/demo.tsx:32-671
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import { DateRange } from '@mui/lab/DateRangePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import Box from '@mui/material/Box';
-import MobileDateRangePicker from '@mui/lab/MobileDateRangePicker';
+import DatePicker from '@mui/lab/DatePicker';
+import Stack from '@mui/material/Stack';
+import { DateFilterContext } from './context/DateFilterContext';
 
 export const DateFilter = () => {
-  const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
+  const { selectedDate, updateSelectedDate } = React.useContext(
+    DateFilterContext
+  );
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <MobileDateRangePicker
-        startText='From:'
-        endText='To:'
-        value={value}
-        clearable
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(startProps, endProps) => (
-          <React.Fragment>
-            <TextField
-              {...startProps}
-              size='small'
-              color='secondary'
-              sx={{ marginLeft: '14px', marginTop: '14px' }}
-            />
-            <Box sx={{ mx: 0.2 }}> </Box>
-            <TextField
-              {...endProps}
-              size='small'
-              color='secondary'
-              sx={{ marginRight: '14px', marginTop: '14px' }}
-            />
-          </React.Fragment>
-        )}
-      />
+    <LocalizationProvider dateAdapter={AdapterDateFns} >
+      <Stack spacing={2} sx={{padding: 2}}>
+        <DatePicker
+          label="From:"
+          value={selectedDate[0]}
+          onChange={(newValue) => {
+            updateSelectedDate([newValue, selectedDate[1]]);
+          }}
+          renderInput={(params) => <TextField color='secondary' {...params} />}
+          
+        />
+        <DatePicker
+          label="To:"
+          value={selectedDate[1]}
+          onChange={(newValue) => {
+            updateSelectedDate([selectedDate[0], newValue]);
+          }}
+          renderInput={(params) => <TextField color='secondary' {...params} />}
+          minDate={selectedDate[0]}
+        />
+      </Stack>
     </LocalizationProvider>
   );
 };

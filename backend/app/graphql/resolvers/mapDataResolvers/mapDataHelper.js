@@ -20,6 +20,7 @@ const idToIsoCodeQuery = async (forCountry) => {
     .select({
       id: 1,
       isoCode: 1,
+      isoCodeName: 1,
     })
     .then((res) => {
       let idToIsoCode = {};
@@ -47,6 +48,7 @@ const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
           // Some isoCodes will not have any data in the date range
           let row = {
             isoCode: idToIsoCode[isoCodeData.isoCode], // isoCode here is the foreign key id
+            isoCodeName: isoCodeData.isoCodeName,
           };
 
           row[metric] = isoCodeData[metric];
