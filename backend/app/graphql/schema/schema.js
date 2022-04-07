@@ -49,6 +49,9 @@ type RootQuery {
     getMostRecentFullyVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getMostRecentBoosterVaccDataByIsoCode(isoCodes:[String!]!): [DailyVaccData!]
     getVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [[DailyVaccData!]!]
+    getFirstVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
+    getFullyVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
+    getBoosterVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
     ${mapDataRootQuery}
     ${dataPipelineRootQuery}
 }
