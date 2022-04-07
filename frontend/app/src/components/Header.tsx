@@ -1,18 +1,19 @@
 // Adapted from:
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Settings from '@mui/icons-material/Settings';
-import Translate from '@mui/icons-material/Translate';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import React from 'react';
-import ConfigBar from './ConfigBar';
-import Logo from './Logo';
-import TranslationDropdown from './TranslationDropdown';
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Settings from "@mui/icons-material/Settings";
+import Translate from "@mui/icons-material/Translate";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import ConfigBar from "./ConfigBar";
+import Logo from "./Logo";
+import TranslationDropdown from "./TranslationDropdown";
 
 export const Header = () => {
   // State for handling configuration bar drawer
@@ -35,25 +36,25 @@ export const Header = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='relative'>
+      <AppBar position="relative">
         <Toolbar>
           <Logo />
-          <Typography component='div' sx={{ flexGrow: 1 }}></Typography>
-          {/* to be used for sign-in/sign-up
+          <Typography component="div" sx={{ flexGrow: 1 }}></Typography>
+          {/* to be used for sign-in/sign-up */}
           <Button color="inherit">Sign In</Button>
           <Button color="secondary">Sign Up</Button>
-          */}
+
           <IconButton
-            size='large'
-            color='inherit'
+            size="large"
+            color="inherit"
             onClick={handleTranslationMenu}
           >
             <Translate />
           </IconButton>
-          <IconButton size='large' color='inherit'>
+          <IconButton size="large" color="inherit">
             <AccountCircle />
           </IconButton>
-          <IconButton size='large' color='inherit' onClick={handleDrawerOpen}>
+          <IconButton size="large" color="inherit" onClick={handleDrawerOpen}>
             <Settings />
           </IconButton>
         </Toolbar>
