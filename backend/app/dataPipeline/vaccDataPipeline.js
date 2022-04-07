@@ -97,10 +97,12 @@ const getDataSets = async () => {
 
         // Check if same as previous data
         let prevDataRow = prevDataIsoCodeData[isoCode];
-        if (prevDataRow && lodash.isEqual(prevDataRow, newData)) return;
+        if (lodash.isEqual(prevDataRow, newData)) {
+          isoCodesAlreadyInPayload.push(isoCode);
+          return;
+        }
 
         prevDataIsoCodeData[isoCode] = newData;
-
         isoCodesUpdatePayload.push({
           ...newData,
           isoCode,
