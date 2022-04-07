@@ -3,7 +3,7 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import Map from './Map';
 import Legend from './Legend';
 import FeaturePolygon from './FeaturePolygon';
-import Loading from '../../elements/Loading';
+import Loading from '../../elements/Loading/Loading';
 import MapError from './MapError';
 import { MapLegend } from './MapConstants';
 

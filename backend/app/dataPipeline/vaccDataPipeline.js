@@ -1,25 +1,25 @@
-const fetch = require('node-fetch');
-const graphqlRequest = require('graphql-request');
-const csvtojson = require('csvtojson');
-const lodash = require('lodash');
-const helpers = require('./dataPipelineHelpers');
-const fs = require('fs');
-const { CronJob } = require('cron');
+const fetch = require("node-fetch");
+const graphqlRequest = require("graphql-request");
+const csvtojson = require("csvtojson");
+const lodash = require("lodash");
+const helpers = require("./dataPipelineHelpers");
+const fs = require("fs");
+const { CronJob } = require("cron");
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
   process.env.BACKEND_API_URL
 );
 
 const CountryIncomeLevelDataURL =
-  'https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv';
+  "https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv";
 const IsoCodesVaccDataURL =
-  'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json';
+  "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json";
 
-const StoredIsoCodeData = 'IsoCodeData.txt';
-const StoredVaccData = 'VaccData.txt';
+const StoredIsoCodeData = "IsoCodeData.txt";
+const StoredVaccData = "VaccData.txt";
 
-const VaccDataPipelineName = 'vacDataPipelineName';
-const VaccDataPipelineTxt = 'vacDataPipelineLogs.txt';
+const VaccDataPipelineName = "vacDataPipelineName";
+const VaccDataPipelineTxt = "vacDataPipelineLogs.txt";
 
 let isoCodesUpdatePayload = [];
 let vaccDataPayload = [];
@@ -91,16 +91,18 @@ const getDataSets = async () => {
         let newData = {
           isoCodeName: dataPoint.Country,
           isoCodeType: helpers.isoCodeToType(dataPoint.Code),
-          incomeLevel: dataPoint['Income group'],
+          incomeLevel: dataPoint["Income group"],
           year: dataPoint.Year,
         };
 
         // Check if same as previous data
         let prevDataRow = prevDataIsoCodeData[isoCode];
-        if (prevDataRow && lodash.isEqual(prevDataRow, newData)) return;
+        if (lodash.isEqual(prevDataRow, newData)) {
+          isoCodesAlreadyInPayload.push(isoCode);
+          return;
+        }
 
         prevDataIsoCodeData[isoCode] = newData;
-
         isoCodesUpdatePayload.push({
           ...newData,
           isoCode,
@@ -233,7 +235,7 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
         true,
         isoCodeDataInput.length,
         res.updateIsoCodeData.number,
-        ''
+        ""
       );
     })
     .catch((err) => {
@@ -322,14 +324,14 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
         true,
         recordsSent,
         recordsAdded,
-        ''
+        ""
       );
       helpers.updateDataPipelineTxt(
         VaccDataPipelineTxt,
         true,
         recordsSent,
         recordsAdded,
-        ''
+        ""
       );
 
       // Serialize the data here only when the call is successful
@@ -372,11 +374,11 @@ const dataPipeline = async () => {
 };
 
 let scheduledJob = new CronJob(
-  '00 00 09 * * *',
+  "00 00 09 * * *",
   dataPipeline,
   null,
   false,
-  'America/Toronto'
+  "America/Toronto"
 );
 
 scheduledJob.start();

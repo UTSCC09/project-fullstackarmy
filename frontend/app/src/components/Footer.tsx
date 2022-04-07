@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
+import Paper from '@mui/material/Paper';
 
 export const Footer = () => {
   return (
-    <div>
+    <Paper elevation={3}>
       <footer>
         <span>
-          <Link to='/datasources'>Data Sources</Link> |{' '}
-          <Link to='/credits'>Credits</Link>
+          <Link className='link' to='/credits'>Credits</Link>
         </span>
       </footer>
-    </div>
+    </Paper>
   );
 };
