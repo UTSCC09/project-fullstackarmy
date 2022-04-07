@@ -1,14 +1,14 @@
 // Adapted from https://github.com/academind/yt-graphql-react-event-booking-api/tree/10-auth-middleware
-const User = require("../../../models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const User = require('../../../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const signUp = async (username, password) => {
   try {
     const existingUser = await User.findOne({ username: username });
-    if (existingUser) {
-      throw new Error("This username is taken");
-    }
+
+    if (existingUser) throw new Error('This username is taken');
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = new User({
@@ -26,21 +26,24 @@ const signUp = async (username, password) => {
 
 const signIn = async (username, password) => {
   const user = await User.findOne({ username });
-  // Since it's not good to distinguish where the wrong credentials are.
+
   if (!user) {
-    throw new Error("Invalid username/password");
+    throw new Error('Invalid username/password');
   }
+
   const isEqual = await bcrypt.compare(password, user.password);
   if (!isEqual) {
-    throw new Error("Invalid username/password");
+    throw new Error('Invalid username/password');
   }
+
   const token = jwt.sign(
     { userId: user.id, username: user.username },
-    "8281ae58cbfab3f53b51a8289cdc47fb",
+    process.env.SECRET_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: '1h',
     }
   );
+
   return { userId: user.id, token: token, tokenExpiration: 1 };
 };
 
