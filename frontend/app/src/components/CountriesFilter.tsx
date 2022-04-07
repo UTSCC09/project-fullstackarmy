@@ -22,12 +22,14 @@ export const CountriesFilter = () => {
     var updatedCountries = [...selectedCountries, country];
     updateSelectedCountries(updatedCountries);
   };
+
   const removeCountry = (country: string) => {
     var updatedCountries = [...selectedCountries];
     var index = selectedCountries.indexOf(country);
     updatedCountries.splice(index, 1);
     updateSelectedCountries(updatedCountries);
   };
+
   const GET_COUNTRY_NAMES: DocumentNode = gql`
     query countryIsoCodes {
       countryIsoCodes {
@@ -36,6 +38,7 @@ export const CountriesFilter = () => {
       }
     }
   `;
+
   const {
     error: countryNamesFilterErr,
     loading: countryNamesLoading,
@@ -44,9 +47,12 @@ export const CountriesFilter = () => {
     variables: {},
     notifyOnNetworkStatusChange: true,
   });
+
   if (countryNamesFilterErr)
     return <Error message={countryNamesFilterErr.message} />;
+
   if (countryNamesLoading) return <Loading />;
+
   if (countryNamesData) {
     return (
       <FormControl sx={{ m: 2, width: 230 }} size='small'>
