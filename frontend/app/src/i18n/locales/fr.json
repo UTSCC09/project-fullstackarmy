@@ -40,9 +40,9 @@
       "desc": "If a vaccine not only protects against disease but reduces transmission, and continues to do so for many years, we are likely to reach a state of herd protection when masks and physical distancing will no longer be required. To learn more about the global progress in vaccinations, explore the data models in the tabs above."
     }
   },
-  "maptabs": {
-    "firstdosemap": "First Vaccination Dose Heat Map",
-    "seconddosemap": "Second Vaccination Dose Heat Map",
-    "boosterdosemap": "Booster Dose Heat Map"
+  "statusTab": {
+    "firstMapTitle": "First Vaccination Dose Heat Map",
+    "secondMapTitle": "Second Vaccination Dose Heat Map",
+    "thirdMapTitle": "Booster Dose Heat Map"
   }
 }

@@ -10,39 +10,70 @@
     "date": "Filtrar por Período",
     "mode": "Aplicar Modo Escuro"
   },
+
   "infotab": {
     "p1": {
-      "title": "Vaccination and Herd Immunity",
-      "question": "HOW WILL THE COVID-19 PANDEMIC END?"
+      "title": "Vacinação e Imunidade do Rebanho",
+      "question": "COMO TERMINARÁ A PANDEMIA DA COVID-19?"
     },
     "p2": {
-      "title": "What is herd immunity?",
-      "def": "Herd immunity occurs when a sufficient proportion of the population develops immunity to a disease. If herd immunity is achieved, the disease will stop circulating and all of the population including those who have immunity and those who do not will be protected."
+      "title": "O que é a imunidade do rebanho?",
+      "def": "A imunidade do rebanho ocorre quando uma proporção suficiente da população desenvolve imunidade a uma doença. Se a imunidade do rebanho for atingida, a doença deixará de circular e toda a população, incluindo aqueles que têm imunidade e aqueles que não a têm, será protegida."
     },
     "p3": {
-      "title": "What is the vaccination threshold required for herd immunity against COVID-19?",
-      "desc": "The percentage of the population that needs to be vaccinated to achieve herd immunity has been speculated by experts to be around 85%."
+      "title": "Qual é o limite de vacinação necessário para a imunidade do rebanho contra a COVID-19?",
+      "desc": "A porcentagem da população que precisa ser vacinada para atingir a imunidade do rebanho foi especulada por especialistas em torno de 85%."
     },
     "p4": {
-      "title": "However, something to note is that",
-      "desc": "We are still learning how the current Covid-19 vaccines reduce transmission of SARS-CoV-2.  It is likely they reduce the risk of virus transmission but probably not completely. Vaccines prime the body into a better position to fight off viruses. However, this does not mean a person cannot transmit the virus. It just means the period they are infectious is significantly reduced. The hope is that the period of infectivity is so low, it would significantly reduce possibility of transmission, however we still don’t know how well the current vaccines can accomplish this. This is one of the reasons why it is still imperative for people to continue wearing masks and practice physical distancing, even if they are vaccinated."
+      "title": "No entanto, algo a ser observado é que",
+      "desc": "Ainda estamos aprendendo como as vacinas atuais contra o Covid-19 reduzem a transmissão do SARS-CoV-2. É provável que elas reduzam o risco de transmissão do vírus, mas não por completo. As vacinas melhoram a capacidade do corpo de combater os vírus. No entanto, isso não significa que uma pessoa não possa transmitir o vírus, mas que o período em que elas são contagiosas é grandemente reduzido. A esperança é que o período de contágio seja tão baixo que reduza significativamente a possibilidade de transmissão, mas ainda não sabemos o quanto as vacinas atuais podem fazer isso. Este é um dos motivos por que ainda é imprescindível que as pessoas continuem utilizando máscaras e praticando o distanciamento físico, mesmo que estejam vacinadas."
     },
     "p5": {
-      "title": "This means that",
-      "desc": "Until we substantially reduce community transmission of SARS-CoV-2, and hospitalizations and death rates dramatically decrease, we still need to wear masks and practice physical distancing."
+      "title": "Isto significa que",
+      "desc": "Até que a transmissão comunitária do SARS-CoV-2 seja reduzida substancialmente, e as hospitalizações e as taxas de mortalidade diminuam drasticamente, ainda é preciso usar máscaras e praticar o distanciamento social."
     },
     "p6": {
-      "title": "Keep in mind that",
-      "desc": "The vaccine is not 100% effective and we still do not know if someone who is vaccinated against SARS-CoV-2 can develop asymptomatic infection and transmit the virus."
+      "title": "Tenha em mente que",
+      "desc": "A vacina não é 100% eficaz e ainda não sabemos se alguém vacinado contra SARS-CoV-2 pode desenvolver uma infecção assintomática e transmitir o vírus."
     },
     "p7": {
-      "title": "But, there is light at the end of the tunnel",
-      "desc": "If a vaccine not only protects against disease but reduces transmission, and continues to do so for many years, we are likely to reach a state of herd protection when masks and physical distancing will no longer be required. To learn more about the global progress in vaccinations, explore the data models in the tabs above."
+      "title": "Mas, há luz ao final do túnel",
+      "desc": "Se certa vacina não apenas protege contra a doença, mas reduz a transmissão, e continua a fazê-lo por muitos anos, é provável que alcancemos um estado de proteção em que as máscaras e o distanciamento físico não serão mais necessários."
     }
   },
-  "maptabs": {
-    "firstdosemap": "First Vaccination Dose Heat Map",
-    "seconddosemap": "Second Vaccination Dose Heat Map",
-    "boosterdosemap": "Booster Dose Heat Map"
-  }
+  "statusTab": {
+    "p1": "Considerando como o mundo está conectado na era moderna, é importante monitorar o processo global da vacinação porque a verdadeira imunidade/proteção do rebanho só pode ser alcançada quando todos os países atingirem um nível de imunidade/proteção do rebanho.",
+    "p2": "Devemos então nos perguntar: em que dose somos considerados protegidos da COVID19?",
+    "p3": "Cada dose administrada na comunidade aumenta as possibilidades de sobrevivência contra o vírus e reduz a probabilidade de transmissão, de forma que é vital receber o número total de doses recomendadas. Atualmente, algumas vacinas já são administradas 3 doses: uma primeira dose, uma segunda dose e um booster.",
+    "p4": "Um gráfico de barras empilhadas é mostrado abaixo para comparar facilmente diferentes países de interesse. Estes países podem ser filtrados usando o recurso de filtro.",
+    "firstMapTitle": "Mapa de Calor da Primeira Dose",
+    "firstDose": "primeira dose",
+    "secondMapTitle": "Mapa de Calor da Segunda Dose",
+    "secondDose": "segunda dose",
+    "thirdMapTitle": "Mapa de Calor da Dose Booster",
+    "thirdDose": "dose booster",
+    "mapWriteUp": "Ao nível de {{ dosagemNível }} de dose, {{ numProtegido }} de {{total }} países ({{ porcentagemProtegido }} sobre os quais temos dados) atingiram o limiar de imunidade / proteção do rebanho. Uma lista completa de países pode ser download"
+  },
+  "ratesTab": {
+    "p1": "Abaixo mostramos caso a taxa de vacinação dos países atualmente selecionados. Isto mostra como a taxa de vacinação de um país mudou dentro do período de tempo selecionado.",
+    "p2": "Para estimar quando um país atingirá o nível de imunidade/proteção do rebanho, podemos tomar e extrapolar os dsdos das taxas de vacinação anteriores. Há muitos fatores que podem afetar a taxa de vacinação, tais como a oferta de vacinação, de forma que utiliza-se uma média simples da taxa de vacinação do último mês para prever quanto tempo levará para cada país atingir o limiar de imunidade/proteção do rebanho.",
+    "p3": "Por exemplo, a taxa de vacinação do Canadá no mês passado foi de 3%. Isto significa que todos os meses, um adicional de 3% da população é vacinada. Dado que a percentagem atual da população que está totalmente vacinada é de 78%, isto significa que, no ritmo atual, serão necessários 2 meses e meio para que toda a população do Canadá esteja totalmente vacinada."
+  },
+  "distributionTab": {
+    "p1": "Ao considerar o estado de vacinação de um país, é importante controlar quanto fornecimento cada país tem para as vacinas. Se houver uma baixa oferta nesse país, não será possível distribuir o maior número possível de vacinas para atingir rapidamente a imunidade do rebanho.",
+    "p2": "Ao olhar para fatos e números sobre países, especificamente, sobre o número de doses de vacina. É importante observar as porcentagens em vez dos valores brutos. Por exemplo, se um país tem uma população muito alta, isso significa que ele precisará de um número muito alto de doses de vacinas. Isto significa que comparar o número de doses de vacina com outro país que tem uma baixa contagem de população é inútil, já que é garantido que será menor! Em vez disso, consideramos uma simples porcentagem: (número de doses) / (número de doses necessárias para atingir uma taxa de vacinação de 85% da população).",
+    "p3": "Isto nos permite enxergar quais países sofrem de uma oferta insuficiente de vacinas e que necessitam de mais doações de vacinas contra COVID-19.",
+    "firstMapTitle": "Mapa de Calor de Porcentagem de Doses entregues",
+    "secondMapTitle": "Mapa de Calor de Porcentagem de Doses esperadas",
+    "delivered": "entregue",
+    "bookNameDelivered": "Fornecimento de Vacinas",
+    "expected": "esperado",
+    "bookNameExpected": "Fornecimento Esperado de Vacinas",
+    "mapWriteUp": "As doses de {{ doseType }} que cada país tem no momento, cerca de {{ herdImmunityAndBooster }}% dos países têm doses suficientes para vacinar completamente o país e doses adicionais de Booster, {{ herdImmunity }}% têm doses suficientes para atingir a imunidade / proteção do rebanho, enquanto que {{ insufficientVaccines }}% dos países não têm doses suficientes para atingir o limite. Uma lista completa dos países de cada categoria está disponível para download"
+  },
+  "mapGeneral": {
+    "scaledLegend": "Lenda em Escala",
+    "continents": "Continentes"
+  },
+  "here": "aqui"
 }
