@@ -1,8 +1,8 @@
-const constants = require('./dataPipelineConstants');
-const graphqlRequest = require('graphql-request');
-const fs = require('fs');
-const moment = require('moment');
-const Sentry = require('@sentry/node');
+const constants = require("./dataPipelineConstants");
+const graphqlRequest = require("graphql-request");
+const fs = require("fs");
+const moment = require("moment");
+const Sentry = require("@sentry/node");
 
 Sentry.init({
   dsn: process.env.DATA_PIPELINE_SENTRY_URL,
@@ -47,8 +47,8 @@ const modifiedParseFloat = (number) => {
  */
 const createESTDate = () => {
   let d = new Date();
-  let myTimezone = 'America/Toronto';
-  let myDatetimeFormat = 'YYYY-MM-DD hh:mm:ss a z';
+  let myTimezone = "America/Toronto";
+  let myDatetimeFormat = "YYYY-MM-DD hh:mm:ss a z";
   let myDatetimeString = moment(d).tz(myTimezone).format(myDatetimeFormat);
 
   return myDatetimeString;

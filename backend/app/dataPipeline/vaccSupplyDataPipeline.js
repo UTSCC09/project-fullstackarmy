@@ -1,20 +1,20 @@
-const fetch = require('node-fetch');
-const graphqlRequest = require('graphql-request');
-const constants = require('./dataPipelineConstants');
-const helpers = require('./dataPipelineHelpers');
-const fs = require('fs');
-const { CronJob } = require('cron');
+const fetch = require("node-fetch");
+const graphqlRequest = require("graphql-request");
+const constants = require("./dataPipelineConstants");
+const helpers = require("./dataPipelineHelpers");
+const fs = require("fs");
+const { CronJob } = require("cron");
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
   process.env.BACKEND_API_URL
 );
 
 const VaccSupplyDataURL =
-  'https://data.covid19taskforce.com/covax-api/getCovaxDashboardData';
-const StoredFileName = 'VaccSupplyData.txt';
+  "https://data.covid19taskforce.com/covax-api/getCovaxDashboardData";
+const StoredFileName = "VaccSupplyData.txt";
 
-const VaccSupplyDataPipelineName = 'vaccineSupplyPipeline';
-const VaccSupplyDataPipelineTxt = 'vaccineSupplyPipelinelogs.txt';
+const VaccSupplyDataPipelineName = "vaccineSupplyPipeline";
+const VaccSupplyDataPipelineTxt = "vaccineSupplyPipelinelogs.txt";
 
 let vaccSupplyPayload = [];
 
@@ -46,7 +46,7 @@ const errCallback = (err) => {
       err.message
     );
   }
-  console.log('successfull write');
+  console.log("successfull write");
   return null;
 };
 
@@ -166,14 +166,14 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
         true,
         isoCodeVaccSupplyDataInput.length,
         res.updateIsoCodeVaccSupplyData.number,
-        ''
+        ""
       );
       helpers.updateDataPipelineTxt(
         VaccSupplyDataPipelineTxt,
         true,
         isoCodeVaccSupplyDataInput.length,
         res.updateIsoCodeVaccSupplyData.number,
-        ''
+        ""
       );
       fs.writeFile(StoredFileName, JSON.stringify(prevData), errCallback);
     })
@@ -205,11 +205,11 @@ const dataPipeline = async () => {
 };
 
 let scheduledJob = new CronJob(
-  '00 30 09 * * *',
+  "00 30 09 * * *",
   dataPipeline,
   null,
   false,
-  'America/Toronto'
+  "America/Toronto"
 );
 
 scheduledJob.start();
