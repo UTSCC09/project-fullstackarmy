@@ -1,24 +1,25 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import '../styles/MapTabPanel.css';
 
 // Adapted from https://mui.com/components/tabs/ example
 interface Props {
-  title: string;
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-const StatusTabPanel: React.FC<Props> = ({ title, children, index, value }) => {
+const MapTabPanel: React.FC<Props> = ({ children, index, value }) => {
   return (
     <div
       role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      className='statusTabPanel'
     >
-      <h2 className='chart-title'>{title}</h2>
       {value === index && (
         <Box
+          className='statusTabPanelBox'
           sx={{
             p: 3,
             position: 'relative',
@@ -31,4 +32,4 @@ const StatusTabPanel: React.FC<Props> = ({ title, children, index, value }) => {
   );
 };
 
-export default StatusTabPanel;
+export default MapTabPanel;

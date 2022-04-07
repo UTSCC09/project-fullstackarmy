@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Header } from './components/header/Header';
+import { Header } from './components/Header';
 import TabNav from './components/TabNav';
 import { Footer } from './components/Footer';
 import { DataSources } from './components/DataSources';
 import { Credits } from './components/Credits';
 import { InfoTab } from './components/tabs/InfoTab';
 import { StatusTab } from './components/tabs/StatusTab';
-import { RatesTab } from './components/tabs/RatesTab';
+import RatesTab from './components/tabs/RatesTab';
 import DistributionTab from './components/tabs/DistributionTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from './components/context/ColorModeContext';
