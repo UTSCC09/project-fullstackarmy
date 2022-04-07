@@ -16,16 +16,6 @@ header {
   display: flex;
   flex-direction: column;
 }
-.nav-bar{
-  display: flex;
-  flex-direction: column;
-  background-color: #e5e5e5;
-}
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  height: 50px;
-}
 
 /* Logo */
 .logo {
@@ -41,24 +31,37 @@ header {
 .logo:hover {
   opacity: 0.7;
 }
+
 footer{
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: whitesmoke;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: bold;
   height: 30px;
-  padding: 3px;
+  padding: 5px;
   margin-top: 100vh;
 }
-footer a:hover{
+
+.link{
+  text-decoration: none;
   color:#2148c0;
 }
-.credits{
-  margin-left: 10px;
-  font-size: 12px;
+.link:visited{
+  text-decoration: none;
+  color: #00acea;
 }
 .chart-title {
   margin-left: 48px;
-  color: #1f74f9;
+  color: #00acea;
+}
+/* For avoiding double scroll bar for parallax feature
+   adapted from: 
+   https://sebhastian.com/hide-scrollbar-css/#:~:text=If%20you%20want%20to%20hide,the%20display%20property%20to%20none%20. 
+*/
+#no-scroll ::-webkit-scrollbar {
+  display: none;
+}
+#no-scroll html {
+  scrollbar-width: none;
 }
