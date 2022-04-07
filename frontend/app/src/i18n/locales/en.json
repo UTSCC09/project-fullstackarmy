@@ -8,7 +8,10 @@
   "configbar": {
     "region": "Filter by Region",
     "date": "Filter by Date Range",
-    "mode": "Apply Dark Mode"
+    "mode": "Apply Dark Mode",
+    "countriesfilter": "Select Countries",
+    "datefrom": "From:",
+    "dateto": "To:"
   },
   "infotab": {
     "p1": {

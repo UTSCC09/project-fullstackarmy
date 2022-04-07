@@ -7,8 +7,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Stack from '@mui/material/Stack';
 import { DateFilterContext } from './context/DateFilterContext';
+import { useTranslation } from 'react-i18next';
 
 export const DateFilter = () => {
+  const { t } = useTranslation();
+
   const { selectedDate, updateSelectedDate } = React.useContext(
     DateFilterContext
   );
@@ -17,7 +20,7 @@ export const DateFilter = () => {
     <LocalizationProvider dateAdapter={AdapterDateFns} >
       <Stack spacing={2} sx={{padding: 2}}>
         <DatePicker
-          label="From:"
+          label={t('configbar.datefrom')}
           value={selectedDate[0]}
           onChange={(newValue) => {
             updateSelectedDate([newValue, selectedDate[1]]);
@@ -26,7 +29,7 @@ export const DateFilter = () => {
           
         />
         <DatePicker
-          label="To:"
+          label={t('configbar.dateto')}
           value={selectedDate[1]}
           onChange={(newValue) => {
             updateSelectedDate([selectedDate[0], newValue]);
