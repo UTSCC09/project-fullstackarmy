@@ -1,5 +1,5 @@
 import React from 'react';
-import './QueryError.css';
+import './Error.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
@@ -7,7 +7,7 @@ interface Props {
   message: string;
 }
 
-const QueryError: React.FC<Props> = ({ message }) => {
+const Error: React.FC<Props> = ({ message }) => {
   return (
     <div className='alertContainer'>
       <Alert severity='error'>
@@ -18,4 +18,4 @@ const QueryError: React.FC<Props> = ({ message }) => {
   );
 };
 
-export default QueryError;
+export default Error;
