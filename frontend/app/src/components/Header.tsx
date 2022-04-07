@@ -2,7 +2,7 @@
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Settings from '@mui/icons-material/Settings';
+import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,7 +18,7 @@ export const Header = () => {
   // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
+  const toggleDrawer = () => {
     setOpen(!configBarOpen);
   };
 
@@ -53,13 +53,13 @@ export const Header = () => {
           <IconButton size='large' color='inherit'>
             <AccountCircle />
           </IconButton>
-          <IconButton size='large' color='inherit' onClick={handleDrawerOpen}>
-            <Settings />
+          <IconButton size='large' color='inherit' onClick={toggleDrawer}>
+            <FilterAlt />
           </IconButton>
         </Toolbar>
       </AppBar>
       <TranslationDropdown anchorEl={anchorEl} handleClose={handleClose} />
-      <ConfigBar open={configBarOpen} />
+      <ConfigBar open={configBarOpen} handleClose={toggleDrawer} />
     </Box>
   );
 };

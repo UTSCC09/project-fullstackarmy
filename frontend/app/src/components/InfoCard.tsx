@@ -13,8 +13,8 @@ interface Props {
 
 const InfoCard: React.FC<Props> = ({ img, title, body }) => {
   return (
-    <Card sx={{ width: 500, margin: 15 }}>
-      <CardMedia component='img' height='140' image={img} />
+    <Card sx={{ width: 700, margin: 15 }}>
+      <CardMedia component='img' height='200' image={img} />
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
           {title}

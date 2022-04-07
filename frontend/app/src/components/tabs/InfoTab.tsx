@@ -1,14 +1,13 @@
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { useTranslation } from 'react-i18next';
-import bgdImg from '../../media/bgd.gif';
-import immunityImg from '../../media/herdimmunity.gif';
-import hopeImg from '../../media/hope.png';
-import populationImg from '../../media/populationimmunity.jpeg';
-import protectionImg from '../../media/protection.jpeg';
-import protocolsImg from '../../media/protocols.jpeg';
-import stopCovidImg from '../../media/stopcovid.png';
-import upImg from '../../media/up.webp';
-import vaccineImg from '../../media/vaccination.jpeg';
+import infoImg from '../../media/info.png';
+import hopeImg from '../../media/hope.jpeg';
+import worldImg from '../../media/world.png';
+import protectionImg from '../../media/protection.png';
+import protocolsImg from '../../media/protocols.png';
+import stopCovidImg from '../../media/vaccine.png';
+import upImg from '../../media/up.gif';
+import vaccineImg from '../../media/covid.png';
 import InfoCard from '../InfoCard';
 
 export const InfoTab = () => {
@@ -22,7 +21,7 @@ export const InfoTab = () => {
           speed={2.5}
           offset={0}
           style={{
-            backgroundImage: `url(${bgdImg})`,
+            backgroundColor: '#E6F3F8',
             backgroundSize: '100%',
             display: 'flex',
             flexDirection: 'column',
@@ -36,7 +35,7 @@ export const InfoTab = () => {
           <img
             src={upImg}
             alt='upImg'
-            style={{ width: '140.5px', height: '150px' }}
+            style={{ width: '80px', height: '80px'}}
           ></img>
         </ParallaxLayer>
 
@@ -49,9 +48,9 @@ export const InfoTab = () => {
           }}
         >
           <img
-            src={immunityImg}
-            alt='immunityImg'
-            style={{ width: '482.25px', height: '337.5px' }}
+            src={infoImg}
+            alt='infoImg'
+            style={{ width: '350px', height: '350px' }}
           ></img>
         </ParallaxLayer>
 
@@ -64,7 +63,7 @@ export const InfoTab = () => {
           }}
         >
           <InfoCard
-            img={populationImg}
+            img={worldImg}
             title={t('infotab.p2.title')}
             body={t('infotab.p2.def')}
           />
