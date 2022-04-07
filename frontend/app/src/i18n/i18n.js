@@ -17,7 +17,7 @@ i18n
       fr: { translation: fr },
     },
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     detection: {
       order: ['queryString', 'cookie'],
       cache: ['cookie'],

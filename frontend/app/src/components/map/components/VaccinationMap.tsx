@@ -1,5 +1,6 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../styles/VaccinationMap.css';
 import { FeatureData, MapLegend } from './MapConstants';
 import MapContainer from './MapContainer';
@@ -33,6 +34,9 @@ const continentEventName: string = 'continents';
 const VaccinationMap: React.FC<Props> = (args) => {
   const [mapState, setMapState] = useState<MapState>(initMapState);
   const [mapLegend, setMapLegend] = useState<MapLegend>(args.primaryLegend);
+  const { t } = useTranslation();
+
+  // let continentsLabel = t('mapGeneral.continents');
 
   const handleMapState = (event: ChangeEvent<HTMLInputElement>) => {
     const eventName: string = event.target.name;
@@ -78,7 +82,7 @@ const VaccinationMap: React.FC<Props> = (args) => {
                 name={continentEventName}
               />
             }
-            label='Continents'
+            label={t('mapGeneral.continents') as string}
           />
         )}
       </FormGroup>

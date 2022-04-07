@@ -6,7 +6,7 @@ import { Footer } from './components/Footer';
 import { Credits } from './components/Credits';
 import { InfoTab } from './components/tabs/InfoTab';
 import { StatusTab } from './components/tabs/StatusTab';
-import { RatesTab } from './components/tabs/RatesTab';
+import RatesTab from './components/tabs/RatesTab';
 import DistributionTab from './components/tabs/DistributionTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from './components/context/ColorModeContext';
@@ -114,7 +114,9 @@ function App() {
               <DateFilterContext.Provider
                 value={{ selectedDate, updateSelectedDate }}
               >
-                <div style={{ backgroundColor: darkMode ? '#303030' : 'white' }}>
+                <div
+                  style={{ backgroundColor: darkMode ? '#303030' : 'white' }}
+                >
                   <Header />
                   <Routes>
                     <Route
