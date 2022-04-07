@@ -6,18 +6,21 @@ import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import ConfigBar from './ConfigBar';
+import { UserContext } from './context/UserContext';
 import Logo from './Logo';
 import TranslationDropdown from './TranslationDropdown';
-import Button from '@mui/material/Button';
 
 export const Header = () => {
   // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
+  const { user, updateUser } = React.useContext(UserContext);
 
   const toggleDrawer = () => {
     setOpen(!configBarOpen);
@@ -30,8 +33,13 @@ export const Header = () => {
   const handleTranslationMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const signOut = () => {
+    updateUser(null);
   };
 
   return (
@@ -40,9 +48,23 @@ export const Header = () => {
         <Toolbar>
           <Logo />
           <Typography component='div' sx={{ flexGrow: 1 }}></Typography>
-          {/* to be used for sign-in/sign-up */}
-          <Button color='inherit'>Sign In</Button>
-          <Button color='secondary'>Sign Up</Button>
+
+          {user === null && (
+            <>
+              <Button component={RouterLink} to='/signin' color='inherit'>
+                Sign In
+              </Button>
+              <Button component={RouterLink} to='/signup' color='secondary'>
+                Sign Up
+              </Button>
+            </>
+          )}
+
+          {user !== null && (
+            <Button color='inherit' onClick={signOut}>
+              Sign Out
+            </Button>
+          )}
 
           <IconButton
             size='large'
@@ -50,9 +72,6 @@ export const Header = () => {
             onClick={handleTranslationMenu}
           >
             <Translate />
-          </IconButton>
-          <IconButton size='large' color='inherit'>
-            <AccountCircle />
           </IconButton>
           <IconButton size='large' color='inherit' onClick={toggleDrawer}>
             <FilterAlt />
