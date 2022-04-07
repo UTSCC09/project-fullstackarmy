@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const cors = require(`cors`);
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const schema = require("./graphql/schema/schema");
-const resolvers = require("./graphql/resolvers/rootResolver");
-const mongoose = require("mongoose");
-const { graphqlHTTP } = require("express-graphql");
-const http = require("http");
-const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const schema = require('./graphql/schema/schema');
+const resolvers = require('./graphql/resolvers/rootResolver');
+const mongoose = require('mongoose');
+const { graphqlHTTP } = require('express-graphql');
+const http = require('http');
+const Sentry = require('@sentry/node');
+const Tracing = require('@sentry/tracing');
 // For security
-const helmet = require("helmet");
+const helmet = require('helmet');
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
-const PORT = 3001;
+const PORT = 3000;
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
@@ -35,9 +35,9 @@ let allowedOrigins = [
   `http://localhost:3001`,
   `http://localhost:80`,
   `http://localhost`,
-  "https://covid19vaxtracker.live",
-  "https://api.covid19vaxtracker.live",
-  "https://www.covid19vaxtracker.live",
+  'https://covid19vaxtracker.live',
+  'https://api.covid19vaxtracker.live',
+  'https://www.covid19vaxtracker.live',
 ];
 
 app.use(
@@ -49,8 +49,8 @@ app.use(
       }
       if (allowedOrigins.indexOf(origin) === -1) {
         let msg =
-          "The CORS policy for this site does not " +
-          "allow access from the specified Origin.";
+          'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
         return callback(new Error(msg), false);
       }
       return callback(null, true);
@@ -65,7 +65,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(
-  "/",
+  '/',
   graphqlHTTP({
     schema: schema,
     rootValue: resolvers,
@@ -76,7 +76,7 @@ app.use(
 
 app.use(
   session({
-    secret: "8281ae58cbfab3f53b51a8289cdc47fb",
+    secret: '8281ae58cbfab3f53b51a8289cdc47fb',
     resave: false,
     saveUninitialized: true,
   })
@@ -91,7 +91,7 @@ mongoose
       if (err) {
         console.log(err);
       } else {
-        console.log("Running server on port " + PORT);
+        console.log('Running server on port ' + PORT);
       }
     });
   })
