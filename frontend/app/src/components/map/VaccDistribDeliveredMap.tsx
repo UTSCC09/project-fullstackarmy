@@ -1,26 +1,25 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import Loading from '../elements/Loading';
-import QueryError from '../elements/QueryError';
+import Loading from '../elements/Loading/Loading';
+import Error from '../elements/Error/Error';
 import {
-  ScaledLegendName,
   ScaledPlusLegend,
   TernaryLegend,
+  VaccDistribThresholds,
 } from './components/MapConstants';
 import VaccinationMap from './components/VaccinationMap';
 import { GET_VACC_DISTRIB_COUNTRY_DATA } from './queries/mapDataQueries';
+import DistributionWriteUp from './components/DistributionWriteUp';
+import { useTranslation } from 'react-i18next';
 
 interface Props {}
 
-// ! move all the data related things to a separate file
-// ! includes interfaces and queries
-
 const mapName = 'vaccDistribDeliveredMap';
-
 const featureValueName = 'dosesDeliveredRequiredPercent';
 
 const VaccDistribDeliveredMap: React.FC<Props> = () => {
   const [featureData, setFeatureData] = useState(null);
+  const { t } = useTranslation();
 
   const distribCountryData = useQuery(GET_VACC_DISTRIB_COUNTRY_DATA, {
     onCompleted: (data) => {
@@ -30,19 +29,28 @@ const VaccDistribDeliveredMap: React.FC<Props> = () => {
 
   if (distribCountryData && distribCountryData.loading) return <Loading />;
   if (distribCountryData && distribCountryData.error)
-    return <QueryError message={distribCountryData.error.message} />;
+    return <Error message={distribCountryData.error.message} />;
 
   return (
-    <VaccinationMap
-      mapName={mapName}
-      featureValueName={featureValueName}
-      featureData={featureData}
-      primaryLegend={TernaryLegend}
-      secondaryLegendToggle={true}
-      secondaryLegendName={ScaledLegendName}
-      secondaryLegend={ScaledPlusLegend}
-      continentToggle={false}
-    />
+    <>
+      <VaccinationMap
+        mapName={mapName}
+        featureValueName={featureValueName}
+        featureData={featureData}
+        primaryLegend={TernaryLegend}
+        secondaryLegendToggle={true}
+        secondaryLegendName={t('mapGeneral.scaledLegend')}
+        secondaryLegend={ScaledPlusLegend}
+        continentToggle={false}
+      />
+      <DistributionWriteUp
+        doseType={t('distributionTab.delivered')}
+        bookName={t('distributionTab.bookNameDelivered')}
+        featureData={featureData}
+        valueName={featureValueName}
+        thresholds={VaccDistribThresholds}
+      />
+    </>
   );
 };
 

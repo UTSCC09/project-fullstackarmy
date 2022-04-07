@@ -6,17 +6,10 @@ import HerdImmunityBarChart from '../charts/HerdImmunityBarChart';
 import BoosterVaccMap from '../map/BoosterVaccMap';
 import FullVacMap from '../map/FullVaccMap';
 import VaccMap from '../map/VaccMap';
-import { t } from 'i18next';
-import StatusTabPanel from './components/StatusTabPanel';
-import './styles/StatusTab.css';
-
-// From https://mui.com/components/tabs/ example
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+import { useTranslation } from 'react-i18next';
+import MapTabPanel from './components/MapTabPanel';
+import './styles/MapTab.css';
+import { a11yProps } from './components/TabHelpers';
 
 /**
  * Status tab containing the herd immunity bar chart plus tabs
@@ -25,6 +18,7 @@ function a11yProps(index: number) {
  */
 export const StatusTab: React.FC = () => {
   const [value, setValue] = React.useState(0);
+  const { t } = useTranslation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -32,12 +26,17 @@ export const StatusTab: React.FC = () => {
 
   return (
     <div className='status-tab'>
-      {/* First is the bar chart */}
+      <p>{t('statusTab.p1')}</p>
+      <p>{t('statusTab.p2')}</p>
+      <p>{t('statusTab.p3')}</p>
+      <p>{t('statusTab.p4')}</p>
+
       <HerdImmunityBarChart />
-      {/* Then is the tabs for the heat maps, which are displayed one at a time */}
-      <Box className='box' sx={{ width: '100%' }}>
-        <Box>
+
+      <Box className='mapBox' sx={{ width: '100%' }}>
+        <Box className='mapTabsContainer'>
           <Tabs
+            orientation='vertical'
             value={value}
             onChange={handleChange}
             aria-label='map tabs'
@@ -45,32 +44,20 @@ export const StatusTab: React.FC = () => {
             indicatorColor='secondary'
             centered
           >
-            <Tab label={t('maptabs.firstdosemap')} {...a11yProps(0)} />
-            <Tab label={t('maptabs.seconddosemap')} {...a11yProps(1)} />
-            <Tab label={t('maptabs.boosterdosemap')} {...a11yProps(2)} />
+            <Tab label={t('statusTab.firstMapTitle')} {...a11yProps(0)} />
+            <Tab label={t('statusTab.secondMapTitle')} {...a11yProps(1)} />
+            <Tab label={t('statusTab.thirdMapTitle')} {...a11yProps(2)} />
           </Tabs>
         </Box>
-        <StatusTabPanel
-          value={value}
-          index={0}
-          title={t('maptabs.firstdosemap')}
-        >
+        <MapTabPanel value={value} index={0}>
           <VaccMap />
-        </StatusTabPanel>
-        <StatusTabPanel
-          value={value}
-          index={1}
-          title={t('maptabs.seconddosemap')}
-        >
+        </MapTabPanel>
+        <MapTabPanel value={value} index={1}>
           <FullVacMap />
-        </StatusTabPanel>
-        <StatusTabPanel
-          value={value}
-          index={2}
-          title={t('maptabs.boosterdosemap')}
-        >
+        </MapTabPanel>
+        <MapTabPanel value={value} index={2}>
           <BoosterVaccMap />
-        </StatusTabPanel>
+        </MapTabPanel>
       </Box>
     </div>
   );
