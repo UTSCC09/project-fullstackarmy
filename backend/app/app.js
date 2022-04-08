@@ -27,6 +27,34 @@ app.use(Sentry.Handlers.tracingHandler());
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 const PORT = 3000;
 
+// From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
+let allowedOrigins = [
+  `http://localhost:3000`,
+  `http://localhost:3001`,
+  `http://localhost:80`,
+  `http://localhost`,
+  'https://api.covid19vaxtracker.live',
+  'https://www.covid19vaxtracker.live',
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      if (!origin) {
+        return callback(null, true);
+      }
+      if (allowedOrigins.indexOf(origin) === -1) {
+        let msg =
+          'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
+
 app.use(bodyParser.json());
 
 app.use(
