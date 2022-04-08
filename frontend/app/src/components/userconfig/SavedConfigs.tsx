@@ -18,12 +18,13 @@ const SavedConfigs: React.FC<Props> = () => {
   const { changeLanguage } = React.useContext(LanguageContext);
   const { updateSelectedDate } = React.useContext(DateFilterContext);
   const { updateSelectedCountries } = React.useContext(CountriesFilterContext);
+  console.log('trying to get user');
   console.log(user);
 
   const handleClick = (cfg) => {
     console.log(cfg.savedLanguage);
-    console.log(cfg.savedIsoCodes);
-    console.log(cfg.savedDates);
+    console.log(cfg.savedIsoCodes.toString());
+    console.log(cfg.savedDates.toString());
     return null;
     // if (cfg.savedLanguage) {
     //   changeLanguage(cfg.savedLanguage);
@@ -50,7 +51,6 @@ const SavedConfigs: React.FC<Props> = () => {
   if (allSavedConfigs && allSavedConfigs.error)
     return <Error message={allSavedConfigs.error.message} />;
   const userConfigs = allSavedConfigs.data.userConfigs;
-  console.log(userConfigs);
   const menuItems = userConfigs.map((cfg) => {
     return (
       <MenuItem key={userConfigs.indexOf(cfg)} onClick={handleClick(cfg)}>
