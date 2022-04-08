@@ -47,13 +47,12 @@ header {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .tab {
   max-width: 1200px;
   width: 100%;
-  align-self: center;
+  margin: 0 auto;
 }
 
 footer {
@@ -64,6 +63,7 @@ footer {
   font-weight: bold;
   height: 30px;
   padding: 5px;
+  margin-top: auto;
 }
 
 .link {
