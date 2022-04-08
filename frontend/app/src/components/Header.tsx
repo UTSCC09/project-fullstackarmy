@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import ConfigBar from './ConfigBar';
 import { UserContext } from './context/UserContext';
@@ -20,6 +21,7 @@ export const Header = () => {
   // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
   const { user, updateUser } = React.useContext(UserContext);
+  const { t } = useTranslation();
 
   const toggleDrawer = () => {
     setOpen(!configBarOpen);
@@ -51,17 +53,17 @@ export const Header = () => {
           {user === null && (
             <>
               <Button component={RouterLink} to='/signin' color='inherit'>
-                Sign In
+                {t('signin')}
               </Button>
               <Button component={RouterLink} to='/signup' color='secondary'>
-                Sign Up
+                {t('signup')}
               </Button>
             </>
           )}
 
           {user !== null && (
             <Button color='inherit' onClick={signOut}>
-              Sign Out
+              {t('signout')}
             </Button>
           )}
 

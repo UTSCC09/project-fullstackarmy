@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import Error from '../elements/Error/Error';
@@ -17,8 +18,8 @@ import { SIGN_IN } from './queries/AuthenticationQuries';
 
 const SignIn: React.FC = () => {
   const [errorPanel, setErrorPanel] = React.useState<string | null>(null);
-
   const { updateUser } = React.useContext(UserContext);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const SignIn: React.FC = () => {
     const password = data.get('password');
 
     if (!email || !password) {
-      setErrorPanel('The email and password fields are required.');
+      setErrorPanel(t('emailPasswordRequired'));
       return;
     }
 
@@ -68,7 +69,7 @@ const SignIn: React.FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign in
+          {t('signin')}
         </Typography>
         <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -98,7 +99,7 @@ const SignIn: React.FC = () => {
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            {t('signin')}
           </Button>
           <Grid container justifyContent='center'>
             <Grid item>
@@ -108,7 +109,7 @@ const SignIn: React.FC = () => {
                 color='secondary'
                 variant='body2'
               >
-                Don't have an account? Sign Up
+                {t('noAccount')}
               </Link>
             </Grid>
           </Grid>
