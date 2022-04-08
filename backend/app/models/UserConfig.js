@@ -12,11 +12,12 @@ const userConfigSchema = new Schema(
         type: String,
       },
     ],
-    savedDates: [
-      {
-        type: Date,
-      },
-    ],
+    savedStartDate: {
+      type: Date,
+    },
+    savedEndDate: {
+      type: Date,
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -28,6 +29,5 @@ const userConfigSchema = new Schema(
   },
   { collection: 'UserConfig', timestamps: true }
 );
-userConfigSchema.index({ name: 1 }, { unique: true, dropDups: true });
 
 module.exports = mongoose.model('UserConfig', userConfigSchema);

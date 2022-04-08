@@ -4,7 +4,8 @@ type UserConfig {
     user: User!
     savedLanguage: String
     savedIsoCodes: [String!]
-    savedDates: [String!]
+    savedStartDate: String
+    savedEndDate: String
 }
 
 input UserConfigInput {
@@ -12,7 +13,8 @@ input UserConfigInput {
     user: ID!
     savedLanguage: String
     savedIsoCodes: [String!]
-    savedDates: [String!]
+    savedStartDate: String
+    savedEndDate: String
 }
 `;
 

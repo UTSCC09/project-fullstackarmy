@@ -86,7 +86,9 @@
   "alreadyHaveAccount": "Vous avez déjà un compte ? Se connecter",
   "savedConfigs": {
     "title": "Configurations sauvegardées",
-    "input": "Entrez un nom pour cette configuration"
+    "subtitle": "Choisissez une configuration",
+    "instruction": "Sauvegarder la configuration actuelle :",
+    "input": "Nom de la nouvelle configuration"
   },
   "here": "ici"
 }

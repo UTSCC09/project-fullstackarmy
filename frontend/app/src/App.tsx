@@ -126,7 +126,9 @@ function App() {
 
   // Handle translation
   const { i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = React.useState('en');
   const changeLanguage = (lang: string) => {
+    setCurrentLanguage(lang);
     i18n.changeLanguage(lang);
   };
 
@@ -155,7 +157,9 @@ function App() {
         <Router>
           <UserContext.Provider value={{ user, updateUser }}>
             <ApolloProvider client={client}>
-              <LanguageContext.Provider value={{ changeLanguage }}>
+              <LanguageContext.Provider
+                value={{ currentLanguage, changeLanguage }}
+              >
                 <CountriesFilterContext.Provider
                   value={{ selectedCountries, updateSelectedCountries }}
                 >

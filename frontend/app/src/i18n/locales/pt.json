@@ -86,8 +86,10 @@
   "emailPasswordRequired": "E-mail e senha são necessários.",
   "alreadyHaveAccount": "Já tem uma conta? Entre",
   "savedConfigs": {
-    "title": "Configurações Salvas",
-    "input": "Digite um nome para esta configuração"
+    "title": "Configurações guardadas",
+    "subtitle": "Escolha uma configuração",
+    "instruction": "Guardar a configuração actual:",
+    "input": "Novo nome de configuração"
   },
   "here": "aqui"
 }

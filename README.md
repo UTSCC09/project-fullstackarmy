@@ -18,15 +18,29 @@ A simplified COVID-19 vaccination worldwide statistics dashboard. The website le
 
 - MERN stack - MongoDB, ExpressJs, React, and NodeJs. We also used GraphQL as our API structure. In doing so, we used Apollo Client on our frontend to make the API calls to our backend. Our frontend scripts are written in TypeScript, while our backend scripts are in JavaScript.
 
-- Context to handle global changes, such filtering data
+Frontend General:
+
+- Context to handle global changes, such date filters, dark mode and chosen language
 - Apollo client requests were made using the hooks provided and the requests were made in the component that required them.
-- Queries were then put into a separate file to encourage modularity
+- Queries were then put into a separate file to encourage modularity (for the most part)
 - Generic components were made such as Loading and Error
 - Styles were put into a separate folder except for dyanmic styling and MUI specific styles
 - Map:
   - One generic map component that supports multiple legends and different geojson polygon shapes was re-used to ensure DRY code
   - Components of the map were split into their own components to ensure modularity
   - Feature data was stored in a storage URL online on GitHub to avoid a large bundle size
+- MUI templates: Material UI for React was extensively used for the design of the website this allowed to have a shared theme throughout the app that can be altered easily
+
+Backend General:
+
+- Schemas were partitioned to encourage modularity, between global, map, authorization, user configs and data pipeline
+- Resolvers were partitioned and put into folders that follow this structure
+- Mongoose was used to query our data base
+- Data Pipeline are in their own folder which are scripts that call onto external endpoints to fetch, tidy, transform and send the data to our backend. This script has its own username and password in the db and is the only user that is allowed to enter vaccination data into the database. To ensure that all data (even past in case of an error from external sources), only the data that is changed is sent to the server. A copy of the vaccination data is serialized and stored in the droplet to ensure that only new or updated data is sent to our database compared to the last update made.
+
+Database General:
+
+- The vaccination data schema is based isoCodes and the data that we have on each isoCode
 
 Frontend libraries:
 
@@ -36,6 +50,7 @@ Frontend libraries:
 - chart.js: for the charts
 - react-router-dom: routing
 - apollo-client: graphql requests
+- react-18next: translation feature
 
 Backend libraries:
 
