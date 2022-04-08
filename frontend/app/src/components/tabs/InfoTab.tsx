@@ -14,7 +14,7 @@ export const InfoTab = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='tab'>
+    <div>
       <Parallax pages={8} style={{}}>
         {/* layer 1 - title */}
         <ParallaxLayer
@@ -35,7 +35,7 @@ export const InfoTab = () => {
           <img
             src={upImg}
             alt='upImg'
-            style={{ width: '80px', height: '80px' }}
+            style={{ width: '80px', height: '80px'}}
           ></img>
         </ParallaxLayer>
 

@@ -9,6 +9,7 @@ import { DateFilter } from './DateFilter';
 import { useTranslation } from 'react-i18next';
 import SavedConfigs from './userconfig/SavedConfigs';
 import { UserContext } from './context/UserContext';
+import { ColorModeToggle } from './ColorModeToggle';
 
 interface Props {
   open: boolean;
@@ -51,15 +52,17 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
       </Typography>
       <DateFilter />
       <Divider sx={{ marginTop: '14px' }} />
+
+      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
+        {t('configbar.mode')}
+      </Typography>
+
+      <ColorModeToggle />
+
       {user !== null && (
         <>
-          <Typography
-            variant='subtitle1'
-            align='left'
-            sx={{ marginLeft: '14px' }}
-          >
-            {t('savedConfigs.title')}
-          </Typography>
+          <Divider sx={{ marginTop: '14px' }} />
+
           <SavedConfigs />
         </>
       )}
