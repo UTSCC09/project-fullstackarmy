@@ -77,9 +77,9 @@
     "scaledLegend": "Scaled Legend",
     "continents": "Continents"
   },
-  "userDashboard": {
-    "savedConfigs": "Saved Configurations",
-    "profileSection": "Profile"
+  "savedConfigs": {
+    "title": "Saved Configurations",
+    "input": "Enter a name for this configuration"
   },
   "here": "here"
 }

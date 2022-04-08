@@ -8,7 +8,7 @@ import { CountriesFilter } from './CountriesFilter';
 import { DateFilter } from './DateFilter';
 import { useTranslation } from 'react-i18next';
 import { ColorModeToggle } from './ColorModeToggle';
-import SavedConfigs from './SavedConfigs';
+import SavedConfigs from './userconfig/SavedConfigs';
 
 interface Props {
   open: boolean;
@@ -59,7 +59,9 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
       <ColorModeToggle />
 
       <Divider sx={{ marginTop: '14px' }} />
-
+      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
+        {t('savedConfigs.title')}
+      </Typography>
       <SavedConfigs />
     </Drawer>
   );

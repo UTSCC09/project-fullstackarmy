@@ -1,5 +1,6 @@
 import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import { UserContext } from '../context/UserContext';
 import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
 import { useQuery } from '@apollo/client';
@@ -9,11 +10,12 @@ import { useTranslation } from 'react-i18next';
 import { LanguageContext } from '../context/LanguageContext';
 import { DateFilterContext } from '../context/DateFilterContext';
 import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select from '@mui/material/Select/Select';
+
 interface Props {}
 
-const SavedConfigs: React.FC<Props> = () => {
+const SavedConfigsDropdown: React.FC<Props> = () => {
   const { user } = React.useContext(UserContext);
   const { changeLanguage } = React.useContext(LanguageContext);
   const { updateSelectedDate } = React.useContext(DateFilterContext);
@@ -21,22 +23,18 @@ const SavedConfigs: React.FC<Props> = () => {
   console.log(user);
 
   const handleClick = (cfg) => {
-    console.log(cfg.savedLanguage);
-    console.log(cfg.savedIsoCodes);
-    console.log(cfg.savedDates);
+    if (cfg.savedLanguage) {
+      changeLanguage(cfg.savedLanguage);
+    }
+    if (cfg.savedDates) {
+      for (let d in cfg.savedDates) {
+        updateSelectedDate(cfg.savedDates[d]);
+      }
+    }
+    if (cfg.savedIsoCodes) {
+      updateSelectedCountries(cfg.savedIsoCodes);
+    }
     return null;
-    // if (cfg.savedLanguage) {
-    //   changeLanguage(cfg.savedLanguage);
-    // }
-    // if (cfg.savedDates) {
-    //   for (let d in cfg.savedDates) {
-    //     updateSelectedDate(cfg.savedDates[d]);
-    //   }
-    // }
-    // if (cfg.savedIsoCodes) {
-    //   updateSelectedCountries(cfg.savedIsoCodes);
-    // }
-    // return null;
   };
   const { t } = useTranslation();
 
@@ -52,6 +50,7 @@ const SavedConfigs: React.FC<Props> = () => {
   const userConfigs = allSavedConfigs.data.userConfigs;
   console.log(userConfigs);
   const menuItems = userConfigs.map((cfg) => {
+    console.log(cfg);
     return (
       <MenuItem key={userConfigs.indexOf(cfg)} onClick={handleClick(cfg)}>
         {cfg.name}
@@ -59,12 +58,14 @@ const SavedConfigs: React.FC<Props> = () => {
     );
   });
   return (
-    <FormControl sx={{ m: 2, width: 230 }} size='small'>
-      <Select value='' color='secondary'>
-        {menuItems}
-      </Select>
-    </FormControl>
+    <Select
+      value=''
+      input={<OutlinedInput label={t('savedConfigs.title')} />}
+      color='secondary'
+    >
+      {menuItems}
+    </Select>
   );
 };
 
-export default SavedConfigs;
+export default SavedConfigsDropdown;

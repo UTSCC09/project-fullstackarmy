@@ -18,7 +18,6 @@ import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import SignUp from './components/authentication/SignUp';
 import SignIn from './components/authentication/SignIn';
-import UserDashboard from './components/userconfig/UserDashboard';
 
 /**
  * Modifies the Event prototype so it will affect how the Google Library behaves.
@@ -174,10 +173,6 @@ function App() {
                       <Route path='/credits' element={<Credits />}></Route>
                       <Route path='/signin' element={<SignIn />}></Route>
                       <Route path='/signup' element={<SignUp />}></Route>
-                      <Route
-                        path='/user-configs'
-                        element={<UserDashboard />}
-                      ></Route>
                     </Routes>
                     <Footer />
                   </div>

@@ -1,7 +1,6 @@
 // Adapted from:
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
@@ -42,11 +41,6 @@ export const Header = () => {
     updateUser(null);
   };
 
-  // TODO: Link to user config page. Only accessible if authenticated
-  const handleConfigPage = () => {
-    console.log('config page btn clicked');
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='relative'>
@@ -69,12 +63,6 @@ export const Header = () => {
             <Button color='inherit' onClick={signOut}>
               Sign Out
             </Button>
-          )}
-
-          {user !== null && (
-            <IconButton size='large' color='inherit' onClick={handleConfigPage}>
-              <AccountCircle />
-            </IconButton>
           )}
 
           <IconButton
