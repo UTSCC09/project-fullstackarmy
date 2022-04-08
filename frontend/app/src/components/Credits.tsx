@@ -181,7 +181,7 @@ export const Credits = () => {
             <a className='Link' href='https://github.com/chendaniely'>
               Daniel Chen
             </a>{' '}
-            Ensuring that our visualization is correct and informative.
+            For advice to ensure our visualizations are correct and informative.
           </li>
           <li>
             <a
@@ -190,7 +190,7 @@ export const Credits = () => {
             >
               Shehab Eid
             </a>{' '}
-            Ensuring that our information is correct and not misleading from
+            Ensuring that our information is correct and not misleading from a
             scientific perspective.
           </li>
         </Typography>
