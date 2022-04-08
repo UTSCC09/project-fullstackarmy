@@ -1,17 +1,17 @@
-version: "3.7"
+version: '3.7'
 
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs 
-      - ./vhost:/etc/nginx/vhost.d 
-      - ./html:/usr/share/nginx/html
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
     restart: always
     privileged: true
   nginx-proxy-acme:
@@ -23,10 +23,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme:/etc/acme.sh
     environment:
-        - DEFAULT_EMAIL=aarenchu@gmail.com
+      - DEFAULT_EMAIL=aarenchu@gmail.com
   frontend:
     image: projectfrontend:latest
-    build: 
+    build:
       context: ./frontend
       args:
         REACT_APP_API_URL: https://api.covid19vaxtracker.live
@@ -38,6 +38,8 @@ services:
     restart: always
     expose:
       - 80
+    volumes:
+      - html:/usr/share/nginx/html
     environment:
       VIRTUAL_HOST: www.covid19vaxtracker.live
       LETSENCRYPT_HOST: www.covid19vaxtracker.live
@@ -53,6 +55,7 @@ services:
       MONGO_USER: admin
       MONGO_PASSWORD: CEZHrExc5aMCcp5s
       MONGO_DB: DataPipelineDev
+      SECRET_KEY: 8281ae58cbfab3f53b51a8289cdc47fb
       BACKEND_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
       VIRTUAL_HOST: api.covid19vaxtracker.live
@@ -84,3 +87,5 @@ services:
     # volumes:
     #   - ./backend/app:/home/node/app
     command: node dataPipeline/vaccSupplyDataPipeline.js
+volumes:
+  html:
