@@ -11,9 +11,7 @@ export const Footer = () => {
     <Paper elevation={3} sx={{ marginTop: pathname !== '/' ? 'auto' : '100vh' }}>
       <footer>
         <span>
-          <Link className='link' to='/credits'>
-            Credits
-          </Link>
+          <Link className='link' to='/credits'>Credits</Link>
         </span>
       </footer>
     </Paper>

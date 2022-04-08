@@ -35,7 +35,7 @@ export const InfoTab = () => {
           <img
             src={upImg}
             alt='upImg'
-            style={{ width: '80px', height: '80px' }}
+            style={{ width: '80px', height: '80px'}}
           ></img>
         </ParallaxLayer>
 

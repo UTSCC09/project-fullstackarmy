@@ -1,6 +1,7 @@
 // Adapted from:
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
@@ -11,7 +12,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { ColorModeToggle } from './ColorModeToggle';
 import ConfigBar from './ConfigBar';
 import { UserContext } from './context/UserContext';
 import Logo from './Logo';
@@ -43,7 +43,7 @@ export const Header = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar position='relative'>
         <Toolbar>
           <Logo />
@@ -65,8 +65,6 @@ export const Header = () => {
               Sign Out
             </Button>
           )}
-
-          <ColorModeToggle />
 
           <IconButton
             size='large'
