@@ -219,14 +219,12 @@ const dataPipeline = async () => {
   }
 };
 
-dataPipeline();
+let scheduledJob = new CronJob(
+  '00 30 09 * * *',
+  dataPipeline,
+  null,
+  false,
+  'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-//   '00 30 09 * * *',
-//   dataPipeline,
-//   null,
-//   false,
-//   'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();

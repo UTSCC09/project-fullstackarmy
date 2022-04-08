@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import { UserContext } from '../context/UserContext';
-import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
 import { useLazyQuery } from '@apollo/client';
-import Loading from '../elements/Loading/Loading';
-import Error from '../elements/Error/Error';
-import { LanguageContext } from '../context/LanguageContext';
-import { DateFilterContext } from '../context/DateFilterContext';
-import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import lodash from 'lodash';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import React, { useEffect } from 'react';
+import { CountriesFilterContext } from '../context/CountriesFilterContext';
+import { DateFilterContext } from '../context/DateFilterContext';
+import { LanguageContext } from '../context/LanguageContext';
+import { UserContext } from '../context/UserContext';
+import Error from '../elements/Error/Error';
+import Loading from '../elements/Loading/Loading';
+import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
 
 interface Props {}
 

@@ -392,26 +392,24 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput, authToken) => {
 };
 
 const dataPipeline = async () => {
-  // try {
-  let dataSetsSuccess = await getDataSets();
-  if (dataSetsSuccess) {
-    let authToken = await helpers.authenticationToken();
-    await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
-    await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
+  try {
+    let dataSetsSuccess = await getDataSets();
+    if (dataSetsSuccess) {
+      let authToken = await helpers.authenticationToken();
+      await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
+      await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
+    }
+  } catch (err) {
+    helpers.logError(err);
   }
-  // } catch (err) {
-  //   helpers.logError(err);
-  // }
 };
 
-dataPipeline();
+let scheduledJob = new CronJob(
+  '00 00 09 * * *',
+  dataPipeline,
+  null,
+  false,
+  'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-//   '00 00 09 * * *',
-//   dataPipeline,
-//   null,
-//   false,
-//   'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();
