@@ -1,6 +1,6 @@
-const IsoCodeType = require('../../models/IsoCodeType');
-const { ErrorMessage } = require('./constants');
-const Sentry = require('@sentry/node');
+const IsoCodeType = require("../../models/IsoCodeType");
+const { ErrorMessage } = require("./constants");
+const Sentry = require("@sentry/node");
 
 const isoCodeType = async (isoCodeTypeId) => {
   try {
@@ -37,7 +37,8 @@ const boolObj = (bool) => {
 };
 
 const dateToString = (date) => {
-  return new Date(date).toISOString();
+  if (date) return new Date(date).toISOString();
+  return null;
 };
 
 const logError = (err) => {

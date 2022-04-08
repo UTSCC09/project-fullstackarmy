@@ -1,6 +1,8 @@
 const { buildSchema } = require('graphql');
 const { mapDataTypes, mapDataRootQuery } = require('./mapDataSchema');
 const {dataPipelineTypes, dataPipelineRootQuery, dataPipelineRootMutation} = require('./dataPipelineSchema');
+const {userConfigTypes, userConfigRootQuery, userConfigRootMutation} = require('./userConfigSchema');
+const {authTypes, authRootQuery, authRootMutation} = require('./authorizationSchema');
 const {globalTypes} = require('./globalTypes');
 
 module.exports = buildSchema(`
@@ -41,7 +43,8 @@ input isoCodeInput {
 
 ${mapDataTypes}
 ${dataPipelineTypes}
-
+${userConfigTypes}
+${authTypes}
 type RootQuery {
     isoCodes(isoCodes:[String!]!): [IsoCode!]!
     countryIsoCodes: [IsoCode!]!
@@ -54,10 +57,14 @@ type RootQuery {
     getBoosterVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
     ${mapDataRootQuery}
     ${dataPipelineRootQuery}
+    ${authRootQuery}
+    ${userConfigRootQuery}
 }
 
 type RootMutation {
     ${dataPipelineRootMutation}
+    ${authRootMutation}
+    ${userConfigRootMutation}
 }
 
 schema {

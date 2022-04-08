@@ -41,7 +41,7 @@ app.use(
 
 app.use(
   session({
-    secret: '8281ae58cbfab3f53b51a8289cdc47fb',
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
   })
