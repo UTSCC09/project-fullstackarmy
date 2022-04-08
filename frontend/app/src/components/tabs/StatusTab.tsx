@@ -27,27 +27,19 @@ export const StatusTab: React.FC = () => {
   };
 
   return (
-    <div className='status-tab'>
-      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
-        <Typography variant='body1'>
-          {t('statusTab.p1')}
-        </Typography>
-        <Typography variant='body1'>
-          {t('statusTab.p2')}
-        </Typography>
-        <Typography variant='body1'>
-          {t('statusTab.p3')}
-        </Typography>
-        <Typography variant='body1'>
-          {t('statusTab.p4')}
-        </Typography>
+    <div className='status-tab tab'>
+      <Paper elevation={2} sx={{ margin: 2, padding: 2 }}>
+        <Typography variant='body1'>{t('statusTab.p1')}</Typography>
+        <Typography variant='body1'>{t('statusTab.p2')}</Typography>
+        <Typography variant='body1'>{t('statusTab.p3')}</Typography>
+        <Typography variant='body1'>{t('statusTab.p4')}</Typography>
       </Paper>
 
-      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+      <Paper elevation={2} sx={{ margin: 2, padding: 2 }}>
         <HerdImmunityBarChart />
       </Paper>
 
-      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+      <Paper elevation={2} sx={{ margin: 2, padding: 2 }}>
         <Box className='mapBox' sx={{ width: '100%' }}>
           <Box className='mapTabsContainer'>
             <Tabs
