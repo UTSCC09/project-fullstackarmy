@@ -18,14 +18,14 @@ import { Bar } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { CountriesFilterContext } from "../context/CountriesFilterContext";
-import { DateFilterContext } from "../context/DateFilterContext";
-import { ColorModeContext } from "../context/ColorModeContext";
+import { CountriesFilterContext } from '../context/CountriesFilterContext';
+import { DateFilterContext } from '../context/DateFilterContext';
+import { ColorModeContext } from '../context/ColorModeContext';
 
 const formatDate = (date) => {
   let d = new Date(Date.parse(date));
   return d.toISOString().split('T')[0];
-}
+};
 
 const currentDate = new Date();
 
@@ -52,41 +52,68 @@ const HerdImmunityBarChart = () => {
   `;
 
   const GET_FIRST_VACC_DATA_BY_DATE: DocumentNode = gql`
-    query getFirstVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
-      getFirstVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
+    query getFirstVaccDataByDateRangeAndIsoCode(
+      $startDate: String!
+      $endDate: String!
+      $isoCodes: [String!]!
+    ) {
+      getFirstVaccDataByDateRangeAndIsoCode(
+        startDate: $startDate
+        endDate: $endDate
+        isoCodes: $isoCodes
+      ) {
         peopleVaccinatedPerHundred
       }
     }
   `;
 
   const GET_SECOND_VACC_DATA_BY_DATE: DocumentNode = gql`
-    query getFullyVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
-      getFullyVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
+    query getFullyVaccDataByDateRangeAndIsoCode(
+      $startDate: String!
+      $endDate: String!
+      $isoCodes: [String!]!
+    ) {
+      getFullyVaccDataByDateRangeAndIsoCode(
+        startDate: $startDate
+        endDate: $endDate
+        isoCodes: $isoCodes
+      ) {
         peopleFullyVaccinatedPerHundred
       }
     }
   `;
 
   const GET_BOOSTER_VACC_DATA_BY_DATE: DocumentNode = gql`
-    query getBoosterVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
-      getBoosterVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
+    query getBoosterVaccDataByDateRangeAndIsoCode(
+      $startDate: String!
+      $endDate: String!
+      $isoCodes: [String!]!
+    ) {
+      getBoosterVaccDataByDateRangeAndIsoCode(
+        startDate: $startDate
+        endDate: $endDate
+        isoCodes: $isoCodes
+      ) {
         totalBoostersPerHundred
       }
     }
   `;
 
   // use darkMode state to set chart colors
-  const {darkMode} = React.useContext(ColorModeContext);
+  const { darkMode } = React.useContext(ColorModeContext);
 
   // vars come from CountriesFilter Component
-  const {selectedCountries} = React.useContext(CountriesFilterContext);
+  const { selectedCountries } = React.useContext(CountriesFilterContext);
   let vars: String[] = selectedCountries;
 
   // date range comes from DateFilter Component
-  const {selectedDate} = React.useContext(DateFilterContext);
+  const { selectedDate } = React.useContext(DateFilterContext);
   // only selected end date matters here because the chart shows current status as of the end date
   let startDate = '2020-12-02';
-  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
+  let selectedEndDate =
+    selectedDate[1] === null
+      ? formatDate(currentDate)
+      : formatDate(selectedDate[1]);
 
   const {
     error: labelErr,
@@ -147,7 +174,7 @@ const HerdImmunityBarChart = () => {
   if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
 
-  if (data && vars.length == labelData.isoCodes.length) {
+  if (data && vars.length === labelData.isoCodes.length) {
     // update label and chart data.
     let labels: string[] = [];
     let vaccData: number[] = [];
