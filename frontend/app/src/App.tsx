@@ -131,6 +131,7 @@ function App() {
                   value={{ selectedDate, updateSelectedDate }}
                 >
                   <div
+                    className='app-container'
                     style={{ backgroundColor: darkMode ? '#303030' : 'white' }}
                   >
                     <Header />

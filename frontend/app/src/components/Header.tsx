@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { ColorModeToggle } from './ColorModeToggle';
 import ConfigBar from './ConfigBar';
 import { UserContext } from './context/UserContext';
 import Logo from './Logo';
@@ -42,7 +43,7 @@ export const Header = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position='relative'>
         <Toolbar>
           <Logo />
@@ -64,6 +65,8 @@ export const Header = () => {
               Sign Out
             </Button>
           )}
+
+          <ColorModeToggle />
 
           <IconButton
             size='large'
