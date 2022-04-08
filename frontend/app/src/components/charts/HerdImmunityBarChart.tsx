@@ -1,3 +1,4 @@
+import React from 'react';
 // Adapted from https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/bar/stacked?from-embed=&file=/App.tsx:315-556
 import {
   Chart as ChartJS,
@@ -17,6 +18,16 @@ import { Bar } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
+import { CountriesFilterContext } from "../context/CountriesFilterContext";
+import { DateFilterContext } from "../context/DateFilterContext";
+import { ColorModeContext } from "../context/ColorModeContext";
+
+const formatDate = (date) => {
+  let d = new Date(Date.parse(date));
+  return d.toISOString().split('T')[0];
+}
+
+const currentDate = new Date();
 
 const HerdImmunityBarChart = () => {
   // Register necessary elements from ChartJS
@@ -40,32 +51,42 @@ const HerdImmunityBarChart = () => {
     }
   `;
 
-  const GET_FIRST_VACC_DATA: DocumentNode = gql`
-    query getMostRecentFirstVaccDataByIsoCode($isoCodes: [String!]!) {
-      getMostRecentFirstVaccDataByIsoCode(isoCodes: $isoCodes) {
+  const GET_FIRST_VACC_DATA_BY_DATE: DocumentNode = gql`
+    query getFirstVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
+      getFirstVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
         peopleVaccinatedPerHundred
       }
     }
   `;
 
-  const GET_SECOND_VACC_DATA: DocumentNode = gql`
-    query getMostRecentFullyVaccDataByIsoCode($isoCodes: [String!]!) {
-      getMostRecentFullyVaccDataByIsoCode(isoCodes: $isoCodes) {
+  const GET_SECOND_VACC_DATA_BY_DATE: DocumentNode = gql`
+    query getFullyVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
+      getFullyVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
         peopleFullyVaccinatedPerHundred
       }
     }
   `;
 
-  const GET_BOOSTER_VACC_DATA: DocumentNode = gql`
-    query getMostRecentBoosterVaccDataByIsoCode($isoCodes: [String!]!) {
-      getMostRecentBoosterVaccDataByIsoCode(isoCodes: $isoCodes) {
+  const GET_BOOSTER_VACC_DATA_BY_DATE: DocumentNode = gql`
+    query getBoosterVaccDataByDateRangeAndIsoCode($startDate: String!, $endDate: String!, $isoCodes: [String!]!) {
+      getBoosterVaccDataByDateRangeAndIsoCode(startDate: $startDate, endDate: $endDate, isoCodes: $isoCodes) {
         totalBoostersPerHundred
       }
     }
   `;
 
-  // TODO: vars will come from Filter Component, remember vars need to be ""
-  let vars: String[] = ['CAN', 'AFG', 'AND', 'CHL', 'PRT'];
+  // use darkMode state to set chart colors
+  const {darkMode} = React.useContext(ColorModeContext);
+
+  // vars come from CountriesFilter Component
+  const {selectedCountries} = React.useContext(CountriesFilterContext);
+  let vars: String[] = selectedCountries;
+
+  // date range comes from DateFilter Component
+  const {selectedDate} = React.useContext(DateFilterContext);
+  // only selected end date matters here because the chart shows current status as of the end date
+  let startDate = '2020-12-02';
+  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
 
   const {
     error: labelErr,
@@ -82,8 +103,10 @@ const HerdImmunityBarChart = () => {
     error: firstVaccErr,
     loading: firstVaccDataLoading,
     data: firstVaccData,
-  } = useQuery(GET_FIRST_VACC_DATA, {
+  } = useQuery(GET_FIRST_VACC_DATA_BY_DATE, {
     variables: {
+      startDate: startDate,
+      endDate: selectedEndDate,
       isoCodes: vars,
     },
     notifyOnNetworkStatusChange: true,
@@ -93,8 +116,10 @@ const HerdImmunityBarChart = () => {
     error: secondVaccErr,
     loading: secondVaccDataLoading,
     data: secondVaccData,
-  } = useQuery(GET_SECOND_VACC_DATA, {
+  } = useQuery(GET_SECOND_VACC_DATA_BY_DATE, {
     variables: {
+      startDate: startDate,
+      endDate: selectedEndDate,
       isoCodes: vars,
     },
     notifyOnNetworkStatusChange: true,
@@ -104,8 +129,10 @@ const HerdImmunityBarChart = () => {
     error: boosterVaccErr,
     loading: boosterVaccDataLoading,
     data: boosterVaccData,
-  } = useQuery(GET_BOOSTER_VACC_DATA, {
+  } = useQuery(GET_BOOSTER_VACC_DATA_BY_DATE, {
     variables: {
+      startDate: startDate,
+      endDate: selectedEndDate,
       isoCodes: vars,
     },
     notifyOnNetworkStatusChange: true,
@@ -120,15 +147,12 @@ const HerdImmunityBarChart = () => {
   if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
 
-  // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
-  if (data) {
+  if (data && vars.length == labelData.isoCodes.length) {
     // update label and chart data.
     let labels: string[] = [];
     let vaccData: number[] = [];
     let fullyVaccData: number[] = [];
     let boosterData: number[] = [];
-    let maxTot: number = 0;
-    let maxFirstVal = 0;
     for (let i in vars) {
       labels.push(
         labelData.isoCodes[i].isoCodeName +
@@ -137,40 +161,25 @@ const HerdImmunityBarChart = () => {
           ')'
       );
       vaccData.push(
-        firstVaccData.getMostRecentFirstVaccDataByIsoCode[i]
+        firstVaccData.getFirstVaccDataByDateRangeAndIsoCode[i]
           .peopleVaccinatedPerHundred
       );
       fullyVaccData.push(
-        secondVaccData.getMostRecentFullyVaccDataByIsoCode[i]
+        secondVaccData.getFullyVaccDataByDateRangeAndIsoCode[i]
           .peopleFullyVaccinatedPerHundred
       );
       boosterData.push(
-        boosterVaccData.getMostRecentBoosterVaccDataByIsoCode[i]
+        boosterVaccData.getBoosterVaccDataByDateRangeAndIsoCode[i]
           .totalBoostersPerHundred
       );
-      // Justification for this method instead of creating an array of totals is less space used
-      let firstVal =
-        firstVaccData.getMostRecentFirstVaccDataByIsoCode[i]
-          .peopleVaccinatedPerHundred;
-      let total =
-        firstVaccData.getMostRecentFirstVaccDataByIsoCode[i]
-          .peopleVaccinatedPerHundred +
-        secondVaccData.getMostRecentFullyVaccDataByIsoCode[i]
-          .peopleFullyVaccinatedPerHundred +
-        boosterVaccData.getMostRecentBoosterVaccDataByIsoCode[i]
-          .totalBoostersPerHundred;
-      if (firstVal >= maxFirstVal) maxTot = total;
     }
-    // TODO: unsure if the comparison btwn CHL and PRT is okay
-    // This value is to get the proper scaling of the chart
-    // Adapted from https://stackoverflow.com/questions/11142884/fast-way-to-get-the-min-max-values-among-properties-of-object
-    const max: number = maxTot / (Math.max(...vaccData) / 100);
 
     const options: ChartOptions<'bar'> = {
       plugins: {
         title: {
           display: true,
           text: 'Share of Population Vaccinated',
+          color: darkMode ? 'white' : '#666',
         },
         legend: {
           position: 'bottom',
@@ -180,14 +189,14 @@ const HerdImmunityBarChart = () => {
             {
               id: 'herdImmThreshold',
               type: 'line',
-              value: max * 0.9,
+              value: 85,
               scaleID: 'y',
               borderWidth: 3,
-              borderColor: '#2148C0',
+              borderColor: '#2148C0E6',
               label: {
                 enabled: true,
-                content: `Herd Immunity Percentile Threshold`,
-                backgroundColor: '#2148C0',
+                content: `Estimated Herd Immunity Percentile Threshold`,
+                backgroundColor: '#2148C0E6',
                 position: 'start',
               },
             },
@@ -198,25 +207,31 @@ const HerdImmunityBarChart = () => {
       scales: {
         x: {
           stacked: true,
+          ticks: {
+            color: darkMode ? 'white' : '#666',
+          },
+          grid: {
+            color: darkMode ? '#404040' : '#e5e5e5',
+          },
         },
         y: {
-          stacked: true,
+          stacked: false,
           min: 0,
-          max: max,
-          // Adapted from Wayne F. Kaskie https://stackoverflow.com/questions/40994841/chart-js-bar-graph-with-percentage-values
+          max: 100,
           ticks: {
-            stepSize: max / 10,
-            callback: function (value) {
-              let numValue: number = +value;
-              return ((numValue / max) * 100).toFixed(0) + '%'; // convert it to percentage
-            },
+            color: darkMode ? 'white' : '#666',
+          },
+          grid: {
+            color: darkMode ? '#404040' : '#e5e5e5',
           },
           title: {
             display: true,
             text: '% of Population',
+            color: darkMode ? 'white' : '#666',
           },
         },
       },
+      color: darkMode ? 'white' : '#666',
     };
     // update chart data
     const data: ChartData<'bar'> = {
@@ -245,6 +260,7 @@ const HerdImmunityBarChart = () => {
 
     return <Bar options={options} data={data} />;
   }
+  return <></>;
 };
 
 export default HerdImmunityBarChart;

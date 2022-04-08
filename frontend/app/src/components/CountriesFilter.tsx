@@ -12,8 +12,11 @@ import Loading from './elements/Loading/Loading';
 import Error from './elements/Error/Error';
 import { CountriesFilterContext } from './context/CountriesFilterContext';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 
 export const CountriesFilter = () => {
+  const { t } = useTranslation();
+
   const { selectedCountries, updateSelectedCountries } = React.useContext(
     CountriesFilterContext
   );
@@ -57,13 +60,13 @@ export const CountriesFilter = () => {
     return (
       <FormControl sx={{ m: 2, width: 230 }} size='small'>
         <InputLabel id='countries-filter-label' color='secondary'>
-          Select Countries
+          {t('configbar.countriesfilter')}
         </InputLabel>
         <Select
           id='countries-filter-select'
           multiple
           value={selectedCountries}
-          input={<OutlinedInput label='Select Countries' />}
+          input={<OutlinedInput label={t('configbar.countriesfilter')} />}
           color='secondary'
           renderValue={(selected) => selected.join(', ')}
         >

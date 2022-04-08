@@ -207,4 +207,154 @@ module.exports = {
       resolverHelpers.unexpectedError(err);
     }
   },
+  /**
+   * @param {{"startDate": String!, "endDate": String!, "isoCodes": [String!]!}} args   starting and end date of range. dates inclusive. for isocodes given
+   * @return {[DailyVaccData!]!} most recent first dose vaccination data for given date range and isocodes
+   */
+   getFirstVaccDataByDateRangeAndIsoCode: async (args) => {
+    try {
+      // Convert the dates
+      const startDate = new Date(args.startDate);
+      const endDate = new Date(args.endDate);
+
+      // Use aggregation to maintain order of isoCodeIds, order in pipeline matters
+      const pipeline = [
+        { $match: { isoCode: { $in: args.isoCodes } } },
+        {
+          $addFields: {
+            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+          },
+        },
+        { $sort: { __order: 1 } },
+        { $project: { _id: 1 } },
+      ];
+
+      const isoCodeIds = await IsoCode.aggregate(pipeline).exec();
+
+      // Gather the promise-like queries
+      const dailyFirstVaccQueries = isoCodeIds.map((isoCodeId) => {
+        return DailyVaccData.findOne({
+          $and: [
+            { isoCode: isoCodeId },
+            { peopleVaccinatedPerHundred: { $ne: null } },
+            { date: { $ne: null } },
+            { date: { $gte: startDate, $lte: endDate } },
+          ],
+        }).sort({date:-1});
+      });
+
+      // Then call them all at once with a single await.
+      const dailyFirstVaccData = await Promise.all(dailyFirstVaccQueries).catch(
+        (err) => {
+          resolverHelpers.unexpectedError(err);
+        }
+      );
+
+      return dailyFirstVaccData.map((dailyFirstVaccData) => {
+        return transformDailyVaccData(dailyFirstVaccData);
+      });
+    } catch (err) {
+      resolverHelpers.unexpectedError(err);
+    }
+  },
+  /**
+   * @param {{"startDate": String!, "endDate": String!, "isoCodes": [String!]!}} args   starting and end date of range. dates inclusive. for isocodes given
+   * @return {[DailyVaccData!]!} most recent second dose vaccination data for given date range and isocodes
+   */
+   getFullyVaccDataByDateRangeAndIsoCode: async (args) => {
+    try {
+      // Convert the dates
+      const startDate = new Date(args.startDate);
+      const endDate = new Date(args.endDate);
+
+      // Use aggregation to maintain order of isoCodeIds, order in pipeline matters
+      const pipeline = [
+        { $match: { isoCode: { $in: args.isoCodes } } },
+        {
+          $addFields: {
+            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+          },
+        },
+        { $sort: { __order: 1 } },
+        { $project: { _id: 1 } },
+      ];
+
+      const isoCodeIds = await IsoCode.aggregate(pipeline).exec();
+
+      // Gather the promise-like queries
+      const dailyFullyVaccQueries = isoCodeIds.map((isoCodeId) => {
+        return DailyVaccData.findOne({
+          $and: [
+            { isoCode: isoCodeId },
+            { peopleFullyVaccinatedPerHundred: { $ne: null } },
+            { date: { $ne: null } },
+            { date: { $gte: startDate, $lte: endDate } },
+          ],
+        }).sort({date:-1});
+      });
+
+      // Then call them all at once with a single await.
+      const dailyFullyVaccData = await Promise.all(dailyFullyVaccQueries).catch(
+        (err) => {
+          resolverHelpers.unexpectedError(err);
+        }
+      );
+
+      return dailyFullyVaccData.map((dailyFullyVaccData) => {
+        return transformDailyVaccData(dailyFullyVaccData);
+      });
+    } catch (err) {
+      resolverHelpers.unexpectedError(err);
+    }
+  },
+  /**
+   * @param {{"startDate": String!, "endDate": String!, "isoCodes": [String!]!}} args   starting and end date of range. dates inclusive. for isocodes given
+   * @return {[DailyVaccData!]!} most recent booster dose vaccination data for given date range and isocodes
+   */
+   getBoosterVaccDataByDateRangeAndIsoCode: async (args) => {
+    try {
+      // Convert the dates
+      const startDate = new Date(args.startDate);
+      const endDate = new Date(args.endDate);
+
+      // Use aggregation to maintain order of isoCodeIds, order in pipeline matters
+      const pipeline = [
+        { $match: { isoCode: { $in: args.isoCodes } } },
+        {
+          $addFields: {
+            __order: { $indexOfArray: [args.isoCodes, '$isoCode'] },
+          },
+        },
+        { $sort: { __order: 1 } },
+        { $project: { _id: 1 } },
+      ];
+
+      const isoCodeIds = await IsoCode.aggregate(pipeline).exec();
+
+      // Gather the promise-like queries
+      const dailyBoosterVaccQueries = isoCodeIds.map((isoCodeId) => {
+        return DailyVaccData.findOne({
+          $and: [
+            { isoCode: isoCodeId },
+            { totalBoostersPerHundred: { $ne: null } },
+            { date: { $ne: null } },
+            { date: { $gte: startDate, $lte: endDate } },
+          ],
+        }).sort({date: -1});
+      });
+      
+      // Then call them all at once with a single await.
+      const dailyBoosterVaccData = await Promise.all(dailyBoosterVaccQueries).catch(
+        (err) => {
+          resolverHelpers.unexpectedError(err);
+        }
+      );
+
+      return dailyBoosterVaccData.map((dailyBoosterVaccData) => {
+        return transformDailyVaccData(dailyBoosterVaccData);
+      });
+    } catch (err) {
+      resolverHelpers.unexpectedError(err);
+    }
+  },
 };
