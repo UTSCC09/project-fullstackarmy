@@ -92,8 +92,8 @@ const HerdImmunityTimeSeriesChart = () => {
   
   // date range comes from DateFilter Component
   const {selectedDate} = React.useContext(DateFilterContext);
-  let selectedStartDate = selectedDate[0] == null ? formatDate('2020-12-02') : formatDate(selectedDate[0]);
-  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
+  let selectedStartDate = selectedDate[0] === null ? formatDate('2020-12-02') : formatDate(selectedDate[0]);
+  let selectedEndDate = selectedDate[1] === null ? formatDate(currentDate) : formatDate(selectedDate[1]);
 
   const {
     error: labelErr,
@@ -122,7 +122,7 @@ const HerdImmunityTimeSeriesChart = () => {
   let data = labelData && chartData; 
   if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
-  if (chartData && vars.length == chartData.getVaccDataByDateRangeAndIsoCode.length) {
+  if (chartData && vars.length === chartData.getVaccDataByDateRangeAndIsoCode.length) {
     const options: ChartOptions<'line'> = {
       responsive: true,
       plugins: {

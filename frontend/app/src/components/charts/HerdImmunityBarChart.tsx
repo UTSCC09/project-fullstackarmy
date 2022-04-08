@@ -86,7 +86,7 @@ const HerdImmunityBarChart = () => {
   const {selectedDate} = React.useContext(DateFilterContext);
   // only selected end date matters here because the chart shows current status as of the end date
   let startDate = '2020-12-02';
-  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
+  let selectedEndDate = selectedDate[1] === null ? formatDate(currentDate) : formatDate(selectedDate[1]);
 
   const {
     error: labelErr,
@@ -147,7 +147,7 @@ const HerdImmunityBarChart = () => {
   if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
 
-  if (data && vars.length == labelData.isoCodes.length) {
+  if (data && vars.length === labelData.isoCodes.length) {
     // update label and chart data.
     let labels: string[] = [];
     let vaccData: number[] = [];

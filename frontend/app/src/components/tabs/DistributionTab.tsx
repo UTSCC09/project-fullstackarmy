@@ -23,7 +23,7 @@ const DistributionTab: React.FC<Props> = () => {
   };
 
   return (
-    <div>
+    <div className='tab'>
       <Paper elevation={2} sx={{margin: 2, padding: 2}}>
         <Typography variant='body1'>
           {t('distributionTab.p1')}
