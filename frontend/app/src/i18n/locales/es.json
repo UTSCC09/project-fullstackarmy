@@ -48,9 +48,9 @@
     "p2": "Debemos entonces preguntarnos: ¿a partir de qué dosis se considera que estamos protegidos contra el COVID19?",
     "p3": "Cada dosis administrada en la comunidad aumenta las posibilidades de supervivencia contra el virus y reduce la probabilidad de transmisión, por lo que es vital recibir el número completo de dosis recomendadas. A día de hoy, es posible que algunas vacunas sean de 3 dosis. Una primera dosis, una segunda dosis y un refuerzo.",
     "p4": "A continuación se muestra un gráfico de barras apiladas para comparar fácilmente diferentes países de interés. Estos países pueden filtrarse utilizando la función de filtro.",
-    "firstMapTitle": "Mapa de Calor de la Primera Dosis",
+    "firstMapTitle": "Mapa de Calor de la Parcialmente Vacunado",
     "firstDose": "primera dosis",
-    "secondMapTitle": "Mapa de calor de la Segunda Dosis",
+    "secondMapTitle": "Mapa de calor de la Totalmente Vacunado",
     "secondDose": "segunda dosis",
     "thirdMapTitle": "Mapa de calor de la Dosis de Refuerzo",
     "thirdDose": "dosis de refuerzo",
@@ -77,5 +77,11 @@
     "scaledLegend": "Leyenda a Escala",
     "continents": "Continentes"
   },
+  "signin": "Iniciar Sesión",
+  "signout": "Cerrar la Sesión",
+  "signup": "Registrarse",
+  "noAccount": "Não tem uma conta? Cadastre-se",
+  "emailPasswordRequired": "E-mail e senha são necessários.",
+  "alreadyHaveAccount": "Já tem uma conta? Entre no site",
   "here": "aquí"
 }

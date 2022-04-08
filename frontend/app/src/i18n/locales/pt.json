@@ -49,9 +49,9 @@
     "p2": "Devemos então nos perguntar: em que dose somos considerados protegidos da COVID19?",
     "p3": "Cada dose administrada na comunidade aumenta as possibilidades de sobrevivência contra o vírus e reduz a probabilidade de transmissão, de forma que é vital receber o número total de doses recomendadas. Atualmente, algumas vacinas já são administradas 3 doses: uma primeira dose, uma segunda dose e um booster.",
     "p4": "Um gráfico de barras empilhadas é mostrado abaixo para comparar facilmente diferentes países de interesse. Estes países podem ser filtrados usando o recurso de filtro.",
-    "firstMapTitle": "Mapa de Calor da Primeira Dose",
+    "firstMapTitle": "Mapa de Calor de Parcialmente Vacinados",
     "firstDose": "primeira dose",
-    "secondMapTitle": "Mapa de Calor da Segunda Dose",
+    "secondMapTitle": "Mapa de Calor de Totalmente Vacinados",
     "secondDose": "segunda dose",
     "thirdMapTitle": "Mapa de Calor da Dose Booster",
     "thirdDose": "dose booster",
@@ -78,5 +78,11 @@
     "scaledLegend": "Lenda em Escala",
     "continents": "Continentes"
   },
+  "signin": "Entrar",
+  "signout": "Sair",
+  "signup": "Cadastre-se",
+  "noAccount": "Não tem uma conta? Cadastre-se",
+  "emailPasswordRequired": "E-mail e senha são necessários.",
+  "alreadyHaveAccount": "Já tem uma conta? Entre",
   "here": "aqui"
 }
