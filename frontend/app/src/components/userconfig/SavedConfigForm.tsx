@@ -10,6 +10,8 @@ import { LanguageContext } from '../context/LanguageContext';
 import { UserContext } from '../context/UserContext';
 import { SAVE_CONFIG } from './queries/UserConfigQueries';
 import Error from '../elements/Error/Error';
+import { useTranslation } from 'react-i18next';
+import Typography from '@mui/material/Typography';
 
 const SavedConfigForm = () => {
   const [errorPanel, setErrorPanel] = React.useState<string | null>(null);
@@ -18,7 +20,7 @@ const SavedConfigForm = () => {
   const { selectedDate } = React.useContext(DateFilterContext);
   const { selectedCountries } = React.useContext(CountriesFilterContext);
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [saveConfig] = useMutation(SAVE_CONFIG, {
     onCompleted: (data) => {
       // TODO: reload page.
@@ -34,7 +36,6 @@ const SavedConfigForm = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = data.get('name');
-
     setErrorPanel(null);
 
     let startDate = null;
@@ -59,17 +60,24 @@ const SavedConfigForm = () => {
   return (
     <div>
       <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Typography
+          variant='subtitle1'
+          align='left'
+          sx={{ marginLeft: '14px' }}
+        >
+          {t('savedConfigs.instruction')}
+        </Typography>
         <TextField
-          margin='normal'
           required
-          fullWidth
+          sx={{ m: 2, width: 230 }}
+          size='small'
           id='name'
-          label='Name of Your Configuaration'
+          label={t('savedConfigs.input')}
           name='name'
           color='secondary'
           autoComplete='none'
         />
-        <Button type='submit' variant='contained'>
+        <Button sx={{ marginLeft: '20%' }} type='submit' variant='contained'>
           Save Configuration
         </Button>
       </Box>

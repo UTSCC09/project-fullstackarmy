@@ -8,12 +8,14 @@ import Error from '../elements/Error/Error';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import SavedConfigsPopoverItem from './SavedConfigsPopoverItem';
+import InputLabel from '@mui/material/InputLabel';
+import { useTranslation } from 'react-i18next';
 
 interface Props {}
 
 const SavedConfigDropdown: React.FC<Props> = () => {
   const { user } = React.useContext(UserContext);
-
+  const { t } = useTranslation();
   const [getConfigs, allSavedConfigs] = useLazyQuery(ALL_SAVED_CONFIGS);
 
   useEffect(() => {
@@ -36,6 +38,9 @@ const SavedConfigDropdown: React.FC<Props> = () => {
 
   return (
     <FormControl sx={{ m: 2, width: 230 }} size='small'>
+      <InputLabel id='countries-filter-label' color='secondary'>
+        {t('savedConfigs.subtitle')}
+      </InputLabel>
       <Select value='' color='secondary'>
         {menuItems}
       </Select>

@@ -1,3 +1,4 @@
+import Divider from '@mui/material/Divider';
 import React from 'react';
 import SavedConfigDropdown from './SavedConfigDropdown';
 import SavedConfigForm from './SavedConfigForm';
@@ -8,6 +9,7 @@ const SavedConfigs: React.FC<Props> = () => {
   return (
     <>
       <SavedConfigDropdown />
+      <Divider sx={{ marginTop: '14px' }} />
       <SavedConfigForm />
     </>
   );

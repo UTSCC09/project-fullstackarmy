@@ -47,5 +47,11 @@
     "firstMapTitle": "First Vaccination Dose Heat Map",
     "secondMapTitle": "Second Vaccination Dose Heat Map",
     "thirdMapTitle": "Booster Dose Heat Map"
+  },
+  "savedConfigs": {
+    "title": "Configurations sauvegardées",
+    "subtitle": "Choisissez une configuration",
+    "instruction": "Sauvegarder la configuration actuelle :",
+    "input": "Nom de la nouvelle configuration"
   }
 }

@@ -77,5 +77,11 @@
     "scaledLegend": "Leyenda a Escala",
     "continents": "Continentes"
   },
+  "savedConfigs": {
+    "title": "Configuraciones guardadas",
+    "subtitle": "Elija una configuración",
+    "instruction": "Guardar la configuración actual:",
+    "input": "Nuevo nombre de configuración"
+  },
   "here": "aquí"
 }
