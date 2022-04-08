@@ -15,13 +15,12 @@ const minStartDate = new Date(Date.parse('2020-12-02')); // smallest date value 
 export const DateFilter = () => {
   const { t } = useTranslation();
 
-  const { selectedDate, updateSelectedDate } = React.useContext(
-    DateFilterContext
-  );
+  const { selectedDate, updateSelectedDate } =
+    React.useContext(DateFilterContext);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} >
-      <Stack spacing={2} sx={{padding: 2}}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Stack spacing={2} sx={{ padding: 2 }}>
         <DatePicker
           label={t('configbar.datefrom')}
           value={selectedDate[0]}

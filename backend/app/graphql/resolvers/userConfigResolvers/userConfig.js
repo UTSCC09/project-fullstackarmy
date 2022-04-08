@@ -20,20 +20,21 @@ const user = async (userId) => {
 
 const transformUserConfig = (userConfigData) => {
   if (userConfigData) {
-    let savedDates;
+    let savedStartDate, savedEndDate;
 
     if (userConfigData._doc) {
-      savedDates = userConfigData._doc.savedDates;
+      savedStartDate = userConfigData._doc.savedStartDate;
+      savedEndDate = userConfigData._doc.savedEndDate;
     } else {
-      savedDates = userConfigData.savedDates;
+      savedStartDate = userConfigData.savedStartDate;
+      savedStartDate = userConfigData.savedStartDate;
     }
 
     return (res = {
       ...userConfigData._doc,
       _id: userConfigData.id,
-      savedDates: userConfigData.savedDates.map((savedDate) =>
-        dateToString(savedDate)
-      ),
+      savedStartDate: dateToString(userConfigData.savedStartDate),
+      savedEndDate: dateToString(userConfigData.savedEndDate),
       user: user.bind(this, userConfigData.user),
     });
   }
@@ -57,11 +58,25 @@ const userConfigs = async (user) => {
 
 const newUserConfig = async (userConfigInput) => {
   try {
-    const { name, user, savedLanguage, savedIsoCodes, savedDates } =
-      userConfigInput;
+    const {
+      name,
+      user,
+      savedLanguage,
+      savedIsoCodes,
+      savedStartDate,
+      savedEndDate,
+    } = userConfigInput;
     const existingUser = await User.findById(user);
     if (!existingUser) {
       throw new Error('User does not exist.');
+    }
+
+    // check valid date range
+    if (
+      (savedStartDate && !savedEndDate) ||
+      (!savedStartDate && savedEndDate)
+    ) {
+      throw new Error('Invalid date range.');
     }
 
     const userConfig = new UserConfig({
@@ -69,7 +84,8 @@ const newUserConfig = async (userConfigInput) => {
       user,
       savedLanguage,
       savedIsoCodes,
-      savedDates,
+      savedStartDate,
+      savedEndDate,
     });
 
     const result = userConfig
@@ -78,6 +94,7 @@ const newUserConfig = async (userConfigInput) => {
         return boolObj(true);
       })
       .catch((err) => {
+        console.log(err);
         return boolObj(false);
       });
     return result;

@@ -6,7 +6,16 @@ export const ALL_SAVED_CONFIGS: DocumentNode = gql`
       name
       savedLanguage
       savedIsoCodes
-      savedDates
+      savedStartDate
+      savedEndDate
+    }
+  }
+`;
+
+export const SAVE_CONFIG: DocumentNode = gql`
+  mutation AddUserConfig($userConfigInput: UserConfigInput!) {
+    addUserConfig(userConfigInput: $userConfigInput) {
+      bool
     }
   }
 `;
