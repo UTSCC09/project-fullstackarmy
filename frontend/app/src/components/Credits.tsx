@@ -178,13 +178,16 @@ export const Credits = () => {
         </Typography>
         <Typography variant='body2' sx={sx.bullet}>
           <li>
-            <a className='Link' href='https://stackoverflow.com/'>
+            <a className='Link' href='https://github.com/chendaniely'>
               Daniel Chen
             </a>{' '}
             Ensuring that our visualization is correct and informative.
           </li>
           <li>
-            <a className='Link' href='https://codepen.io/'>
+            <a
+              className='Link'
+              href='https://www.linkedin.com/in/shehab-eid-824985118/'
+            >
               Shehab Eid
             </a>{' '}
             Ensuring that our information is correct and not misleading from
