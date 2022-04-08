@@ -25,6 +25,7 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 /**
  * Modifies the Event prototype so it will affect how the Google Library behaves.
@@ -129,8 +130,22 @@ function App() {
     i18n.changeLanguage(lang);
   };
 
-  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  const httpLink = createHttpLink({
     uri: process.env.REACT_APP_API_URL,
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: user.token ? `Bearer ${user.token}` : '',
+      },
+    };
+  });
+
+  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    link: user ? authLink.concat(httpLink) : httpLink,
     cache: new InMemoryCache(),
   });
 
