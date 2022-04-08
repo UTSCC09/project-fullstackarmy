@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { UserContext } from '../context/UserContext';
 import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,8 @@ import { DateFilterContext } from '../context/DateFilterContext';
 import { CountriesFilterContext } from '../context/CountriesFilterContext';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import lodash from 'lodash';
+
 interface Props {}
 
 const SavedConfigs: React.FC<Props> = () => {
@@ -18,8 +20,14 @@ const SavedConfigs: React.FC<Props> = () => {
   const { changeLanguage } = React.useContext(LanguageContext);
   const { updateSelectedDate } = React.useContext(DateFilterContext);
   const { updateSelectedCountries } = React.useContext(CountriesFilterContext);
-  console.log('trying to get user');
-  console.log(user);
+
+  const [getConfigs, allSavedConfigs] = useLazyQuery(ALL_SAVED_CONFIGS);
+
+  useEffect(() => {
+    if (user) {
+      getConfigs({ variables: { user: user.userId } });
+    }
+  }, [user, getConfigs]);
 
   const handleClick = (cfg) => {
     console.log(cfg.savedLanguage);
@@ -39,18 +47,17 @@ const SavedConfigs: React.FC<Props> = () => {
     // }
     // return null;
   };
+
   const { t } = useTranslation();
 
-  // get data
-  const allSavedConfigs = useQuery(ALL_SAVED_CONFIGS, {
-    variables: {
-      user: '624dad9714daa3e6fd937623',
-    },
-  });
   if (allSavedConfigs && allSavedConfigs.loading) return <Loading />;
   if (allSavedConfigs && allSavedConfigs.error)
     return <Error message={allSavedConfigs.error.message} />;
-  const userConfigs = allSavedConfigs.data.userConfigs;
+
+  const userConfigs = allSavedConfigs.data
+    ? allSavedConfigs.data.userConfigs
+    : [];
+
   const menuItems = userConfigs.map((cfg) => {
     return (
       <MenuItem key={userConfigs.indexOf(cfg)} onClick={handleClick(cfg)}>
@@ -58,6 +65,7 @@ const SavedConfigs: React.FC<Props> = () => {
       </MenuItem>
     );
   });
+
   return (
     <FormControl sx={{ m: 2, width: 230 }} size='small'>
       <Select value='' color='secondary'>

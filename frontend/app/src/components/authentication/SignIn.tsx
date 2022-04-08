@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
 
   const [signIn] = useLazyQuery(SIGN_IN, {
     onCompleted: (data) => {
-      updateUser(data.signIn);
+      updateUser(data.signin);
       navigate('/');
     },
     onError: (error) => {

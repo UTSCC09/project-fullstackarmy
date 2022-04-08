@@ -90,7 +90,11 @@ function App() {
 
   // User state
   const [user, setUser] = React.useState(null);
-  const updateUser = (user: { _id: number; username: string }) => {
+  const updateUser = (user: {
+    userId: number;
+    token: string;
+    tokenExpiration: number;
+  }) => {
     setUser(user);
   };
 
