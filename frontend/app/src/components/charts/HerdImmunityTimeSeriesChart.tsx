@@ -19,31 +19,31 @@ import { Line } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import { DateFilterContext } from '../context/DateFilterContext';
-import { ColorModeContext } from '../context/ColorModeContext';
+import { CountriesFilterContext } from "../context/CountriesFilterContext";
+import { DateFilterContext } from "../context/DateFilterContext";
+import { ColorModeContext } from "../context/ColorModeContext";
 
 const formatDate = (date) => {
   let d = new Date(Date.parse(date));
   return d.toISOString().split('T')[0];
-};
+}
 
 const currentDate = new Date();
 
 const mapCountryCodeToColor = (code: String) => {
-  // Taken from:
+  // Taken from: 
   // https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
   let hash = 0;
-  for (let i = 0; i < code.length; i++) {
-    hash = code.charCodeAt(i) + ((hash << 5) - hash);
+  for (var i = 0; i < code.length; i++) {
+      hash = code.charCodeAt(i) + ((hash << 5) - hash);
   }
-  let colour = '#';
-  for (let i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).substr(-2);
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+      var value = (hash >> (i * 8)) & 0xFF;
+      colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
-};
+}
 
 const HerdImmunityTimeSeriesChart = () => {
   ChartJS.register(
@@ -56,7 +56,7 @@ const HerdImmunityTimeSeriesChart = () => {
     Legend,
     Tooltip
   );
-
+  
   const GET_LABELS: DocumentNode = gql`
     query isoCodes($isoCodes: [String!]!) {
       isoCodes(isoCodes: $isoCodes) {
@@ -84,22 +84,16 @@ const HerdImmunityTimeSeriesChart = () => {
   `;
 
   // use darkMode state to set chart colors
-  const { darkMode } = React.useContext(ColorModeContext);
+  const {darkMode} = React.useContext(ColorModeContext);
 
   // vars  come from CountriesFilter Component
-  const { selectedCountries } = React.useContext(CountriesFilterContext);
+  const {selectedCountries} = React.useContext(CountriesFilterContext);
   let vars: string[] = selectedCountries;
-
+  
   // date range comes from DateFilter Component
-  const { selectedDate } = React.useContext(DateFilterContext);
-  let selectedStartDate =
-    selectedDate[0] === null
-      ? formatDate('2020-12-02')
-      : formatDate(selectedDate[0]);
-  let selectedEndDate =
-    selectedDate[1] === null
-      ? formatDate(currentDate)
-      : formatDate(selectedDate[1]);
+  const {selectedDate} = React.useContext(DateFilterContext);
+  let selectedStartDate = selectedDate[0] == null ? formatDate('2020-12-02') : formatDate(selectedDate[0]);
+  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
 
   const {
     error: labelErr,
@@ -125,13 +119,10 @@ const HerdImmunityTimeSeriesChart = () => {
   });
   let err = labelErr || chartDataErr;
   let loading = labelLoading || chartDataLoading;
-  // let data = labelData && chartData;
+  let data = labelData && chartData; 
   if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
-  if (
-    chartData &&
-    vars.length === chartData.getVaccDataByDateRangeAndIsoCode.length
-  ) {
+  if (chartData && vars.length == chartData.getVaccDataByDateRangeAndIsoCode.length) {
     const options: ChartOptions<'line'> = {
       responsive: true,
       plugins: {
@@ -197,21 +188,15 @@ const HerdImmunityTimeSeriesChart = () => {
         }
       );
       // get colour based on country name
-      let borderColor = mapCountryCodeToColor(
-        labelData.isoCodes[i].isoCodeName.repeat(i + 50)
-      );
+      let borderColor = mapCountryCodeToColor(labelData.isoCodes[i].isoCodeName.repeat(i + 50));
       let bgColor = borderColor;
       let dataObj = {
-        label:
-          labelData.isoCodes[i].isoCodeName +
-          '  (' +
-          labelData.isoCodes[i].isoCode +
-          ')',
+        label: labelData.isoCodes[i].isoCodeName + '  (' + labelData.isoCodes[i].isoCode + ')',
         data: data,
         borderColor: borderColor,
         backgroundColor: bgColor,
         tesion: 0.9,
-        pointRadius: 0.5,
+        pointRadius: 0.5
       };
       datasets.push(dataObj);
     }
