@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Error from '../elements/Error/Error';
 import { SIGN_UP } from './queries/AuthenticationQuries';
@@ -18,6 +19,8 @@ const SignUp: React.FC = () => {
   const [errorPanel, setErrorPanel] = React.useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: () => {
@@ -35,7 +38,7 @@ const SignUp: React.FC = () => {
     const password = data.get('password');
 
     if (!email || !password) {
-      setErrorPanel('The email and password fields are required.');
+      setErrorPanel(t('emailPasswordRequired'));
       return;
     }
 
@@ -64,7 +67,7 @@ const SignUp: React.FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          {t('signup')}
         </Typography>
         <Box
           component='form'
@@ -104,7 +107,7 @@ const SignUp: React.FC = () => {
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            {t('signup')}
           </Button>
           <Grid container justifyContent='center'>
             <Grid item>
@@ -114,7 +117,7 @@ const SignUp: React.FC = () => {
                 color='secondary'
                 variant='body2'
               >
-                Already have an account? Sign in
+                {t('alreadyHaveAccount')}
               </Link>
             </Grid>
           </Grid>

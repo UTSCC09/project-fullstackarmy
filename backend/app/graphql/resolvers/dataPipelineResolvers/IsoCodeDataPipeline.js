@@ -115,6 +115,10 @@ const updateIsoCodeIncomeLevelQueries = (
  */
 module.exports = {
   updateIsoCodeData: async (args) => {
+    if (args.username !== process.env.DATA_PIPELINE_USERNAME) {
+      throw Error('Unauthorized');
+    }
+
     let isoCodeData = args.isoCodeDataInput;
 
     let incomeLevels = [];

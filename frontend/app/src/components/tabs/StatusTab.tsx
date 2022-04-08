@@ -27,7 +27,7 @@ export const StatusTab: React.FC = () => {
   };
 
   return (
-    <div className='status-tab'>
+    <div className='status-tab tab'>
       <Paper elevation={2} sx={{margin: 2, padding: 2}}>
         <Typography variant='body1'>
           {t('statusTab.p1')}

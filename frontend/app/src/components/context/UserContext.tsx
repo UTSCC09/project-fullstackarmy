@@ -6,5 +6,5 @@ export const UserContext = React.createContext({
     token: null,
     tokenExpiration: null,
   },
-  updateUser: ({ _id: number, username: string }) => {},
+  updateUser: ({ userId, token, tokenExpiration }) => {},
 });
