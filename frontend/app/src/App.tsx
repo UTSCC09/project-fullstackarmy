@@ -95,13 +95,7 @@ function App() {
   };
 
   // Filter countries included in the charts based on the selectedCountries state
-  const [selectedCountries, setSelectedCountries] = React.useState([
-    'CAN',
-    'AFG',
-    'AND',
-    'CHL',
-    'PRT',
-  ]);
+  const [selectedCountries, setSelectedCountries] = React.useState(["CAN", "AFG", "AND", "CHL", "PRT"]);
   const updateSelectedCountries = (countries) => {
     setSelectedCountries(countries);
   };
@@ -131,7 +125,6 @@ function App() {
                   value={{ selectedDate, updateSelectedDate }}
                 >
                   <div
-                    className='app-container'
                     style={{ backgroundColor: darkMode ? '#303030' : 'white' }}
                   >
                     <Header />
