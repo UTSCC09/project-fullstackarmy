@@ -1,20 +1,20 @@
-const fetch = require("node-fetch");
-const graphqlRequest = require("graphql-request");
-const constants = require("./dataPipelineConstants");
-const helpers = require("./dataPipelineHelpers");
-const fs = require("fs");
-const { CronJob } = require("cron");
+const fetch = require('node-fetch');
+const graphqlRequest = require('graphql-request');
+const constants = require('./dataPipelineConstants');
+const helpers = require('./dataPipelineHelpers');
+const fs = require('fs');
+const { CronJob } = require('cron');
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
   process.env.BACKEND_API_URL
 );
 
 const VaccSupplyDataURL =
-  "https://data.covid19taskforce.com/covax-api/getCovaxDashboardData";
-const StoredFileName = "VaccSupplyData.txt";
+  'https://data.covid19taskforce.com/covax-api/getCovaxDashboardData';
+const StoredFileName = 'VaccSupplyData.txt';
 
-const VaccSupplyDataPipelineName = "vaccineSupplyPipeline";
-const VaccSupplyDataPipelineTxt = "vaccineSupplyPipelinelogs.txt";
+const VaccSupplyDataPipelineName = 'vaccineSupplyPipeline';
+const VaccSupplyDataPipelineTxt = 'vaccineSupplyPipelinelogs.txt';
 
 let vaccSupplyPayload = [];
 
@@ -36,17 +36,18 @@ const errCallback = (err) => {
       false,
       0,
       0,
-      err.message
+      err.message,
+      authToken
     );
     helpers.updateDataPipelineTxt(
       VaccSupplyDataPipelineTxt,
       false,
       0,
       0,
-      err.message
+      err.message,
+      authToken
     );
   }
-  console.log("successfull write");
   return null;
 };
 
@@ -64,9 +65,8 @@ const getDataSets = async () => {
     // Done synchronously since it is needed in the rest of the function
     prevData = JSON.parse(fs.readFileSync(StoredFileName));
   } catch (err) {
-    // This will only occur when there is no file which occurs only when
-    // when the script is first run
-    prevData = {};
+    helpers.logError(err);
+    return false;
   }
 
   // Get the new data
@@ -135,6 +135,8 @@ const getDataSets = async () => {
       dosesExpectedRequiredPercent,
     });
   });
+
+  return true;
 };
 
 /**
@@ -143,10 +145,13 @@ const getDataSets = async () => {
  * @return {Number} number of records added
  * @author Mohamed Tayeh
  */
-const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
+const addIsoCodeVaccSupplyDataReq = async (
+  isoCodeVaccSupplyDataInput,
+  authToken
+) => {
   const query = graphqlRequest.gql`
-    mutation UpdateIsoCodeVaccSupplyData($isoCodeVaccSupplyDataInput: [IsoCodeVaccSupplyDataInput!]!) {              
-      updateIsoCodeVaccSupplyData(isoCodeVaccSupplyDataInput: $isoCodeVaccSupplyDataInput) {
+    mutation UpdateIsoCodeVaccSupplyData($isoCodeVaccSupplyDataInput: [IsoCodeVaccSupplyDataInput!]!, $username: String!) {              
+      updateIsoCodeVaccSupplyData(isoCodeVaccSupplyDataInput: $isoCodeVaccSupplyDataInput, username: $username) {
         number
       }
     }
@@ -154,8 +159,10 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
 
   const variables = {
     isoCodeVaccSupplyDataInput,
+    username: process.env.DATA_PIPELINE_USERNAME,
   };
 
+  graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
   const req = graphQLClient.request(query, variables);
 
   req
@@ -166,15 +173,18 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
         true,
         isoCodeVaccSupplyDataInput.length,
         res.updateIsoCodeVaccSupplyData.number,
-        ""
+        '',
+        authToken
       );
+
       helpers.updateDataPipelineTxt(
         VaccSupplyDataPipelineTxt,
         true,
         isoCodeVaccSupplyDataInput.length,
         res.updateIsoCodeVaccSupplyData.number,
-        ""
+        ''
       );
+
       fs.writeFile(StoredFileName, JSON.stringify(prevData), errCallback);
     })
     .catch((err) => {
@@ -185,8 +195,10 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
         false,
         isoCodeVaccSupplyDataInput.length,
         0,
-        err.message
+        err.message,
+        authToken
       );
+
       helpers.updateDataPipelineTxt(
         VaccSupplyDataPipelineTxt,
         false,
@@ -200,16 +212,21 @@ const addIsoCodeVaccSupplyDataReq = async (isoCodeVaccSupplyDataInput) => {
 };
 
 const dataPipeline = async () => {
-  await getDataSets();
-  await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload);
+  let dataSetsSuccess = await getDataSets();
+  if (dataSetsSuccess) {
+    let authToken = await helpers.authenticationToken();
+    await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+  }
 };
 
-let scheduledJob = new CronJob(
-  "00 30 09 * * *",
-  dataPipeline,
-  null,
-  false,
-  "America/Toronto"
-);
+dataPipeline();
 
-scheduledJob.start();
+// let scheduledJob = new CronJob(
+//   '00 30 09 * * *',
+//   dataPipeline,
+//   null,
+//   false,
+//   'America/Toronto'
+// );
+
+// scheduledJob.start();

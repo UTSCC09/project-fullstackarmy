@@ -16,7 +16,12 @@ module.exports = {
       recordsSent,
       recordsSuccessfullyAdded,
       msg,
+      username,
     } = dataPipelineLogsInput;
+
+    if (username !== process.env.DATA_PIPELINE_USERNAME) {
+      throw Error('Unauthorized');
+    }
 
     const newLog = new DataPipelineLogs({
       date,
