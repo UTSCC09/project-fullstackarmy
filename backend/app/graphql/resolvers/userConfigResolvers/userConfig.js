@@ -5,6 +5,7 @@ const {
   dateToString,
   logError,
   unexpectedError,
+  sanitizeInputs,
 } = require('../helper');
 
 const user = async (userId) => {
@@ -90,6 +91,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
+    sanitizeInputs({ user });
     const result = userConfigs(user);
     return result;
   },
@@ -97,6 +99,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated!');
     }
+    sanitizeInputs(userConfigInput);
     const result = newUserConfig(userConfigInput);
     return result;
   },

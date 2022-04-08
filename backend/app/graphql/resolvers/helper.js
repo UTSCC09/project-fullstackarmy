@@ -1,6 +1,7 @@
-const IsoCodeType = require("../../models/IsoCodeType");
-const { ErrorMessage } = require("./constants");
-const Sentry = require("@sentry/node");
+const IsoCodeType = require('../../models/IsoCodeType');
+const { ErrorMessage } = require('./constants');
+const Sentry = require('@sentry/node');
+const sanitize = require('mongo-sanitize');
 
 const isoCodeType = async (isoCodeTypeId) => {
   try {
@@ -50,9 +51,14 @@ const unexpectedError = (err) => {
   throw new Error(ErrorMessage);
 };
 
+const sanitizeInputs = (input) => {
+  Object.keys(input).map((key) => sanitize(input[key]));
+};
+
 exports.transformIsoCode = transformIsoCode;
 exports.numberObj = numberObj;
 exports.boolObj = boolObj;
 exports.dateToString = dateToString;
 exports.logError = logError;
 exports.unexpectedError = unexpectedError;
+exports.sanitizeInputs = sanitizeInputs;
