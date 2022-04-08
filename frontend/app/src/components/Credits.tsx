@@ -82,6 +82,13 @@ export const Credits = () => {
               hrbrmstr
             </a>
           </li>
+          <li>
+            Translations from
+            <a className='link' href='https://www.deepl.com/translator'>
+              {' '}
+              DeepL
+            </a>
+          </li>
         </Typography>
       </Paper>
 
