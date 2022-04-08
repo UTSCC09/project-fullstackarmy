@@ -8,7 +8,10 @@
   "configbar": {
     "region": "Filtrar por Región",
     "date": "Filtrar por Rango de Fechas",
-    "mode": "Aplicar Modo Oscuro"
+    "mode": "Aplicar Modo Oscuro",
+    "countriesfilter": "Seleccione los países",
+    "datefrom": "De:",
+    "dateto": "A:"
   },
   "infotab": {
     "p1": {

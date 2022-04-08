@@ -1,4 +1,4 @@
-import randomColor from 'randomcolor';
+import React from 'react';
 
 // from https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/line/default?from-embed=&file=/App.tsx:1134-1173
 import {
@@ -19,6 +19,31 @@ import { Line } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
+import { CountriesFilterContext } from "../context/CountriesFilterContext";
+import { DateFilterContext } from "../context/DateFilterContext";
+import { ColorModeContext } from "../context/ColorModeContext";
+
+const formatDate = (date) => {
+  let d = new Date(Date.parse(date));
+  return d.toISOString().split('T')[0];
+}
+
+const currentDate = new Date();
+
+const mapCountryCodeToColor = (code: String) => {
+  // Taken from: 
+  // https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
+  let hash = 0;
+  for (var i = 0; i < code.length; i++) {
+      hash = code.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+      var value = (hash >> (i * 8)) & 0xFF;
+      colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+}
 
 const HerdImmunityTimeSeriesChart = () => {
   ChartJS.register(
@@ -31,6 +56,15 @@ const HerdImmunityTimeSeriesChart = () => {
     Legend,
     Tooltip
   );
+  
+  const GET_LABELS: DocumentNode = gql`
+    query isoCodes($isoCodes: [String!]!) {
+      isoCodes(isoCodes: $isoCodes) {
+        isoCode
+        isoCodeName
+      }
+    }
+  `;
 
   const GET_DATA: DocumentNode = gql`
     query getVaccDataByDateRangeAndIsoCode(
@@ -49,26 +83,46 @@ const HerdImmunityTimeSeriesChart = () => {
     }
   `;
 
-  // TODO: vars will come from Filter Component, remember vars need to be ""
-  let vars: string[] = ['USA', 'GBR'];
-  // TODO: These values should come from Slider Component
-  const startDate = '2020-12-12';
-  const endDate = '2022-03-17';
+  // use darkMode state to set chart colors
+  const {darkMode} = React.useContext(ColorModeContext);
+
+  // vars  come from CountriesFilter Component
+  const {selectedCountries} = React.useContext(CountriesFilterContext);
+  let vars: string[] = selectedCountries;
+  
+  // date range comes from DateFilter Component
+  const {selectedDate} = React.useContext(DateFilterContext);
+  let selectedStartDate = selectedDate[0] == null ? formatDate('2020-12-02') : formatDate(selectedDate[0]);
+  let selectedEndDate = selectedDate[1] == null ? formatDate(currentDate) : formatDate(selectedDate[1]);
 
   const {
-    error,
-    loading,
+    error: labelErr,
+    loading: labelLoading,
+    data: labelData,
+  } = useQuery(GET_LABELS, {
+    variables: {
+      isoCodes: vars,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const {
+    error: chartDataErr,
+    loading: chartDataLoading,
     data: chartData,
   } = useQuery(GET_DATA, {
     variables: {
-      startDate: startDate,
-      endDate: endDate,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
       isoCodes: vars,
     },
   });
-  if (error) return <Error message={error.message} />;
+  let err = labelErr || chartDataErr;
+  let loading = labelLoading || chartDataLoading;
+  let data = labelData && chartData; 
+  if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
-  if (chartData) {
+  if (chartData && vars.length == chartData.getVaccDataByDateRangeAndIsoCode.length) {
     const options: ChartOptions<'line'> = {
       responsive: true,
       plugins: {
@@ -78,15 +132,16 @@ const HerdImmunityTimeSeriesChart = () => {
         title: {
           display: true,
           text: 'Vaccination Rates Over Time',
+          color: darkMode ? 'white' : '#666',
         },
       },
       scales: {
         // Adapted from: https://stackoverflow.com/questions/67322201/chart-js-v3-x-time-series-on-x-axis
         x: {
           type: 'time',
-          min: new Date(startDate).getTime(),
+          min: new Date(selectedStartDate).getTime(),
           suggestedMin: new Date('2020-01-01').getTime(),
-          max: new Date(endDate).getTime(),
+          max: new Date(selectedEndDate).getTime(),
           suggestedMax: Date.now(),
           time: {
             unit: 'month',
@@ -95,14 +150,28 @@ const HerdImmunityTimeSeriesChart = () => {
             },
             tooltipFormat: 'Y-M-D',
           },
+          ticks: {
+            color: darkMode ? 'white' : '#666',
+          },
+          grid: {
+            color: darkMode ? '#404040' : '#e5e5e5',
+          },
         },
         y: {
           title: {
             display: true,
             text: 'Total % of Population (Fully Vaccinated)',
+            color: darkMode ? 'white' : '#666',
+          },
+          ticks: {
+            color: darkMode ? 'white' : '#666',
+          },
+          grid: {
+            color: darkMode ? '#404040' : '#e5e5e5',
           },
         },
       },
+      color: darkMode ? 'white' : '#666',
     };
 
     // update chart data
@@ -118,17 +187,16 @@ const HerdImmunityTimeSeriesChart = () => {
           };
         }
       );
-      // TODO: Replace with actual colours for lines
-      let borderColor = randomColor({
-        format: 'rgba',
-        alpha: 0,
-      });
-      let bgColor = borderColor.replace(', 0)', ', 0.5)');
+      // get colour based on country name
+      let borderColor = mapCountryCodeToColor(labelData.isoCodes[i].isoCodeName.repeat(i + 50));
+      let bgColor = borderColor;
       let dataObj = {
-        label: vars[i],
+        label: labelData.isoCodes[i].isoCodeName + '  (' + labelData.isoCodes[i].isoCode + ')',
         data: data,
         borderColor: borderColor,
         backgroundColor: bgColor,
+        tesion: 0.9,
+        pointRadius: 0.5
       };
       datasets.push(dataObj);
     }
@@ -137,6 +205,7 @@ const HerdImmunityTimeSeriesChart = () => {
     };
     return <Line options={options} data={data} />;
   }
+  return <></>;
 };
 
 export default HerdImmunityTimeSeriesChart;

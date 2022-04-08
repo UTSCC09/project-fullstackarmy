@@ -2,6 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import HerdImmunityBarChart from '../charts/HerdImmunityBarChart';
 import BoosterVaccMap from '../map/BoosterVaccMap';
 import FullVacMap from '../map/FullVaccMap';
@@ -26,39 +28,53 @@ export const StatusTab: React.FC = () => {
 
   return (
     <div className='status-tab'>
-      <p>{t('statusTab.p1')}</p>
-      <p>{t('statusTab.p2')}</p>
-      <p>{t('statusTab.p3')}</p>
-      <p>{t('statusTab.p4')}</p>
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <Typography variant='body1'>
+          {t('statusTab.p1')}
+        </Typography>
+        <Typography variant='body1'>
+          {t('statusTab.p2')}
+        </Typography>
+        <Typography variant='body1'>
+          {t('statusTab.p3')}
+        </Typography>
+        <Typography variant='body1'>
+          {t('statusTab.p4')}
+        </Typography>
+      </Paper>
 
-      <HerdImmunityBarChart />
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <HerdImmunityBarChart />
+      </Paper>
 
-      <Box className='mapBox' sx={{ width: '100%' }}>
-        <Box className='mapTabsContainer'>
-          <Tabs
-            orientation='vertical'
-            value={value}
-            onChange={handleChange}
-            aria-label='map tabs'
-            textColor='secondary'
-            indicatorColor='secondary'
-            centered
-          >
-            <Tab label={t('statusTab.firstMapTitle')} {...a11yProps(0)} />
-            <Tab label={t('statusTab.secondMapTitle')} {...a11yProps(1)} />
-            <Tab label={t('statusTab.thirdMapTitle')} {...a11yProps(2)} />
-          </Tabs>
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <Box className='mapBox' sx={{ width: '100%' }}>
+          <Box className='mapTabsContainer'>
+            <Tabs
+              orientation='vertical'
+              value={value}
+              onChange={handleChange}
+              aria-label='map tabs'
+              textColor='secondary'
+              indicatorColor='secondary'
+              centered
+            >
+              <Tab label={t('statusTab.firstMapTitle')} {...a11yProps(0)} />
+              <Tab label={t('statusTab.secondMapTitle')} {...a11yProps(1)} />
+              <Tab label={t('statusTab.thirdMapTitle')} {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <MapTabPanel value={value} index={0}>
+            <VaccMap />
+          </MapTabPanel>
+          <MapTabPanel value={value} index={1}>
+            <FullVacMap />
+          </MapTabPanel>
+          <MapTabPanel value={value} index={2}>
+            <BoosterVaccMap />
+          </MapTabPanel>
         </Box>
-        <MapTabPanel value={value} index={0}>
-          <VaccMap />
-        </MapTabPanel>
-        <MapTabPanel value={value} index={1}>
-          <FullVacMap />
-        </MapTabPanel>
-        <MapTabPanel value={value} index={2}>
-          <BoosterVaccMap />
-        </MapTabPanel>
-      </Box>
+      </Paper>
     </div>
   );
 };

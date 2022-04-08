@@ -1,15 +1,29 @@
 import { t } from 'i18next';
 import HerdImmunityTimeSeriesChart from '../charts/HerdImmunityTimeSeriesChart';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 interface Props {}
 
 const RatesTab: React.FC<Props> = () => {
   return (
     <div>
-      <p>{t('ratesTab.p1')}</p>
-      <HerdImmunityTimeSeriesChart />
-      <p>{t('ratesTab.p2')}</p>
-      <p>{t('ratesTab.p3')}</p>
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <Typography variant='body1'>
+          {t('ratesTab.p1')}
+        </Typography>
+      </Paper>
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <HerdImmunityTimeSeriesChart />
+      </Paper>
+      <Paper elevation={2} sx={{margin: 2, padding: 2}}>
+        <Typography variant='body1'>
+          {t('ratesTab.p2')}
+        </Typography> 
+        <Typography variant='body1'>
+        {t('ratesTab.p3')}
+        </Typography>
+      </Paper>
     </div>
   );
 };
