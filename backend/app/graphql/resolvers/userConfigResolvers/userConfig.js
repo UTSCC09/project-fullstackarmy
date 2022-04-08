@@ -94,7 +94,6 @@ const newUserConfig = async (userConfigInput) => {
         return boolObj(true);
       })
       .catch((err) => {
-        console.log(err);
         return boolObj(false);
       });
     return result;
