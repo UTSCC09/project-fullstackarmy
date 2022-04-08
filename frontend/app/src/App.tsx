@@ -18,6 +18,14 @@ import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import SignUp from './components/authentication/SignUp';
 import SignIn from './components/authentication/SignIn';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 /**
  * Modifies the Event prototype so it will affect how the Google Library behaves.
@@ -90,7 +98,11 @@ function App() {
 
   // User state
   const [user, setUser] = React.useState(null);
-  const updateUser = (user: { _id: number; username: string }) => {
+  const updateUser = (user: {
+    userId: number;
+    token: string;
+    tokenExpiration: number;
+  }) => {
     setUser(user);
   };
 
@@ -118,68 +130,91 @@ function App() {
     i18n.changeLanguage(lang);
   };
 
+  const httpLink = createHttpLink({
+    uri: process.env.REACT_APP_API_URL,
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: user.token ? `Bearer ${user.token}` : '',
+      },
+    };
+  });
+
+  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    link: user ? authLink.concat(httpLink) : httpLink,
+    cache: new InMemoryCache(),
+  });
+
   return (
     <ColorModeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <ThemeProvider theme={theme}>
         <Router>
           <UserContext.Provider value={{ user, updateUser }}>
-            <LanguageContext.Provider value={{ changeLanguage }}>
-              <CountriesFilterContext.Provider
-                value={{ selectedCountries, updateSelectedCountries }}
-              >
-                <DateFilterContext.Provider
-                  value={{ selectedDate, updateSelectedDate }}
+            <ApolloProvider client={client}>
+              <LanguageContext.Provider value={{ changeLanguage }}>
+                <CountriesFilterContext.Provider
+                  value={{ selectedCountries, updateSelectedCountries }}
                 >
-                  <div
-                    className='app-container'
-                    style={{ backgroundColor: darkMode ? '#303030' : 'white' }}
+                  <DateFilterContext.Provider
+                    value={{ selectedDate, updateSelectedDate }}
                   >
-                    <Header />
-                    <Routes>
-                      <Route
-                        path='/'
-                        element={
-                          <div id='no-scroll'>
+                    <div
+                      className='app-container'
+                      style={{
+                        backgroundColor: darkMode ? '#303030' : 'white',
+                      }}
+                    >
+                      <Header />
+                      <Routes>
+                        <Route
+                          path='/'
+                          element={
+                            <div id='no-scroll'>
+                              <>
+                                <TabNav selected='one' /> <InfoTab />
+                              </>
+                            </div>
+                          }
+                        ></Route>
+                        <Route
+                          path='/vaccination-status'
+                          element={
                             <>
-                              <TabNav selected='one' /> <InfoTab />
+                              <TabNav selected='two' /> <StatusTab />
                             </>
-                          </div>
-                        }
-                      ></Route>
-                      <Route
-                        path='/vaccination-status'
-                        element={
-                          <>
-                            <TabNav selected='two' /> <StatusTab />
-                          </>
-                        }
-                      ></Route>
-                      <Route
-                        path='/vaccination-rates'
-                        element={
-                          <>
-                            <TabNav selected='three' /> <RatesTab />
-                          </>
-                        }
-                      ></Route>
-                      <Route
-                        path='/vaccination-distribution'
-                        element={
-                          <>
-                            {' '}
-                            <TabNav selected='four' /> <DistributionTab />
-                          </>
-                        }
-                      ></Route>
-                      <Route path='/credits' element={<Credits />}></Route>
-                      <Route path='/signin' element={<SignIn />}></Route>
-                      <Route path='/signup' element={<SignUp />}></Route>
-                    </Routes>
-                    <Footer />
-                  </div>
-                </DateFilterContext.Provider>
-              </CountriesFilterContext.Provider>
-            </LanguageContext.Provider>
+                          }
+                        ></Route>
+                        <Route
+                          path='/vaccination-rates'
+                          element={
+                            <>
+                              <TabNav selected='three' /> <RatesTab />
+                            </>
+                          }
+                        ></Route>
+                        <Route
+                          path='/vaccination-distribution'
+                          element={
+                            <>
+                              {' '}
+                              <TabNav selected='four' /> <DistributionTab />
+                            </>
+                          }
+                        ></Route>
+                        <Route path='/credits' element={<Credits />}></Route>
+                        <Route path='/signin' element={<SignIn />}></Route>
+                        <Route path='/signup' element={<SignUp />}></Route>
+                      </Routes>
+                      <Footer />
+                    </div>
+                  </DateFilterContext.Provider>
+                </CountriesFilterContext.Provider>
+              </LanguageContext.Provider>
+            </ApolloProvider>
           </UserContext.Provider>
         </Router>
       </ThemeProvider>

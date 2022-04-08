@@ -83,5 +83,9 @@
   "noAccount": "Don't have an account? Sign Up",
   "emailPasswordRequired": "Email and password are required.",
   "alreadyHaveAccount": "Already have an account? Sign In",
+  "savedConfigs": {
+    "title": "Saved Configurations",
+    "input": "Enter a name for this configuration"
+  },
   "here": "here"
 }

@@ -72,6 +72,8 @@ services:
     environment:
       BACKEND_API_URL: https://api.covid19vaxtracker.live
       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+      DATA_PIPELINE_USERNAME: dataPipeline
+      DATA_PIPELINE_PASSWORD: dataPipelineSecure12345
     # volumes:
     #   - ./backend/app:/home/node/app
     command: node dataPipeline/vaccDataPipeline.js
@@ -84,6 +86,8 @@ services:
     environment:
       BACKEND_API_URL: https://api.covid19vaxtracker.live
       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+      DATA_PIPELINE_USERNAME: dataPipeline
+      DATA_PIPELINE_PASSWORD: dataPipelineSecure12345
     # volumes:
     #   - ./backend/app:/home/node/app
     command: node dataPipeline/vaccSupplyDataPipeline.js

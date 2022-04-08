@@ -2,6 +2,7 @@
 const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { sanitizeInputs } = require('../helper');
 
 const signUp = async (username, password) => {
   try {
@@ -48,12 +49,14 @@ const signIn = async (username, password) => {
 };
 
 module.exports = {
-  signup: async ({ username, password }) => {
-    const result = signUp(username, password);
+  signup: async (args) => {
+    sanitizeInputs(args);
+    const result = signUp(args.username, args.password);
     return result;
   },
-  signin: async ({ username, password }) => {
-    const result = signIn(username, password);
+  signin: async (args) => {
+    sanitizeInputs(args);
+    const result = signIn(args.username, args.password);
     return result;
   },
 };
