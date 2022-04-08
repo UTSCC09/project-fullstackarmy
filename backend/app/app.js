@@ -9,8 +9,6 @@ const { graphqlHTTP } = require('express-graphql');
 const http = require('http');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
-// For security
-const helmet = require('helmet');
 
 const app = express();
 
@@ -57,10 +55,6 @@ app.use(
     },
   })
 );
-
-// Set the proper headers
-// TODO: This be struggling.
-// app.use(helmet());
 
 app.use(bodyParser.json());
 
