@@ -5,7 +5,6 @@ import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
 import { useLazyQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { useTranslation } from 'react-i18next';
 import { LanguageContext } from '../context/LanguageContext';
 import { DateFilterContext } from '../context/DateFilterContext';
 import { CountriesFilterContext } from '../context/CountriesFilterContext';
@@ -30,10 +29,10 @@ const SavedConfigs: React.FC<Props> = () => {
   }, [user, getConfigs]);
 
   const handleClick = (cfg) => {
+    console.log(user);
     console.log(cfg.savedLanguage);
     console.log(cfg.savedIsoCodes.toString());
     console.log(cfg.savedDates.toString());
-    return null;
     // if (cfg.savedLanguage) {
     //   changeLanguage(cfg.savedLanguage);
     // }
@@ -45,10 +44,8 @@ const SavedConfigs: React.FC<Props> = () => {
     // if (cfg.savedIsoCodes) {
     //   updateSelectedCountries(cfg.savedIsoCodes);
     // }
-    // return null;
+    return null;
   };
-
-  const { t } = useTranslation();
 
   if (allSavedConfigs && allSavedConfigs.loading) return <Loading />;
   if (allSavedConfigs && allSavedConfigs.error)

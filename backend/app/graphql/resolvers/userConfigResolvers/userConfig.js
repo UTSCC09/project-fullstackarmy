@@ -86,11 +86,17 @@ const newUserConfig = async (userConfigInput) => {
 };
 
 module.exports = {
-  userConfigs: async ({ user }) => {
+  userConfigs: async ({ user }, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     const result = userConfigs(user);
     return result;
   },
-  addUserConfig: async ({ userConfigInput }) => {
+  addUserConfig: async ({ userConfigInput }, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     const result = newUserConfig(userConfigInput);
     return result;
   },

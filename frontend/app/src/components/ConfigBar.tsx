@@ -8,6 +8,7 @@ import { CountriesFilter } from './CountriesFilter';
 import { DateFilter } from './DateFilter';
 import { useTranslation } from 'react-i18next';
 import SavedConfigs from './userconfig/SavedConfigs';
+import { UserContext } from './context/UserContext';
 
 interface Props {
   open: boolean;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
+  const { user } = React.useContext(UserContext);
   const { t } = useTranslation();
 
   const closeDrawer = () => {
@@ -48,13 +50,19 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
         {t('configbar.date')}
       </Typography>
       <DateFilter />
-
       <Divider sx={{ marginTop: '14px' }} />
-
-      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
-        {t('savedConfigs.title')}
-      </Typography>
-      <SavedConfigs />
+      {user !== null && (
+        <>
+          <Typography
+            variant='subtitle1'
+            align='left'
+            sx={{ marginLeft: '14px' }}
+          >
+            {t('savedConfigs.title')}
+          </Typography>
+          <SavedConfigs />
+        </>
+      )}
     </Drawer>
   );
 };
