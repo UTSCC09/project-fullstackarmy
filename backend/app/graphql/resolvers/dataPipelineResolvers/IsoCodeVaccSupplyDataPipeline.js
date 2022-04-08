@@ -42,6 +42,10 @@ const updateIsoCodeVaccSupplyDataQueries = (isoCodeData, isoCodeToID) => {
  */
 module.exports = {
   updateIsoCodeVaccSupplyData: async (args) => {
+    if (args.username !== process.env.DATA_PIPELINE_USERNAME) {
+      throw Error('Unauthorized');
+    }
+
     let isoCodeVaccSupplyData = args.isoCodeVaccSupplyDataInput;
 
     // Make a query to get all the isoCodes and their respective id's

@@ -3,55 +3,92 @@
     "infotab": "Information",
     "statustab": "Statut Vaccinal",
     "ratestab": "Taux de Vaccination",
-    "distributiontab": "Distribution de Vaccins"
+    "distributiontab": "Distribution des Vaccins"
   },
   "configbar": {
     "region": "Filtrer par Région",
     "date": "Filtrer par Plage de Dates",
     "mode": "Appliquer le Mode Sombre",
-    "countriesfilter": "Sélectionner les pays",
+    "countriesfilter": "Sélectionner les Pays",
     "datefrom": "De:",
-    "dateto": "À:"
+    "dateto": "A:"
   },
   "infotab": {
     "p1": {
-      "title": "Vaccination and Herd Immunity",
-      "question": "HOW WILL THE COVID-19 PANDEMIC END?"
+      "title": "Vaccination et Immunité Collective",
+      "question": "COMMENT VA SE TERMINER LA PANDÉMIE DE COVID-19?"
     },
     "p2": {
-      "title": "What is herd immunity?",
-      "def": "Herd immunity occurs when a sufficient proportion of the population develops immunity to a disease. If herd immunity is achieved, the disease will stop circulating and all of the population including those who have immunity and those who do not will be protected."
+      "title": "Qu'est-ce que l'immunité Collective?",
+      "def": "On parle d'immunité collective lorsqu'une proportion suffisante de la population développe une immunité contre une maladie. Si l'immunité collective est atteinte, la maladie cesse de circuler et toute la population, y compris ceux qui sont immunisés et ceux qui ne le sont pas, est protégée."
     },
     "p3": {
-      "title": "What is the vaccination threshold required for herd immunity against COVID-19?",
-      "desc": "The percentage of the population that needs to be vaccinated to achieve herd immunity has been speculated by experts to be around 85%."
+      "title": "Quel est le seuil de vaccination nécessaire pour obtenir une immunité collective contre le COVID-19 ?",
+      "desc": "Le pourcentage de la population qui doit être vaccinée pour atteindre l'immunité de groupe a été estimé par les experts à environ 85 %."
     },
     "p4": {
-      "title": "However, something to note is that",
-      "desc": "We are still learning how the current Covid-19 vaccines reduce transmission of SARS-CoV-2.  It is likely they reduce the risk of virus transmission but probably not completely. Vaccines prime the body into a better position to fight off viruses. However, this does not mean a person cannot transmit the virus. It just means the period they are infectious is significantly reduced. The hope is that the period of infectivity is so low, it would significantly reduce possibility of transmission, however we still don’t know how well the current vaccines can accomplish this. This is one of the reasons why it is still imperative for people to continue wearing masks and practice physical distancing, even if they are vaccinated."
+      "title": "Cependant, il faut noter que",
+      "desc": "Nous sommes encore en train d'apprendre comment les vaccins actuels Covid-19 réduisent la transmission du SRAS-CoV-2.  Il est probable qu'ils réduisent le risque de transmission du virus, mais probablement pas complètement. Les vaccins préparent l'organisme à mieux combattre les virus. Toutefois, cela ne signifie pas qu'une personne ne peut pas transmettre le virus. Cela signifie simplement que la période pendant laquelle elle est infectieuse est considérablement réduite. L'espoir est que la période d'infectiosité soit si faible qu'elle réduise considérablement la possibilité de transmission, mais nous ne savons toujours pas dans quelle mesure les vaccins actuels peuvent y parvenir. C'est l'une des raisons pour lesquelles il est toujours impératif que les personnes continuent à porter des masques et à pratiquer la distanciation physique, même si elles sont vaccinées."
     },
     "p5": {
-      "title": "This means that",
-      "desc": "Until we substantially reduce community transmission of SARS-CoV-2, and hospitalizations and death rates dramatically decrease, we still need to wear masks and practice physical distancing."
+      "title": "Cela signifie que",
+      "desc": "Tant que nous n'aurons pas réduit de manière substantielle la transmission communautaire du SRAS-CoV-2 et que les taux d'hospitalisation et de décès n'auront pas diminué de manière spectaculaire, nous devrons continuer à porter des masques et à pratiquer la distanciation physique."
     },
     "p6": {
-      "title": "Keep in mind that",
-      "desc": "The vaccine is not 100% effective and we still do not know if someone who is vaccinated against SARS-CoV-2 can develop asymptomatic infection and transmit the virus."
+      "title": "Gardez à l'esprit que",
+      "desc": "Le vaccin n'est pas efficace à 100 % et nous ne savons toujours pas si une personne vaccinée contre le SRAS-CoV-2 peut développer une infection asymptomatique et transmettre le virus."
     },
     "p7": {
-      "title": "But, there is light at the end of the tunnel",
-      "desc": "If a vaccine not only protects against disease but reduces transmission, and continues to do so for many years, we are likely to reach a state of herd protection when masks and physical distancing will no longer be required. To learn more about the global progress in vaccinations, explore the data models in the tabs above."
+      "title": "Mais, il y a de la lumière au bout du tunnel.",
+      "desc": "Si un vaccin ne se contente pas de protéger contre la maladie mais réduit la transmission, et qu'il continue à le faire pendant de nombreuses années, il est probable que nous atteindrons un état de protection collective où les masques et la distance physique ne seront plus nécessaires. Pour en savoir plus sur les progrès mondiaux en matière de vaccination, explorez les modèles de données dans les onglets ci-dessus."
     }
   },
   "statusTab": {
-    "firstMapTitle": "First Vaccination Dose Heat Map",
-    "secondMapTitle": "Second Vaccination Dose Heat Map",
-    "thirdMapTitle": "Booster Dose Heat Map"
+    "p1": "Compte tenu de l'interconnexion du monde à l'ère moderne, il est important de surveiller l'état de la vaccination dans le monde, car une véritable immunité/protection collective ne peut être obtenue que lorsque tous les pays atteignent un niveau d'immunité/protection collective.",
+    "p2": "Il faut alors se demander: à quelle dose est-on considéré comme protégé du COVID19 ?",
+    "p3": "Chaque dose administrée dans la communauté augmente les chances de survie contre le virus et réduit la probabilité de transmission, il est donc vital de recevoir le nombre complet de doses recommandées. À l'heure actuelle, certains vaccins peuvent être administrés en trois doses. Une première dose, une deuxième dose et un rappel.",
+    "p4": "Un diagramme à barres empilées est présenté ci-dessous pour comparer facilement différents pays d'intérêt. Ces pays peuvent être filtrés à l'aide de la fonction de filtrage.",
+    "firstMapTitle": "Carte Thermique des Vaccins Partiels",
+    "firstDose": "Première dose",
+    "secondMapTitle": "Carte Thermique des Vaccins Complets",
+    "secondDose": "Deuxième dose",
+    "thirdMapTitle": "Carte Thermique de la Dose de Rappel",
+    "thirdDose": "Dose de Rappel",
+    "mapWriteUp": "Au niveau de {{ dosageLevel }}, {{ numProtected }} des {{ total }} pays ({{ percentageProtected }}% pour lesquels nous disposons de données) ont atteint le seuil d'immunité/de protection collective. Une liste complète des pays peut être téléchargée"
   },
+  "ratesTab": {
+    "p1": "Nous présentons ci-dessous le taux de vaccination des pays actuellement sélectionnés. Cela montre comment le taux de vaccination d'un pays a évolué au cours de la période sélectionnée.",
+    "p2": "Pour estimer quand un pays atteindra le niveau d'immunité/protection collective, nous pouvons tirer des enseignements et extrapoler à partir des taux de vaccination passés. De nombreux facteurs peuvent influer sur le taux de vaccination, comme l'offre de vaccins. On utilise donc une simple moyenne des taux de vaccination des 30 derniers jours pour prédire le temps qu'il faudra à chaque pays pour atteindre le seuil d'immunité/protection collective.",
+    "p3": "Par exemple, le taux de vaccination au Canada le mois dernier était de 3 %. Cela signifie que chaque mois, 3 % supplémentaires de la population sont vaccinés. Étant donné que le pourcentage actuel de la population entièrement vaccinée est de 78 %, cela signifie qu'au rythme actuel, il faudra 2 mois et demi pour que toute la population du Canada soit entièrement vaccinée."
+  },
+  "distributionTab": {
+    "p1": "Lorsqu'on examine le statut vaccinal d'un pays, il est important de surveiller l'approvisionnement en vaccins de chaque pays. Si l'offre est faible dans ce pays, il ne sera pas possible de distribuer autant de vaccins que possible pour atteindre rapidement l'immunité de groupe.",
+    "p2": "Lorsque l'on examine les faits et les chiffres concernant les pays, en particulier le nombre de doses de vaccin. Il est important de regarder les pourcentages plutôt que les valeurs brutes. Par exemple, si un pays a une population très élevée, cela signifie qu'il aura besoin d'un nombre très élevé de doses de vaccin. Cela signifie qu'il est inutile de comparer le nombre de doses de vaccin avec celui d'un autre pays dont la population est faible, car il est garanti qu'il sera inférieur ! Au lieu de cela, nous examinons un simple pourcentage : (nombre de doses) / (nombre de doses nécessaires pour atteindre un taux de vaccination de 85% de la population).",
+    "p3": "Cela nous permet de voir quels sont les pays qui n'ont pas assez de vaccins pour atteindre le seuil d'immunité/de protection du troupeau et qui ont donc besoin de plus de dons.",
+    "p4": "Il est important de noter que ces pourcentages dépasseront 100 % pour certains pays car il s'agit de pourcentages du nombre de doses que ces pays ont ou prévoient d'avoir par rapport aux doses requises pour atteindre le seuil d'immunité collective sur la base d'un protocole de vaccination complet (1 dose pour certains vaccins et 2 pour d'autres).",
+    "firstMapTitle": "Carte thermique du pourcentage de doses délivrées",
+    "secondMapTitle": "Carte thermique du pourcentage de doses attendues",
+    "delivered": "livré",
+    "bookNameDelivered": "Vaccination Fourniture livrée",
+    "expected": "attendu",
+    "bookNameExpected": "Vaccination Offre attendue",
+    "mapWriteUp": "Les doses {{ doseType }} dont dispose chaque pays à l'heure actuelle, environ {{ herdImmunityAndBooster }}% des pays ont suffisamment de doses pour assurer une vaccination complète du pays et des rappels supplémentaires, {{ herdImmunity }}% ont suffisamment de doses pour atteindre l'immunité/la protection de groupe, tandis que {{ insufficientVaccines }}% des pays n'ont pas suffisamment de doses pour atteindre le seuil. La liste complète des pays de chaque catégorie peut être téléchargée."
+  },
+  "mapGeneral": {
+    "scaledLegend": "Légende à l'échelle",
+    "continents": "Continents"
+  },
+  "signin": "S'inscrire",
+  "signout": "Se Déconnecter",
+  "signup": "S'inscrire",
+  "noAccount": "Vous n'avez pas de compte ? S'inscrire",
+  "emailPasswordRequired": "L'adresse électronique et le mot de passe sont requis.",
+  "alreadyHaveAccount": "Vous avez déjà un compte ? Se connecter",
   "savedConfigs": {
     "title": "Configurations sauvegardées",
     "subtitle": "Choisissez une configuration",
     "instruction": "Sauvegarder la configuration actuelle :",
     "input": "Nom de la nouvelle configuration"
-  }
+  },
+  "here": "ici"
 }

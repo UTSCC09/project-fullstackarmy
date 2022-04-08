@@ -1,8 +1,8 @@
-const constants = require("./dataPipelineConstants");
-const graphqlRequest = require("graphql-request");
-const fs = require("fs");
-const moment = require("moment");
-const Sentry = require("@sentry/node");
+const constants = require('./dataPipelineConstants');
+const graphqlRequest = require('graphql-request');
+const fs = require('fs');
+const moment = require('moment');
+const Sentry = require('@sentry/node');
 
 Sentry.init({
   dsn: process.env.DATA_PIPELINE_SENTRY_URL,
@@ -47,8 +47,8 @@ const modifiedParseFloat = (number) => {
  */
 const createESTDate = () => {
   let d = new Date();
-  let myTimezone = "America/Toronto";
-  let myDatetimeFormat = "YYYY-MM-DD hh:mm:ss a z";
+  let myTimezone = 'America/Toronto';
+  let myDatetimeFormat = 'YYYY-MM-DD hh:mm:ss a z';
   let myDatetimeString = moment(d).tz(myTimezone).format(myDatetimeFormat);
 
   return myDatetimeString;
@@ -69,13 +69,14 @@ const updateDataPipelineLogs = (
   successStatus,
   recordsSent,
   recordsSuccessfullyAdded,
-  msg
+  msg,
+  authToken
 ) => {
   let date = createESTDate();
 
   const query = graphqlRequest.gql`  
-    mutation UpdateDataPipelineLogs($dataPipelineLogsInput: DataPipelineLogsInput!) {              
-      updateDataPipelineLogs(dataPipelineLogsInput: $dataPipelineLogsInput) {
+    mutation UpdateDataPipelineLogs($dataPipelineLogsInput: DataPipelineLogsInput!, $username: String!) {              
+      updateDataPipelineLogs(dataPipelineLogsInput: $dataPipelineLogsInput, username: $username) {
         bool
       }
     }
@@ -90,7 +91,10 @@ const updateDataPipelineLogs = (
       recordsSuccessfullyAdded,
       msg,
     },
+    username: process.env.DATA_PIPELINE_USERNAME,
   };
+
+  graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
 
   // If there is an error it shouldn't crash the program
   const req = graphQLClient.request(query, variables).catch((err) => {
@@ -121,8 +125,38 @@ const logError = (err) => {
   Sentry.captureException(err);
 };
 
+const authenticationToken = () => {
+  const query = graphqlRequest.gql`  
+  query Signin($username: String!, $password: String!) {
+    signin(username: $username, password: $password) {
+      userId
+      token
+      tokenExpiration
+    } 
+  }
+  `;
+
+  const variables = {
+    username: process.env.DATA_PIPELINE_USERNAME,
+    password: process.env.DATA_PIPELINE_PASSWORD,
+  };
+
+  // If there is an error it shouldn't crash the program
+  const req = graphQLClient
+    .request(query, variables)
+    .then((res) => {
+      return res.signin.token;
+    })
+    .catch((err) => {
+      Sentry.captureException(err);
+    });
+
+  return req;
+};
+
 exports.isoCodeToType = isoCodeToType;
 exports.modifiedParseFloat = modifiedParseFloat;
 exports.updateDataPipelineLogs = updateDataPipelineLogs;
 exports.updateDataPipelineTxt = updateDataPipelineTxt;
 exports.logError = logError;
+exports.authenticationToken = authenticationToken;

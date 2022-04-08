@@ -1,7 +1,6 @@
 // Adapted from:
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
@@ -11,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import ConfigBar from './ConfigBar';
 import { UserContext } from './context/UserContext';
@@ -21,6 +21,7 @@ export const Header = () => {
   // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
   const { user, updateUser } = React.useContext(UserContext);
+  const { t } = useTranslation();
 
   const toggleDrawer = () => {
     setOpen(!configBarOpen);
@@ -43,7 +44,7 @@ export const Header = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position='relative'>
         <Toolbar>
           <Logo />
@@ -52,17 +53,17 @@ export const Header = () => {
           {user === null && (
             <>
               <Button component={RouterLink} to='/signin' color='inherit'>
-                Sign In
+                {t('signin')}
               </Button>
               <Button component={RouterLink} to='/signup' color='secondary'>
-                Sign Up
+                {t('signup')}
               </Button>
             </>
           )}
 
           {user !== null && (
             <Button color='inherit' onClick={signOut}>
-              Sign Out
+              {t('signout')}
             </Button>
           )}
 

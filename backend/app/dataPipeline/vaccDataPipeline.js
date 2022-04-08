@@ -1,25 +1,25 @@
-const fetch = require("node-fetch");
-const graphqlRequest = require("graphql-request");
-const csvtojson = require("csvtojson");
-const lodash = require("lodash");
-const helpers = require("./dataPipelineHelpers");
-const fs = require("fs");
-const { CronJob } = require("cron");
+const fetch = require('node-fetch');
+const graphqlRequest = require('graphql-request');
+const csvtojson = require('csvtojson');
+const lodash = require('lodash');
+const helpers = require('./dataPipelineHelpers');
+const fs = require('fs');
+const { CronJob } = require('cron');
 
 const graphQLClient = new graphqlRequest.GraphQLClient(
   process.env.BACKEND_API_URL
 );
 
 const CountryIncomeLevelDataURL =
-  "https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv";
+  'https://raw.githubusercontent.com/owid/covid-19-data/master/scripts/input/wb/income_groups.csv';
 const IsoCodesVaccDataURL =
-  "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json";
+  'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json';
 
-const StoredIsoCodeData = "IsoCodeData.txt";
-const StoredVaccData = "VaccData.txt";
+const StoredIsoCodeData = 'IsoCodeData.txt';
+const StoredVaccData = 'VaccData.txt';
 
-const VaccDataPipelineName = "vacDataPipelineName";
-const VaccDataPipelineTxt = "vacDataPipelineLogs.txt";
+const VaccDataPipelineName = 'vacDataPipeline';
+const VaccDataPipelineTxt = 'vacDataPipelineLogs.txt';
 
 let isoCodesUpdatePayload = [];
 let vaccDataPayload = [];
@@ -35,7 +35,7 @@ let prevDataVaccData;
  * @param {NodeJS.ErrnoException} err
  * @return {NodeJS.ErrnoException | null} the error or null
  */
-const errCallback = (err) => {
+const errCallback = (err, authToken) => {
   if (err) {
     helpers.logError(err);
     helpers.updateDataPipelineLogs(
@@ -43,7 +43,8 @@ const errCallback = (err) => {
       false,
       0,
       0,
-      err.message
+      err.message,
+      authToken
     );
     helpers.updateDataPipelineTxt(
       VaccDataPipelineTxt,
@@ -70,8 +71,8 @@ const getDataSets = async () => {
   } catch (err) {
     // This will only occur when there is no file which occurs only when
     // when the script is first run, therefore do nothing
-    prevDataIsoCodeData = {};
-    prevDataVaccData = {};
+    helpers.logError(err);
+    return false;
   }
 
   // To avoid adding duplicates in the isoCodes obtained
@@ -91,7 +92,7 @@ const getDataSets = async () => {
         let newData = {
           isoCodeName: dataPoint.Country,
           isoCodeType: helpers.isoCodeToType(dataPoint.Code),
-          incomeLevel: dataPoint["Income group"],
+          incomeLevel: dataPoint['Income group'],
           year: dataPoint.Year,
         };
 
@@ -113,6 +114,7 @@ const getDataSets = async () => {
     })
     .catch((err) => {
       helpers.logError(err);
+      return null;
     });
 
   const isoCodesVaccData = await fetch(IsoCodesVaccDataURL);
@@ -203,6 +205,8 @@ const getDataSets = async () => {
       data,
     });
   });
+
+  return true;
 };
 
 // *** IsoCodeData updates
@@ -213,10 +217,10 @@ const getDataSets = async () => {
  * @note Small dataset therefore there is no need to perform batch requests
  * @author Mohamed Tayeh
  */
-const isoCodesUpdateReq = async (isoCodeDataInput) => {
+const isoCodesUpdateReq = async (isoCodeDataInput, authToken) => {
   const query = graphqlRequest.gql`  
-    mutation UpdateIsoCodeData($isoCodeDataInput: [IsoCodeDataInput]) {              
-      updateIsoCodeData(isoCodeDataInput: $isoCodeDataInput) {
+    mutation UpdateIsoCodeData($isoCodeDataInput: [IsoCodeDataInput], $username: String!) {              
+      updateIsoCodeData(isoCodeDataInput: $isoCodeDataInput, username: $username) {
         number
       }
     }
@@ -224,7 +228,10 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
 
   const variables = {
     isoCodeDataInput,
+    username: process.env.DATA_PIPELINE_USERNAME,
   };
+
+  graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
 
   const req = graphQLClient.request(query, variables);
 
@@ -235,7 +242,8 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
         true,
         isoCodeDataInput.length,
         res.updateIsoCodeData.number,
-        ""
+        '',
+        authToken
       );
     })
     .catch((err) => {
@@ -245,8 +253,10 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
         false,
         isoCodeDataInput.length,
         0,
-        err.message
+        err.message,
+        authToken
       );
+      return null;
     });
 
   return req;
@@ -260,10 +270,10 @@ const isoCodesUpdateReq = async (isoCodeDataInput) => {
  * @return {Number} number of records added
  * @author Mohamed Tayeh
  */
-const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput) => {
+const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput, authToken) => {
   const query = graphqlRequest.gql`
-    mutation UpdateIsoCodeVaccData($isoCodeVaccDataInput: [IsoCodeVaccDataInput!]!) {              
-      updateIsoCodeVaccData(isoCodeVaccDataInput: $isoCodeVaccDataInput) {
+    mutation UpdateIsoCodeVaccData($isoCodeVaccDataInput: [IsoCodeVaccDataInput!]!, $username: String!) {              
+      updateIsoCodeVaccData(isoCodeVaccDataInput: $isoCodeVaccDataInput, username: $username) {
         number
       }
     }
@@ -271,7 +281,10 @@ const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput) => {
 
   const variables = {
     isoCodeVaccDataInput,
+    username: process.env.DATA_PIPELINE_USERNAME,
   };
+
+  graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
 
   return graphQLClient.request(query, variables);
 };
@@ -284,7 +297,7 @@ const addIsoCodeVaccDataReq = async (isoCodeVaccDataInput) => {
  * @note No async here so that it doesn't return a promise but an array of promises
  * @author Mohamed Tayeh
  */
-const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
+const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput, authToken) => {
   let allQueries = [];
   const numRecordsPerReq = 200;
 
@@ -306,11 +319,13 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
       );
       recordsSent += queryVariables.data.length;
 
-      allQueries.push(addIsoCodeVaccDataReq(queryVariables));
+      allQueries.push(addIsoCodeVaccDataReq(queryVariables, authToken));
     }
 
     index += 1;
   });
+
+  console.log(`${recordsSent} records sent`);
 
   let result = Promise.all(allQueries)
     .then((allRes) => {
@@ -324,27 +339,34 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
         true,
         recordsSent,
         recordsAdded,
-        ""
+        '',
+        authToken
       );
+
       helpers.updateDataPipelineTxt(
         VaccDataPipelineTxt,
         true,
         recordsSent,
         recordsAdded,
-        ""
+        ''
       );
 
       // Serialize the data here only when the call is successful
-      fs.writeFile(
-        StoredIsoCodeData,
-        JSON.stringify(prevDataIsoCodeData),
-        errCallback
-      );
-      fs.writeFile(
-        StoredVaccData,
-        JSON.stringify(prevDataVaccData),
-        errCallback
-      );
+      try {
+        fs.writeFileSync(
+          StoredIsoCodeData,
+          JSON.stringify(prevDataIsoCodeData)
+        );
+        console.log(`${recordsSent} records sent`);
+      } catch (e) {
+        errCallback(e, authToken);
+      }
+
+      try {
+        fs.writeFileSync(StoredVaccData, JSON.stringify(prevDataVaccData));
+      } catch (e) {
+        errCallback(e, authToken);
+      }
     })
     .catch((err) => {
       helpers.logError(err);
@@ -353,7 +375,8 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
         false,
         recordsSent,
         0,
-        err.message
+        err.message,
+        authToken
       );
       helpers.updateDataPipelineTxt(
         VaccDataPipelineTxt,
@@ -362,23 +385,31 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput) => {
         0,
         err.message
       );
+      return null;
     });
 
   return result;
 };
 
 const dataPipeline = async () => {
-  await getDataSets();
-  await isoCodesUpdateReq(isoCodesUpdatePayload);
-  await isoCodeVaccDataUpdateReq(vaccDataPayload);
+  try {
+    let dataSetsSuccess = await getDataSets();
+    if (dataSetsSuccess) {
+      let authToken = await helpers.authenticationToken();
+      await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
+      await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
+    }
+  } catch (err) {
+    helpers.logError(err);
+  }
 };
 
 let scheduledJob = new CronJob(
-  "00 00 09 * * *",
+  '00 00 09 * * *',
   dataPipeline,
   null,
   false,
-  "America/Toronto"
+  'America/Toronto'
 );
 
 scheduledJob.start();

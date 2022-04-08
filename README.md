@@ -16,7 +16,31 @@ A simplified COVID-19 vaccination worldwide statistics dashboard. The website le
 
 **Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used.
 
-We used the MERN stack - MongoDB, ExpressJs, React, and NodeJs. We also used GraphQL as our API structure. In doing so, we used Apollo Client on our frontend to make the API calls to our backend. Our frontend scripts are written in TypeScript, while our backend scripts are in JavaScript.
+- MERN stack - MongoDB, ExpressJs, React, and NodeJs. We also used GraphQL as our API structure. In doing so, we used Apollo Client on our frontend to make the API calls to our backend. Our frontend scripts are written in TypeScript, while our backend scripts are in JavaScript.
+
+Frontend General:
+
+- Context to handle global changes, such date filters, dark mode and chosen language
+- Apollo client requests were made using the hooks provided and the requests were made in the component that required them.
+- Queries were then put into a separate file to encourage modularity (for the most part)
+- Generic components were made such as Loading and Error
+- Styles were put into a separate folder except for dyanmic styling and MUI specific styles
+- Map:
+  - One generic map component that supports multiple legends and different geojson polygon shapes was re-used to ensure DRY code
+  - Components of the map were split into their own components to ensure modularity
+  - Feature data was stored in a storage URL online on GitHub to avoid a large bundle size
+- MUI templates: Material UI for React was extensively used for the design of the website this allowed to have a shared theme throughout the app that can be altered easily
+
+Backend General:
+
+- Schemas were partitioned to encourage modularity, between global, map, authorization, user configs and data pipeline
+- Resolvers were partitioned and put into folders that follow this structure
+- Mongoose was used to query our data base
+- Data Pipeline are in their own folder which are scripts that call onto external endpoints to fetch, tidy, transform and send the data to our backend. This script has its own username and password in the db and is the only user that is allowed to enter vaccination data into the database. To ensure that all data (even past in case of an error from external sources), only the data that is changed is sent to the server. A copy of the vaccination data is serialized and stored in the droplet to ensure that only new or updated data is sent to our database compared to the last update made.
+
+Database General:
+
+- The vaccination data schema is based isoCodes and the data that we have on each isoCode
 
 Frontend libraries:
 
@@ -25,11 +49,14 @@ Frontend libraries:
 - mui: material ui for react elements such as buttons, etc.
 - chart.js: for the charts
 - react-router-dom: routing
+- apollo-client: graphql requests
+- react-18next: translation feature
 
 Backend libraries:
 
+- mapshaper - used to merge geojson data and lower its precision to make it as light weight as possible
 - node-cron - handles making a script run on schedule (every day at 9AM EST)
-- node-fetch - makes a request to the data sources that we are using in the project
+- node-fetch - makes server-side request to the data sources that we are using in the project
 - csvtojson - used to convert csv format (some data sources) to json format
 - lodash - specifically used for cloneDeep because of issues between shallow vs deep copies when doing the data pipline
 - graphql-request - used to make graphql requests to the db from the script, light wrapper therefore it was used
@@ -52,12 +79,16 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 **Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
 
+- General: Sentry was set up on frontend, backend and data pipeline to ensure we are aware of any errors that come up. The sample rate for the frontend and backend was put to 0.3 as recommended in production evironments; the sample rate for data pipeline is 1 since these are critical errors.
+
+- Data Pipeline: A collection was specifically made to monitor the number of records that were sent and successfully recorded in the data base set up, this allows us to build our own dashboard in the future to monitor the site. In addition text logs were set up in the backend as well.
+
 ## Challenges
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items.
 
 1.
-2. Ensuring that the map code is optimized, without overloading the main thread and follows DRY principles
+2. Understanding the google maps API, and ensuring that the map code is optimized, without overloading the main thread and follows DRY principles
 3. Deployment takes time, and the VMs at school are not as reliable as a VM from outide, like Digital Ocean
 
 ## Contributions
@@ -80,12 +111,16 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 - Mohamed Tayeh
   - Maps Implementation
   - Data Pipelines
-  - Schema Structure
   - Data Sources
+  - Data Wrangling and Transformation
+  - Schema Structure
   - Plans for Data Visualization
   - Write Up / Translations
   - Translation feature
-  - Researching best practices
+  - Excel download
+  - Researching best practices - linting, typescript, etc.
+  - Frontend sign/signup component
+  - Small frontend components, such as Loading and Error, and some style fixes
 
 # One more thing?
 
@@ -106,4 +141,6 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
   This occurs when hovering over a feature that is big and outside of the maps bounds. This animation/feature is from the google maps api libary therefore its speed is outside of our control
 
-  3. ``
+  3. `[Violation] 'setTimeout' handler took 221ms`, in the console this occurs in the `map.js` (not our files)
+
+  This occurs when clicking the scaled legend switch in the google maps, this is caused due to it takes a bit of time for google maps to recolor all the features present on the map

@@ -49,14 +49,14 @@ input DataPipelineLogsInput {
 }
 `;
 
-const dataPipelineRootQuery =`
+const dataPipelineRootQuery = `
 `;
 
 const dataPipelineRootMutation = `
-updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput]): Number!
-updateIsoCodeVaccData(isoCodeVaccDataInput: [IsoCodeVaccDataInput]): Number!
-updateIsoCodeVaccSupplyData(isoCodeVaccSupplyDataInput: [IsoCodeVaccSupplyDataInput]): Number!
-updateDataPipelineLogs(dataPipelineLogsInput: DataPipelineLogsInput!): Bool!
+updateIsoCodeData(isoCodeDataInput: [IsoCodeDataInput], username: String!): Number!
+updateIsoCodeVaccData(isoCodeVaccDataInput: [IsoCodeVaccDataInput], username: String!): Number!
+updateIsoCodeVaccSupplyData(isoCodeVaccSupplyDataInput: [IsoCodeVaccSupplyDataInput], username: String!): Number!
+updateDataPipelineLogs(dataPipelineLogsInput: DataPipelineLogsInput!, username: String!): Bool!
 `;
 
 exports.dataPipelineTypes = dataPipelineTypes;
