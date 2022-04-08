@@ -1,11 +1,15 @@
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { IconButton } from '@mui/material';
 import React from 'react';
-import Switch from '@mui/material/Switch';
 import { ColorModeContext } from './context/ColorModeContext';
 
 export const ColorModeToggle = () => {
   const { darkMode, toggleDarkMode } = React.useContext(ColorModeContext);
 
   return (
-    <Switch checked={darkMode} onChange={toggleDarkMode} color='secondary' />
+    <IconButton size='large' color='inherit' onClick={toggleDarkMode}>
+      {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
   );
 };
