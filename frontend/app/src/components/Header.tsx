@@ -42,6 +42,11 @@ export const Header = () => {
     updateUser(null);
   };
 
+  // TODO: Link to user config page. Only accessible if authenticated
+  const handleConfigPage = () => {
+    console.log('config page btn clicked');
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='relative'>
@@ -64,6 +69,12 @@ export const Header = () => {
             <Button color='inherit' onClick={signOut}>
               Sign Out
             </Button>
+          )}
+
+          {user !== null && (
+            <IconButton size='large' color='inherit' onClick={handleConfigPage}>
+              <AccountCircle />
+            </IconButton>
           )}
 
           <IconButton
