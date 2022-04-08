@@ -3,18 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import TabNav from './components/TabNav';
 import { Footer } from './components/Footer';
-import { DataSources } from './components/DataSources';
 import { Credits } from './components/Credits';
 import { InfoTab } from './components/tabs/InfoTab';
 import { StatusTab } from './components/tabs/StatusTab';
-import { RatesTab } from './components/tabs/RatesTab';
+import RatesTab from './components/tabs/RatesTab';
 import DistributionTab from './components/tabs/DistributionTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext } from './components/context/ColorModeContext';
 import { CountriesFilterContext } from './components/context/CountriesFilterContext';
+import { DateFilterContext } from './components/context/DateFilterContext';
 import { LanguageContext } from './components/context/LanguageContext';
+import { UserContext } from './components/context/UserContext';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
+import SignUp from './components/authentication/SignUp';
+import SignIn from './components/authentication/SignIn';
 
 /**
  * Modifies the Event prototype so it will affect how the Google Library behaves.
@@ -85,10 +88,22 @@ function App() {
     },
   });
 
+  // User state
+  const [user, setUser] = React.useState(null);
+  const updateUser = (user: { _id: number; username: string }) => {
+    setUser(user);
+  };
+
   // Filter countries included in the charts based on the selectedCountries state
   const [selectedCountries, setSelectedCountries] = React.useState([]);
   const updateSelectedCountries = (countries: Array<String>) => {
     setSelectedCountries(countries);
+  };
+
+  // Filter date based on the selectedDate state
+  const [selectedDate, setSelectedDate] = React.useState([null, null]);
+  const updateSelectedDate = (date) => {
+    setSelectedDate(date);
   };
 
   // Handle translation
@@ -101,53 +116,64 @@ function App() {
     <ColorModeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <ThemeProvider theme={theme}>
         <Router>
-          <LanguageContext.Provider value={{ changeLanguage }}>
-            <CountriesFilterContext.Provider
-              value={{ selectedCountries, updateSelectedCountries }}
-            >
-              <div style={{ backgroundColor: darkMode ? '#303030' : 'white' }}>
-                <Header />
-                <Routes>
-                  <Route
-                    path='/'
-                    element={
-                      <>
-                        <TabNav selected='one' /> <InfoTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-status'
-                    element={
-                      <>
-                        <TabNav selected='two' /> <StatusTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-rates'
-                    element={
-                      <>
-                        <TabNav selected='three' /> <RatesTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route
-                    path='/vaccination-distribution'
-                    element={
-                      <>
-                        {' '}
-                        <TabNav selected='four' /> <DistributionTab />
-                      </>
-                    }
-                  ></Route>
-                  <Route path='/datasources' element={<DataSources />}></Route>
-                  <Route path='/credits' element={<Credits />}></Route>
-                </Routes>
-                <Footer />
-              </div>
-            </CountriesFilterContext.Provider>
-          </LanguageContext.Provider>
+          <UserContext.Provider value={{ user, updateUser }}>
+            <LanguageContext.Provider value={{ changeLanguage }}>
+              <CountriesFilterContext.Provider
+                value={{ selectedCountries, updateSelectedCountries }}
+              >
+                <DateFilterContext.Provider
+                  value={{ selectedDate, updateSelectedDate }}
+                >
+                  <div
+                    style={{ backgroundColor: darkMode ? '#303030' : 'white' }}
+                  >
+                    <Header />
+                    <Routes>
+                      <Route
+                        path='/'
+                        element={
+                          <div id='no-scroll'>
+                            <>
+                              <TabNav selected='one' /> <InfoTab />
+                            </>
+                          </div>
+                        }
+                      ></Route>
+                      <Route
+                        path='/vaccination-status'
+                        element={
+                          <>
+                            <TabNav selected='two' /> <StatusTab />
+                          </>
+                        }
+                      ></Route>
+                      <Route
+                        path='/vaccination-rates'
+                        element={
+                          <>
+                            <TabNav selected='three' /> <RatesTab />
+                          </>
+                        }
+                      ></Route>
+                      <Route
+                        path='/vaccination-distribution'
+                        element={
+                          <>
+                            {' '}
+                            <TabNav selected='four' /> <DistributionTab />
+                          </>
+                        }
+                      ></Route>
+                      <Route path='/credits' element={<Credits />}></Route>
+                      <Route path='/signin' element={<SignIn />}></Route>
+                      <Route path='/signup' element={<SignUp />}></Route>
+                    </Routes>
+                    <Footer />
+                  </div>
+                </DateFilterContext.Provider>
+              </CountriesFilterContext.Provider>
+            </LanguageContext.Provider>
+          </UserContext.Provider>
         </Router>
       </ThemeProvider>
     </ColorModeContext.Provider>

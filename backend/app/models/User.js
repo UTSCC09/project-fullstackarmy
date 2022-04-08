@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -15,13 +15,13 @@ const userSchema = new Schema(
     savedConfigurations: [
       {
         type: Schema.Types.ObjectId,
-        ref: "UserConfig",
+        ref: 'UserConfig',
       },
     ],
   },
-  { collection: "User" }
+  { collection: 'User' }
 );
 
 userSchema.index({ username: 1 }, { unique: true, dropDups: true });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

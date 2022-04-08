@@ -1,13 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
 const userConfigSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
     savedLanguage: {
       type: String,
     },
@@ -22,8 +18,12 @@ const userConfigSchema = new Schema(
     savedEndDate: {
       type: Date,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
-  { collection: "UserConfig", timestamps: true }
+  { collection: 'UserConfig', timestamps: true }
 );
 
-module.exports = mongoose.model("UserConfig", userConfigSchema);
+module.exports = mongoose.model('UserConfig', userConfigSchema);

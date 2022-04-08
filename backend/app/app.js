@@ -9,8 +9,6 @@ const { graphqlHTTP } = require('express-graphql');
 const http = require('http');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
-// For security
-const helmet = require('helmet');
 
 const app = express();
 
@@ -27,7 +25,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.14jgs.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
-const PORT = 3001;
+const PORT = 3000;
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
@@ -58,10 +56,6 @@ app.use(
   })
 );
 
-// Set the proper headers
-// TODO: This be struggling.
-// app.use(helmet());
-
 app.use(bodyParser.json());
 
 app.use(
@@ -76,7 +70,7 @@ app.use(
 
 app.use(
   session({
-    secret: '8281ae58cbfab3f53b51a8289cdc47fb',
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
   })

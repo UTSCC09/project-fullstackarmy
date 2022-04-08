@@ -8,13 +8,21 @@ import { CountriesFilter } from './CountriesFilter';
 import { DateFilter } from './DateFilter';
 import { useTranslation } from 'react-i18next';
 import { ColorModeToggle } from './ColorModeToggle';
+import SavedConfigs from './SavedConfigs';
 
 interface Props {
   open: boolean;
+  handleClose: Function;
 }
 
-const ConfigBar: React.FC<Props> = ({ open }) => {
+const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
   const { t } = useTranslation();
+
+  const closeDrawer = () => {
+    if (open) {
+      handleClose();
+    }
+  };
 
   return (
     <Drawer
@@ -25,9 +33,10 @@ const ConfigBar: React.FC<Props> = ({ open }) => {
           width: 260,
         },
       }}
-      variant='persistent'
+      variant='temporary'
       anchor='left'
       open={open}
+      onBackdropClick={closeDrawer}
     >
       <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
         {t('configbar.region')}
@@ -46,7 +55,12 @@ const ConfigBar: React.FC<Props> = ({ open }) => {
       <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
         {t('configbar.mode')}
       </Typography>
+
       <ColorModeToggle />
+
+      <Divider sx={{ marginTop: '14px' }} />
+
+      <SavedConfigs />
     </Drawer>
   );
 };

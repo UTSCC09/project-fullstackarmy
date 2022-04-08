@@ -33,7 +33,7 @@ const TabNav: React.FC<Props> = ({ selected }) => {
         <Tab
           icon={<BiInfoSquare />}
           iconPosition='start'
-          value='one'
+          value='info'
           label={t('tabnav.infotab')}
           component={Link}
           to='/'
@@ -41,7 +41,7 @@ const TabNav: React.FC<Props> = ({ selected }) => {
         <Tab
           icon={<BiWorld />}
           iconPosition='start'
-          value='two'
+          value='vaccination-status'
           label={t('tabnav.statustab')}
           component={Link}
           to='/vaccination-status'
@@ -49,7 +49,7 @@ const TabNav: React.FC<Props> = ({ selected }) => {
         <Tab
           icon={<AiOutlineLineChart />}
           iconPosition='start'
-          value='three'
+          value='vaccination-rates'
           label={t('tabnav.ratestab')}
           component={Link}
           to='/vaccination-rates'
@@ -57,7 +57,7 @@ const TabNav: React.FC<Props> = ({ selected }) => {
         <Tab
           icon={<BiBarChartSquare style={{ transform: `rotate(90deg)` }} />}
           iconPosition='start'
-          value='four'
+          value='vaccination-distribution'
           label={t('tabnav.distributiontab')}
           component={Link}
           to='/vaccination-distribution'

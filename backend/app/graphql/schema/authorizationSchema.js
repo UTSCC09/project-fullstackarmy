@@ -3,8 +3,8 @@ const authTypes = `
 type User {
     _id: ID!
     username: String!
-    password: String
 }
+
 type AuthData {
     userId: ID!
     token: String!

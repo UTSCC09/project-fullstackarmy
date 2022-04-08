@@ -4,7 +4,50 @@ export type FeatureData = [isoCode: string, value: number][];
 
 export type MapQueryType = 'countryMapQuery' | 'continentMapQuery';
 
-export const ScaledLegendName: string = 'Scaled Legend';
+export type ExcelBookData = {
+  isoCodeName: string;
+  isoCode: string;
+};
+
+export type MapExcelThreshold = {
+  sheetName: string;
+  lowerBound: number;
+  upperBound: number;
+};
+
+export const herdImmunityThreshold = 85;
+export const VaccinateEntireCountryThreshold = 120;
+
+export const VaccinationThresholds: MapExcelThreshold[] = [
+  {
+    sheetName: 'Herd Immune',
+    lowerBound: herdImmunityThreshold,
+    upperBound: 100,
+  },
+  {
+    sheetName: 'Not Herd Immune',
+    lowerBound: 0,
+    upperBound: herdImmunityThreshold,
+  },
+];
+
+export const VaccDistribThresholds: MapExcelThreshold[] = [
+  {
+    sheetName: 'Herd Immunity and Booster',
+    lowerBound: VaccinateEntireCountryThreshold,
+    upperBound: 999,
+  },
+  {
+    sheetName: 'Herd Immunity Only',
+    lowerBound: 100,
+    upperBound: VaccinateEntireCountryThreshold,
+  },
+  {
+    sheetName: 'Insufficient Supply',
+    lowerBound: 0,
+    upperBound: 100,
+  },
+];
 
 export const ScaledLegend: MapLegend = [
   ['#010a19', '91% - 100%', 91],

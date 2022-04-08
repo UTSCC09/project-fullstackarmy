@@ -1,13 +1,19 @@
-const User = require("../../../models/User");
-const UserConfig = require("../../../models/UserConfig");
-const { boolObj, dateToString } = require("../helper");
+const User = require('../../../models/User');
+const UserConfig = require('../../../models/UserConfig');
+const {
+  boolObj,
+  dateToString,
+  logError,
+  unexpectedError,
+} = require('../helper');
 
 const user = async (userId) => {
   try {
     const user = await User.findById(userId);
     return user;
   } catch (err) {
-    throw err;
+    logError(err);
+    throw new Error('User was not found');
   }
 };
 
@@ -45,7 +51,7 @@ const userConfigs = async (user) => {
       return transformUserConfig(userConfig);
     });
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 
@@ -56,7 +62,7 @@ const mostRecentSavedIsoCodes = async (user) => {
     }).sort({ createdAt: -1 });
     return transformUserConfig(query);
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 
@@ -67,7 +73,7 @@ const mostRecentSavedLanguage = async (user) => {
     }).sort({ createdAt: -1 });
     return transformUserConfig(query);
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 
@@ -82,7 +88,7 @@ const mostRecentSavedDateRange = async (user) => {
     }).sort({ createdAt: -1 });
     return transformUserConfig(query);
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 
@@ -92,7 +98,7 @@ const newUserConfig = async (userConfigInput) => {
       userConfigInput;
     const existingUser = await User.findById(user);
     if (!existingUser) {
-      throw new Error("User does not exist.");
+      throw new Error('User does not exist.');
     }
 
     // check that date range is valid
@@ -100,7 +106,7 @@ const newUserConfig = async (userConfigInput) => {
       (savedStartDate && !savedEndDate) ||
       (!savedStartDate && savedEndDate)
     ) {
-      throw new Error("Invalid date range");
+      throw new Error('Invalid date range');
     }
     const userConfig = new UserConfig({
       user,
@@ -120,7 +126,7 @@ const newUserConfig = async (userConfigInput) => {
       });
     return result;
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 
@@ -128,7 +134,7 @@ const delUserConfig = async (userConfigId) => {
   try {
     const userConfig = await UserConfig.findById(userConfigId);
     if (!userConfig) {
-      throw new Error("User config does not exist.");
+      throw new Error('User config does not exist.');
     }
 
     const result = UserConfig.deleteOne({ _id: userConfigId })
@@ -140,7 +146,7 @@ const delUserConfig = async (userConfigId) => {
       });
     return result;
   } catch (err) {
-    throw err;
+    unexpectedError(err);
   }
 };
 

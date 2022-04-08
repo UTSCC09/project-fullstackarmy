@@ -98,10 +98,12 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
   - There are 2 violations that occur due to the google maps, particularly due to having many features in the map
 
-  1. `[Violation] 'requestAnimationFrame' handler took 125m`, in the console this occurs in the `map.js` (not our files)
+  1. `[Violation] 'requestAnimationFrame' handler took 125ms`, in the console this occurs in the `map.js` (not our files)
 
   This mainly occurs when zooming in and out the map, when panning the camera too fast. The animation of having the features on the map takes too long, which outside of our controls since we are using the google maps API to draw the features on the map.
 
   2. `[Violation] 'setTimeout' handler took 81ms`, in the console this occurs in the `poly.js` (not our files)
 
   This occurs when hovering over a feature that is big and outside of the maps bounds. This animation/feature is from the google maps api libary therefore its speed is outside of our control
+
+  3. ``

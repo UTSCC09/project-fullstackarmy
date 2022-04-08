@@ -15,8 +15,8 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import { Bar } from 'react-chartjs-2';
 
 import { DocumentNode, gql, useQuery } from '@apollo/client';
-import Loading from '../elements/Loading';
-import QueryError from '../elements/QueryError';
+import Loading from '../elements/Loading/Loading';
+import Error from '../elements/Error/Error';
 
 const HerdImmunityBarChart = () => {
   // Register necessary elements from ChartJS
@@ -117,7 +117,7 @@ const HerdImmunityBarChart = () => {
     secondVaccDataLoading ||
     boosterVaccDataLoading;
   let data = labelData && firstVaccData && secondVaccData && boosterVaccData;
-  if (err) return <QueryError message={err.message} />;
+  if (err) return <Error message={err.message} />;
   if (loading) return <Loading />;
 
   // TODO: Queries occur multiple times (more than just the 4) and sometimes return undefined values
