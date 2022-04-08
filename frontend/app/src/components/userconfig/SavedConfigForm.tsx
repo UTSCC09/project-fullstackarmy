@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CountriesFilterContext } from '../context/CountriesFilterContext';
 import { DateFilterContext } from '../context/DateFilterContext';
 import { LanguageContext } from '../context/LanguageContext';
@@ -19,15 +18,9 @@ const SavedConfigForm = () => {
   const { currentLanguage } = React.useContext(LanguageContext);
   const { selectedDate } = React.useContext(DateFilterContext);
   const { selectedCountries } = React.useContext(CountriesFilterContext);
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [saveConfig] = useMutation(SAVE_CONFIG, {
-    onCompleted: (data) => {
-      // TODO: reload page.
-      // navigate('/');
-    },
     onError: (error) => {
-      console.log(error);
       setErrorPanel(error.message);
     },
   });
