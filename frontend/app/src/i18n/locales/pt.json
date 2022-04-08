@@ -66,6 +66,7 @@
     "p1": "Ao considerar o estado de vacinação de um país, é importante controlar quanto fornecimento cada país tem para as vacinas. Se houver uma baixa oferta nesse país, não será possível distribuir o maior número possível de vacinas para atingir rapidamente a imunidade do rebanho.",
     "p2": "Ao olhar para fatos e números sobre países, especificamente, sobre o número de doses de vacina. É importante observar as porcentagens em vez dos valores brutos. Por exemplo, se um país tem uma população muito alta, isso significa que ele precisará de um número muito alto de doses de vacinas. Isto significa que comparar o número de doses de vacina com outro país que tem uma baixa contagem de população é inútil, já que é garantido que será menor! Em vez disso, consideramos uma simples porcentagem: (número de doses) / (número de doses necessárias para atingir uma taxa de vacinação de 85% da população).",
     "p3": "Isto nos permite enxergar quais países sofrem de uma oferta insuficiente de vacinas e que necessitam de mais doações de vacinas contra COVID-19.",
+    "p4": "É importante notar que estas percentagens excederão 100% para alguns países, uma vez que são percentagens do número de doses que estes países têm ou esperam ter em relação às doses necessárias para atingir o limiar de imunidade do efectivo, com base no protocolo de vacinação completo (1 dose para algumas vacinas e 2 para outras).",
     "firstMapTitle": "Mapa de Calor de Porcentagem de Doses entregues",
     "secondMapTitle": "Mapa de Calor de Porcentagem de Doses esperadas",
     "delivered": "entregue",
@@ -84,5 +85,9 @@
   "noAccount": "Não tem uma conta? Cadastre-se",
   "emailPasswordRequired": "E-mail e senha são necessários.",
   "alreadyHaveAccount": "Já tem uma conta? Entre",
+  "savedConfigs": {
+    "title": "Configurações Salvas",
+    "input": "Digite um nome para esta configuração"
+  },
   "here": "aqui"
 }

@@ -65,6 +65,7 @@
     "p1": "When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. If there is a low supply in that country, it will not be possible to distribute as many vaccines as possible to quickly reach herd immunity.",
     "p2": "When looking at facts and figures about countries, specifically, about number of vaccine doses. It is important to look at percentages instead of raw values. For example, if a country has a very high population count, that means it will need a very high number of vaccines doses. This means comparing the number vaccine doeses with another country that has a low population count is pointless since it's guaranteed to be lower! Instead we look at a simple percentage: (number of doses) / (number of doses required to reach a 85% vaccination rate of the population).",
     "p3": "This allows us to see which countries don't have enough vaccines to reach the herd immunity / protection threshold and thus require more donations.",
+    "p4": "It is important to note that these percentages will exceed 100% for some countries as these are percentages of the number of doses these countries have or expect to have with respect to the doses required to reach the herd immunity threshold based on full vaccination protocol (1 dose for some vaccines and 2 for others).",
     "firstMapTitle": "Delivered Doses Percentage heat map",
     "secondMapTitle": "Expected Doses Percentage heat map",
     "delivered": "delivered",
