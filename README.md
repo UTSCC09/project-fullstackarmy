@@ -92,7 +92,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items.
 
-1.
+1. Data Pipeline, setting up the schema, wrangling data from sources, setting up scripts with schedulers, and deploying the scripts
 2. Understanding the google maps API, and ensuring that the map code is optimized, without overloading the main thread and follows DRY principles
 3. Deployment takes time, and the VMs at school are not as reliable as a VM from outide, like Digital Ocean
 
