@@ -49,7 +49,7 @@ header {
 }
 
 .tab {
-  max-width: 1200px;
+  max-width: 1000px;
   width: 100%;
   margin: 0 auto;
 }
@@ -82,8 +82,8 @@ footer {
    https://sebhastian.com/hide-scrollbar-css/#:~:text=If%20you%20want%20to%20hide,the%20display%20property%20to%20none%20. 
 */
 #no-scroll ::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 #no-scroll html {
-  scrollbar-width: none;
+  scrollbar-width: none !important;
 }

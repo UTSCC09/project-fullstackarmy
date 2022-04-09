@@ -5,7 +5,7 @@ import TabNav from './components/TabNav';
 import { Footer } from './components/Footer';
 import { Credits } from './components/Credits';
 import { InfoTab } from './components/tabs/InfoTab';
-import { StatusTab } from './components/tabs/StatusTab';
+import StatusTab from './components/tabs/StatusTab';
 import RatesTab from './components/tabs/RatesTab';
 import DistributionTab from './components/tabs/DistributionTab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -131,20 +131,18 @@ function App() {
   });
 
   return (
-    <ColorModeContext.Provider value={{ darkMode, toggleDarkMode }}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <UserContext.Provider value={{ user, updateUser }}>
-            <ApolloProvider client={client}>
-              <LanguageContext.Provider
-                value={{ currentLanguage, changeLanguage }}
-              >
-                <CountriesFilterContext.Provider
-                  value={{ selectedCountries, updateSelectedCountries }}
-                >
-                  <DateFilterContext.Provider
-                    value={{ selectedDate, updateSelectedDate }}
-                  >
+    <ApolloProvider client={client}>
+      <LanguageContext.Provider value={{ currentLanguage, changeLanguage }}>
+        <DateFilterContext.Provider
+          value={{ selectedDate, updateSelectedDate }}
+        >
+          <CountriesFilterContext.Provider
+            value={{ selectedCountries, updateSelectedCountries }}
+          >
+            <UserContext.Provider value={{ user, updateUser }}>
+              <ColorModeContext.Provider value={{ darkMode, toggleDarkMode }}>
+                <ThemeProvider theme={theme}>
+                  <Router>
                     <div
                       className='app-container'
                       style={{
@@ -194,14 +192,14 @@ function App() {
                       </Routes>
                       <Footer />
                     </div>
-                  </DateFilterContext.Provider>
-                </CountriesFilterContext.Provider>
-              </LanguageContext.Provider>
-            </ApolloProvider>
-          </UserContext.Provider>
-        </Router>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+                  </Router>
+                </ThemeProvider>
+              </ColorModeContext.Provider>
+            </UserContext.Provider>
+          </CountriesFilterContext.Provider>
+        </DateFilterContext.Provider>
+      </LanguageContext.Provider>
+    </ApolloProvider>
   );
 }
 

@@ -15,7 +15,7 @@ interface Props {
   isContinentFeatures: boolean;
 }
 
-const defaultHeight: string = '600px';
+const defaultHeight: string = '500px';
 const deafultZoom: number = 2.1;
 const defaultCenter = { lat: 0, lng: 0 };
 
