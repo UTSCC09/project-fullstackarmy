@@ -7,6 +7,7 @@ const DataPipelineLogs = require("./dataPipelineResolvers/DataPipelineLogs");
 // Exposed API's
 const IsoCodeResolver = require("./isoCodeResolver");
 const DailyVaccDataResolver = require("./dailyVaccDataResolver");
+const SupplyVaccDataResolver = require("./demandDataResolver");
 const VaccStatusMapResolver = require("./mapDataResolvers/vaccStatusMapResolver");
 const VaccDistribMapResolver = require("./mapDataResolvers/vaccDistribMapResolver");
 
@@ -24,6 +25,7 @@ const rootResolver = {
   // Exposed API's
   ...IsoCodeResolver,
   ...DailyVaccDataResolver,
+  ...SupplyVaccDataResolver,
   ...VaccStatusMapResolver,
   ...VaccDistribMapResolver,
 

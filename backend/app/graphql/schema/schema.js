@@ -36,6 +36,12 @@ type DailyVaccData {
     totalBoostersPerHundred: Float
 }
 
+type VaccSupplyData {
+    isoCode: IsoCode!
+    dosesDeliveredRequiredPercent: Float
+    dosesExpectedRequiredPercent: Float
+}
+
 input isoCodeInput {
     isoCode: String!
     isoCodeName: String!
@@ -55,6 +61,7 @@ type RootQuery {
     getFirstVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
     getFullyVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
     getBoosterVaccDataByDateRangeAndIsoCode(startDate: String!, endDate: String!, isoCodes: [String!]!): [DailyVaccData!]
+    getSupplyDataByIsoCode(isoCodes:[String!]!): [VaccSupplyData!]
     ${mapDataRootQuery}
     ${dataPipelineRootQuery}
     ${authRootQuery}
