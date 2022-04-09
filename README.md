@@ -65,6 +65,8 @@ Backend libraries:
 - mongodb - to interact with the database
 - graphql - to work with graphql
 - express-graphql - same as above
+- mongo-sanitize - to sanitize inputs into mongoose queries
+- jsonwebtoken - to generate a secure token used for authentication
 - other: libraries taken from the course - nodemon, bcrypt, body-parser, cors, express, fs
 
 ## Deployment
@@ -99,10 +101,13 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
   - Deployment
   - CI/CD
-  - Herd Immunity Bar and Series Charts, including GraphQL API calls such as isoCodes, get...
+  - Herd Immunity Bar and Series Charts, including GraphQL API calls
+  - Saved User configurations
   - Set up of organization and clusters in MongoDB Atlas
   - Design of tab structure to display one heat map at a time
   - Schema Structure
+  - Authentication
+  - Sanitizing Mongoose queries
 
 - Raha Gharadaghi
 
