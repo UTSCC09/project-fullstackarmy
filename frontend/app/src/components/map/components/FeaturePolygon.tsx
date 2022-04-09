@@ -217,6 +217,7 @@ const FeaturePolygon: React.FC<Props> = ({
       mouseOutOfFeature(e, infoWindow);
     });
 
+    // Files were too big to add to local storage
     const addContinentFeatures = fetch(
       process.env.REACT_APP_COUNTRY_FEATURES_URL
     );

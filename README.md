@@ -54,7 +54,6 @@ Frontend libraries:
 
 Backend libraries:
 
-- mapshaper - used to merge geojson data and lower its precision to make it as light weight as possible
 - node-cron - handles making a script run on schedule (every day at 9AM EST)
 - node-fetch - makes server-side request to the data sources that we are using in the project
 - csvtojson - used to convert csv format (some data sources) to json format
@@ -66,6 +65,10 @@ Backend libraries:
 - graphql - to work with graphql
 - express-graphql - same as above
 - other: libraries taken from the course - nodemon, bcrypt, body-parser, cors, express, fs
+
+Other:
+
+- mapshaper - used to merge geojson data and lower its precision to make it as light weight as possible
 
 ## Deployment
 
@@ -79,7 +82,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 **Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
 
-- General: Sentry was set up on frontend, backend and data pipeline to ensure we are aware of any errors that come up. The sample rate for the frontend and backend was put to 0.3 as recommended in production evironments; the sample rate for data pipeline is 1 since these are critical errors.
+- General: Sentry was set up on frontend, backend and data pipeline to ensure we are aware of any errors that come up. The sample rate for the frontend and backend was put to 0.3 as recommended in production evironments; the sample rate for data pipeline is 1 since these are critical errors. In addition we integrated sentry with the discord API to get updates in case of any errors, since we do hope that our website does get used after the course is complete.
 
 - Data Pipeline: A collection was specifically made to monitor the number of records that were sent and successfully recorded in the data base set up, this allows us to build our own dashboard in the future to monitor the site. In addition text logs were set up in the backend as well.
 
@@ -121,6 +124,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
   - Researching best practices - linting, typescript, etc.
   - Frontend sign/signup component
   - Small frontend components, such as Loading and Error, and some style fixes
+  - Sentry
 
 # One more thing?
 

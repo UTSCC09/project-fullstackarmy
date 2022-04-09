@@ -54,4 +54,4 @@ const Map: React.FC<Props> = ({ center, zoom, height, children, mapName }) => {
   );
 };
 
-export default Map;
+export default React.memo(Map);
