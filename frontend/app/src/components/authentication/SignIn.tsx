@@ -77,7 +77,7 @@ const SignIn: React.FC = () => {
             required
             fullWidth
             id='email'
-            label='Email Address'
+            label='User'
             name='email'
             color='secondary'
             autoComplete='email'
