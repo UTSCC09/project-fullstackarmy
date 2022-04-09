@@ -97,6 +97,17 @@ export const Credits = () => {
           User Interface and Design
         </Typography>
         <Typography variant='subtitle1'>
+          Tab Icon
+        </Typography>
+        <Typography variant='body2' sx={sx.bullet}>
+          <li>
+            From 
+            <a className='link' href='https://www.flaticon.com/free-icons/vaccine'> Vaccine icons created by Freepik - Flaticon</a>
+            , licensed under the
+            <a className='link' href='https://www.flaticon.com'> Flaticon License</a> 
+          </li>
+        </Typography>
+        <Typography variant='subtitle1'>
           UI Components (Layout Components, Buttons, Dropdown Menus)
         </Typography>
         <Typography variant='body2' sx={sx.bullet}>
