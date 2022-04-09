@@ -106,7 +106,12 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 - Raha Gharadaghi
 
-  - Please fill this out
+  - Design of UI/frontend skeleton 
+  - Implementation of information tab parallax scroll
+  - Filtering by region and date range (making queries for the charts responsive to the selected values and applying changes to the chart display)
+  - Dark Mode/Light Mode feature
+  - Vaccine Distribution chart (including GraphQL API calls)
+  - Languages dropdown for translation
 
 - Mohamed Tayeh
   - Maps Implementation

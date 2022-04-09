@@ -50,7 +50,7 @@ export const InfoTab = () => {
           <img
             src={infoImg}
             alt='infoImg'
-            style={{ width: '350px', height: '350px' }}
+            style={{ width: '20%', height: 'auto' }}
           ></img>
         </ParallaxLayer>
 
@@ -60,6 +60,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
@@ -75,6 +76,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
@@ -90,6 +92,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
@@ -105,6 +108,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
@@ -120,6 +124,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
@@ -135,6 +140,7 @@ export const InfoTab = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
+            marginLeft: '5%'
           }}
         >
           <InfoCard
