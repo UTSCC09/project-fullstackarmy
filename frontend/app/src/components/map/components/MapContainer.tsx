@@ -58,4 +58,4 @@ const MapContainer: React.FC<Props> = ({
   );
 };
 
-export default MapContainer;
+export default React.memo(MapContainer);

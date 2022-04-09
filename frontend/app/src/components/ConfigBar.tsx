@@ -1,15 +1,14 @@
 // Adapted from:
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
-import React from 'react';
-import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { UserContext } from './context/UserContext';
 import { CountriesFilter } from './CountriesFilter';
 import { DateFilter } from './DateFilter';
-import { useTranslation } from 'react-i18next';
 import SavedConfigs from './userconfig/SavedConfigs';
-import { UserContext } from './context/UserContext';
-import { ColorModeToggle } from './ColorModeToggle';
 
 interface Props {
   open: boolean;
@@ -51,14 +50,6 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
         {t('configbar.date')}
       </Typography>
       <DateFilter />
-      <Divider sx={{ marginTop: '14px' }} />
-
-      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
-        {t('configbar.mode')}
-      </Typography>
-
-      <ColorModeToggle />
-      <Divider sx={{ marginTop: '14px' }} />
 
       {user !== null && (
         <>

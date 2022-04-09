@@ -131,7 +131,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
   - These are not errors nor bugs, they are indications of where improvement can be made to the code
   - Our violations are coming from google maps api library rather than our code.
 
-  - There are 2 violations that occur due to the google maps, particularly due to having many features in the map
+  - There are 4 violations that occur due to the google maps, particularly due to having many features in the map
 
   1. `[Violation] 'requestAnimationFrame' handler took 125ms`, in the console this occurs in the `map.js` (not our files)
 
@@ -144,3 +144,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
   3. `[Violation] 'setTimeout' handler took 221ms`, in the console this occurs in the `map.js` (not our files)
 
   This occurs when clicking the scaled legend switch in the google maps, this is caused due to it takes a bit of time for google maps to recolor all the features present on the map
+
+  4. `[Violation] Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952`
+
+  Mohamed has asked about this on Piazza and implemented the solution in `FeaturePolygon.ts` however this violation occured instead. Mohamed has talked with google maps developers/maintainers in their discord as well and it was not from his code. He has sent this portion of the code to them to be able to create a repo with this issue.

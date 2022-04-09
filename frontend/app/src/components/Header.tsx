@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import { ColorModeToggle } from './ColorModeToggle';
 import ConfigBar from './ConfigBar';
 import { UserContext } from './context/UserContext';
 import Logo from './Logo';
@@ -74,6 +75,9 @@ export const Header = () => {
           >
             <Translate />
           </IconButton>
+
+          <ColorModeToggle />
+
           <IconButton size='large' color='inherit' onClick={toggleDrawer}>
             <FilterAlt />
           </IconButton>

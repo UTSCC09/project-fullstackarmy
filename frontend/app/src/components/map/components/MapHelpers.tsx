@@ -14,6 +14,14 @@ export const mapExcelDownload = (
 
     bookData.forEach((country) => {
       if (
+        isNaN(country[valueName]) ||
+        country[valueName] === null ||
+        country[valueName] === undefined
+      ) {
+        sheetData.push(['', country.isoCodeName, country.isoCode, 'N/A']);
+      }
+
+      if (
         country[valueName] >= threshold.lowerBound &&
         country[valueName] <= threshold.upperBound
       ) {
