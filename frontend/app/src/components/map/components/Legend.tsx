@@ -30,7 +30,7 @@ const Legend: React.FC<Props> = ({ map, mapLegend }) => {
         border-radius: 3px; margin: 5px 10px 5px 13px;"
       ></div>
       <div style="display: grid;place-items: center;
-        margin: 5px 13px 5px 10px;font-size: 14px;">
+        margin: 5px 13px 5px 10px;font-size: 14px; color: black !important;">
         ${rangeToColor[1]}
       </div>
     `;

@@ -32,6 +32,25 @@ const FeaturePolygon: React.FC<Props> = ({
 
   if (!(map && mapLegend !== null)) return null;
 
+  /**
+   * Modifies the Event prototype so it will affect how the Google Library behaves.
+   * Otherwise non-passive event listener violations will appear in the console.
+   * @note Credits: https://stackoverflow.com/questions/47799388/javascript-google-maps-api-non-passive-event-handlers
+   */
+  (function () {
+    if (typeof EventTarget !== 'undefined') {
+      let func = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (type, fn, capture) {
+        this.func = func;
+        if (typeof capture !== 'boolean') {
+          capture = capture || {};
+          capture.passive = false;
+        }
+        this.func(type, fn, capture);
+      };
+    }
+  })();
+
   // * Prop dependent helpers
   /**
    * Mouse goes in the geometry of the feature name
@@ -55,14 +74,14 @@ const FeaturePolygon: React.FC<Props> = ({
 
       if (metric) {
         content = `
-          <div style="font-size: 14px; display: flex; flex-direction: column;">
+          <div style="font-size: 14px; display: flex; flex-direction: column; color: black !important;">
             <div>Region: ${country}</div>
             <div>Percentage: ${metric}%</div>
           </div>
         `;
       } else {
         content = `
-          <div style="font-size: 14px; display: flex; flex-direction: column;">
+          <div style="font-size: 14px; display: flex; flex-direction: column; color: black !important;">
             <div>Region: ${country}</div>
             <div>Percentage: No Data</div>
           </div>
