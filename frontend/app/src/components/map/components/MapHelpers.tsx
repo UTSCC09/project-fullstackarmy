@@ -10,7 +10,7 @@ export const mapExcelDownload = (
   let workBook = XLSX.utils.book_new();
 
   thresholds.forEach((threshold) => {
-    let sheetData = [[], ['', 'Country', 'Iso Code', 'Percentage']];
+    let sheetData = [[], ['', 'Iso Code', 'Percentage']];
 
     bookData.forEach((country) => {
       if (
@@ -25,12 +25,7 @@ export const mapExcelDownload = (
         country[valueName] >= threshold.lowerBound &&
         country[valueName] <= threshold.upperBound
       ) {
-        sheetData.push([
-          '',
-          country.isoCodeName,
-          country.isoCode,
-          country[valueName],
-        ]);
+        sheetData.push(['', country.isoCode, country[valueName]]);
       }
     });
 

@@ -51,7 +51,7 @@ export const Header = () => {
           <Logo />
           <Typography component='div' sx={{ flexGrow: 1 }}></Typography>
 
-          {user === null && (
+          {/* {user === null && (
             <>
               <Button component={RouterLink} to='/signin' color='inherit'>
                 {t('signin')}
@@ -66,7 +66,7 @@ export const Header = () => {
             <Button color='inherit' onClick={signOut}>
               {t('signout')}
             </Button>
-          )}
+          )} */}
 
           <IconButton
             size='large'
@@ -78,9 +78,9 @@ export const Header = () => {
 
           <ColorModeToggle />
 
-          <IconButton size='large' color='inherit' onClick={toggleDrawer}>
+          {/* <IconButton size='large' color='inherit' onClick={toggleDrawer}>
             <FilterAlt />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
       <TranslationDropdown anchorEl={anchorEl} handleClose={handleClose} />
