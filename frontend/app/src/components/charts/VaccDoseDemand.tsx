@@ -1,6 +1,6 @@
+// Code adapted from: https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/line/default?from-embed=&file=/App.tsx:1134-1173
+
 import React from 'react';
-import { faker } from '@faker-js/faker';
-// from https://codesandbox.io/s/github/reactchartjs/react-chartjs-2/tree/master/sandboxes/line/default?from-embed=&file=/App.tsx:1134-1173
 import {
   BarElement,
   CategoryScale,
@@ -14,8 +14,8 @@ import { Bar } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { CountriesFilterContext } from "../context/CountriesFilterContext";
-import { ColorModeContext } from "../context/ColorModeContext";
+import { CountriesFilterContext } from '../context/CountriesFilterContext';
+import { ColorModeContext } from '../context/ColorModeContext';
 
 const VaccDoseDemand = () => {
   ChartJS.register(
@@ -44,14 +44,14 @@ const VaccDoseDemand = () => {
       }
     }
   `;
-  
+
   // use darkMode state to set chart colors
-  const {darkMode} = React.useContext(ColorModeContext);
+  const { darkMode } = React.useContext(ColorModeContext);
 
   // vars come from CountriesFilter Component
-  const {selectedCountries} = React.useContext(CountriesFilterContext);
+  const { selectedCountries } = React.useContext(CountriesFilterContext);
   let vars: String[] = selectedCountries;
-  
+
   const {
     error: labelErr,
     loading: labelLoading,
@@ -92,12 +92,10 @@ const VaccDoseDemand = () => {
           ')'
       );
       deliveredData.push(
-        chartData.getSupplyDataByIsoCode[i]
-          .dosesDeliveredRequiredPercent
+        chartData.getSupplyDataByIsoCode[i].dosesDeliveredRequiredPercent
       );
       expectedData.push(
-        chartData.getSupplyDataByIsoCode[i]
-          .dosesExpectedRequiredPercent
+        chartData.getSupplyDataByIsoCode[i].dosesExpectedRequiredPercent
       );
     }
 
@@ -119,13 +117,13 @@ const VaccDoseDemand = () => {
           color: darkMode ? 'white' : '#666',
         },
       },
-      scales:{
-        x:{
+      scales: {
+        x: {
           title: {
             display: true,
             text: '% of Doses',
             color: darkMode ? 'white' : '#666',
-            position: 'bottom'
+            position: 'bottom',
           },
           ticks: {
             color: darkMode ? 'white' : '#666',
@@ -134,20 +132,18 @@ const VaccDoseDemand = () => {
             color: darkMode ? '#404040' : '#e5e5e5',
           },
         },
-        y:{
-
+        y: {
           ticks: {
             color: darkMode ? 'white' : '#666',
           },
           grid: {
             color: darkMode ? '#404040' : '#e5e5e5',
           },
-        }
+        },
       },
       color: darkMode ? 'white' : '#666',
     };
-  
-  
+
     const data = {
       labels: labels,
       datasets: [
