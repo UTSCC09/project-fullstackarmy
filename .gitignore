@@ -20,3 +20,5 @@ yarn-debug.log*
 yarn-error.log*
 
 *.sh
+choose default
+choose default.pub
