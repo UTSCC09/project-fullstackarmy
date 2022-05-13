@@ -1,30 +1,45 @@
-version: "3.7"
+version: '3.7'
 
 services:
-  # dns:
-  #   hostname: somename
-  #   domainname
-  frontend:
-    image: projectfrontend:latest
-    build: './frontend'
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     ports:
-      - 80:80
-  backend:
-    image: projectbackend:latest
-    build: './backend'
-    ports:
-      - 3000:3000
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme:/etc/acme.sh
     environment:
-      MONGO_USER: admin
-      MONGO_PASSWORD: CEZHrExc5aMCcp5s
-      MONGO_DB: VaccDataDev
-# If need to get a static IP address
-# From: zainengineer https://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container
-#       networks:
-#         static-network:
-#           ipv4_address: 172.17.0.3
-# networks:
-#   static-network:
-#     ipam:
-#       config:
-#         - subnet: 172.20.0.0/16
+      - DEFAULT_EMAIL=mohamedntayeh@gmail.com
+
+  frontend:
+    image: ghcr.io/UTSCC09/frontend-covid19vaxtracker
+    container_name: frontend-covid19vaxtracker
+    restart: always
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=covid19vaxtracker.live
+      - LETSENCRYPT_HOST=covid19vaxtracker.live
+
+  backend:
+    image: ghcr.io/UTSCC09/backend-covid19vaxtracker
+    container_name: backend-covid19vaxtracker
+    restart: always
+    expose:
+      - 3000
+    environment:
+      - VIRTUAL_HOST=api.covid19vaxtracker.live
+      - LETSENCRYPT_HOST=api.covid19vaxtracker.live

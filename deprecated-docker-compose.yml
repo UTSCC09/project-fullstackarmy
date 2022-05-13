@@ -1,0 +1,95 @@
+# version: '3.7'
+
+# services:
+#   nginx-proxy:
+#     image: jwilder/nginx-proxy
+#     container_name: nginx-proxy
+#     ports:
+#       - '80:80'
+#       - '443:443'
+#     volumes:
+#       - /var/run/docker.sock:/tmp/docker.sock:ro
+#       - ./certs:/etc/nginx/certs
+#       - ./vhost:/etc/nginx/vhost.d
+#       - html:/usr/share/nginx/html
+#     restart: always
+#     privileged: true
+#   nginx-proxy-acme:
+#     image: nginxproxy/acme-companion
+#     container_name: nginx-proxy-acme
+#     volumes_from:
+#       - nginx-proxy
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#       - ./acme:/etc/acme.sh
+#     environment:
+#       - DEFAULT_EMAIL=aarenchu@gmail.com
+#   frontend:
+#     image: projectfrontend:latest
+#     build:
+#       context: ./frontend
+#       args:
+#         REACT_APP_API_URL: https://api.covid19vaxtracker.live
+#         REACT_APP_GOOGLE_MAPS_API_KEY: AIzaSyCscGGvV3_l1nM4YabksgUCPWFuuLOXrzA
+#         REACT_APP_COUNTRY_FEATURES_URL: https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/countryFeatures.json
+#         REACT_APP_CONTINENT_FEATURES_URL: https://raw.githubusercontent.com/mohamed-tayeh/geojson-data/main/continentFeatures.json
+#         REACT_APP_SENTRY_URL: https://99576e366624422f8ce74c04cfa45f69@o1189409.ingest.sentry.io/6309791
+#     container_name: projectfrontend
+#     restart: always
+#     expose:
+#       - 80
+#     volumes:
+#       - html:/usr/share/nginx/html
+#     environment:
+#       VIRTUAL_HOST: www.covid19vaxtracker.live
+#       LETSENCRYPT_HOST: www.covid19vaxtracker.live
+#   backend:
+#     image: projectbackend:latest
+#     build:
+#       context: ./backend
+#     container_name: projectbackend
+#     restart: always
+#     expose:
+#       - 3000
+#     environment:
+#       MONGO_USER: admin
+#       MONGO_PASSWORD: CEZHrExc5aMCcp5s
+#       MONGO_DB: DataPipelineDev
+#       SECRET_KEY: 8281ae58cbfab3f53b51a8289cdc47fb
+#       BACKEND_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+#       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+#       VIRTUAL_HOST: api.covid19vaxtracker.live
+#       LETSENCRYPT_HOST: api.covid19vaxtracker.live
+#   # Adapted from https://lukashermann.dev/writing/cron-in-nodejs-docker-image/
+#   # The following two containers run vaccDataPipeline.js and vaccSupplyDataPipeline.js
+#   # These node scripts use a scheduler to pull data from a repo
+#   vacc-data-pipeline:
+#     image: vaccdatapipeline:latest
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile-dataPipeline
+#     container_name: vacc-data-pipeline
+#     environment:
+#       BACKEND_API_URL: https://api.covid19vaxtracker.live
+#       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+#       DATA_PIPELINE_USERNAME: dataPipeline
+#       DATA_PIPELINE_PASSWORD: dataPipelineSecure12345
+#     # volumes:
+#     #   - ./backend/app:/home/node/app
+#     command: node dataPipeline/vaccDataPipeline.js
+#   vacc-supply-data-pipeline:
+#     image: vaccsupplydatapipeline:latest
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile-dataPipeline
+#     container_name: vacc-supply-data-pipeline
+#     environment:
+#       BACKEND_API_URL: https://api.covid19vaxtracker.live
+#       DATA_PIPELINE_SENTRY_URL: https://ec0624e60f6b4f51822965179018c063@o1189409.ingest.sentry.io/6311833
+#       DATA_PIPELINE_USERNAME: dataPipeline
+#       DATA_PIPELINE_PASSWORD: dataPipelineSecure12345
+#     # volumes:
+#     #   - ./backend/app:/home/node/app
+#     command: node dataPipeline/vaccSupplyDataPipeline.js
+# volumes:
+#   html:
