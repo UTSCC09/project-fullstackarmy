@@ -10,7 +10,8 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY ./app/package.json ./
 
-RUN npm install
+# to deal with weird dependencies
+RUN npm install --legacy-peer-deps
 
 # Bundle app source
 COPY ./app .
