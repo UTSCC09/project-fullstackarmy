@@ -100,6 +100,21 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 **Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number).
 
+- Mohamed Tayeh
+  - Maps Implementation
+  - Data Pipelines
+  - Data Sources
+  - Data Wrangling and Transformation
+  - Schema Structure
+  - Plans for Data Visualization
+  - Write Up / Translations
+  - Translation feature
+  - Excel download
+  - Researching best practices - linting, typescript, etc.
+  - Frontend sign/signup component
+  - Small frontend components, such as Loading and Error, and some style fixes
+  - Sentry
+
 - Aaren Chu:
 
   - Deployment
@@ -120,21 +135,6 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
   - Dark Mode/Light Mode feature
   - Vaccine Distribution chart (including GraphQL API calls)
   - Languages dropdown for translation
-
-- Mohamed Tayeh
-  - Maps Implementation
-  - Data Pipelines
-  - Data Sources
-  - Data Wrangling and Transformation
-  - Schema Structure
-  - Plans for Data Visualization
-  - Write Up / Translations
-  - Translation feature
-  - Excel download
-  - Researching best practices - linting, typescript, etc.
-  - Frontend sign/signup component
-  - Small frontend components, such as Loading and Error, and some style fixes
-  - Sentry
 
 # One more thing?
 
