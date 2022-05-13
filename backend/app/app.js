@@ -38,6 +38,8 @@ let allowedOrigins = [
   `http://localhost`,
   'https://api.covid19vaxtracker.live',
   'https://www.covid19vaxtracker.live',
+  'https://mohamedtayeh.com',
+  'https://www.mohamedtayeh.com',
 ];
 
 app.use(
