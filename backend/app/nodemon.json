@@ -1,7 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "moh",
-        "MONGO_PASSWORD": "mohamedtayeh2000",
-        "MONGO_DB": "VaccDataDev"
-    }
-}

@@ -1,0 +1,94 @@
+{
+  "tabnav": {
+    "infotab": "Information",
+    "statustab": "Vaccination Status",
+    "ratestab": "Vaccination Rates",
+    "distributiontab": "Vaccination Distribution"
+  },
+  "configbar": {
+    "region": "Filter by Region",
+    "date": "Filter by Date Range",
+    "mode": "Apply Dark Mode",
+    "countriesfilter": "Select Countries",
+    "datefrom": "From:",
+    "dateto": "To:"
+  },
+  "infotab": {
+    "p1": {
+      "title": "Vaccination and Herd Immunity",
+      "question": "HOW WILL THE COVID-19 PANDEMIC END?"
+    },
+    "p2": {
+      "title": "What is herd immunity?",
+      "def": "Herd immunity occurs when a sufficient proportion of the population develops immunity to a disease. If herd immunity is achieved, the disease will stop circulating and all of the population including those who have immunity and those who do not will be protected."
+    },
+    "p3": {
+      "title": "What is the vaccination threshold required for herd immunity against COVID-19?",
+      "desc": "The percentage of the population that needs to be vaccinated to achieve herd immunity has been speculated by experts to be around 85%."
+    },
+    "p4": {
+      "title": "However, something to note is that",
+      "desc": "We are still learning how the current Covid-19 vaccines reduce transmission of SARS-CoV-2.  It is likely they reduce the risk of virus transmission but probably not completely. Vaccines prime the body into a better position to fight off viruses. However, this does not mean a person cannot transmit the virus. It just means the period they are infectious is significantly reduced. The hope is that the period of infectivity is so low, it would significantly reduce possibility of transmission, however we still don’t know how well the current vaccines can accomplish this. This is one of the reasons why it is still imperative for people to continue wearing masks and practice physical distancing, even if they are vaccinated."
+    },
+    "p5": {
+      "title": "This means that",
+      "desc": "Until we substantially reduce community transmission of SARS-CoV-2, and hospitalizations and death rates dramatically decrease, we still need to wear masks and practice physical distancing."
+    },
+    "p6": {
+      "title": "Keep in mind that",
+      "desc": "The vaccine is not 100% effective and we still do not know if someone who is vaccinated against SARS-CoV-2 can develop asymptomatic infection and transmit the virus."
+    },
+    "p7": {
+      "title": "But, there is light at the end of the tunnel",
+      "desc": "If a vaccine not only protects against disease but reduces transmission, and continues to do so for many years, we are likely to reach a state of herd protection when masks and physical distancing will no longer be required. To learn more about the global progress in vaccinations, explore the data models in the tabs above."
+    }
+  },
+  "statusTab": {
+    "p1": "Given how connected the world is in the modern age, it is important to monitor the global vaccination status because true herd immunity/protection can only be achieved when all the countries reach a herd immunity/protection level.",
+    "p2": "We must then wonder: at which dose are we considered protected from COVID19?",
+    "p3": "Each dose administered in the community increases survivability chances against the virus and reduces the likelihood of transmission, therefore it is vital to receive the full number of recommended doses. As of today, it is possible for some vaccines to be 3 doses. A first dose, a second dose and a booster.",
+    "p4": "A stacked bar chart is shown below to easily compare different countries of interest. These countries can be filtered using the filter feature.",
+    "firstMapTitle": "Partially Vaccinated Heat Map",
+    "firstDose": "First Dose",
+    "secondMapTitle": "Fully Vaccinated Heat Map",
+    "secondDose": "Second Dose",
+    "thirdMapTitle": "Booster Dose Heat Map",
+    "thirdDose": "Booster Dose",
+    "mapWriteUp": "At the {{ dosageLevel }} dose level, {{ numProtected }} of {{ total }} countries ({{ percentageProtected }}% that we have data on) have reached the herd immunity / protection threshold. A full list of countries can be downloaded"
+  },
+  "ratesTab": {
+    "p1": "Below we show case the vaccination rate of the currently selected countries. This shows how the vaccination rate of a country changed within the selected time period.",
+    "p2": "To estimate when a country will reach herd immunity/protection level, we can learn and extrapolate from the past vaccination rates. There are many factors that could affect the vaccination rate such as vaccination supply, and so a simple average of the last 30 days vaccination rate is used to predict how long it will take for each country to reach the herd immunity/protection threshold.",
+    "p3": "For example, Canada's rate of vaccination last month was 3%. This means that every month, an additional 3% of the population is vaccinated. Given that the current percentage of the population that is fully vaccinated is 78%, this means that at the current rate, it will take 2 months and a half for Canada's entire population to be fully vaccinated."
+  },
+  "distributionTab": {
+    "p1": "When considering the vaccination status of a country, it is important to monitor how much supply each country has to the vaccines. If there is a low supply in that country, it will not be possible to distribute as many vaccines as possible to quickly reach herd immunity.",
+    "p2": "When looking at facts and figures about countries, specifically, about number of vaccine doses. It is important to look at percentages instead of raw values. For example, if a country has a very high population count, that means it will need a very high number of vaccines doses. This means comparing the number vaccine doeses with another country that has a low population count is pointless since it's guaranteed to be lower! Instead we look at a simple percentage: (number of doses) / (number of doses required to reach a 85% vaccination rate of the population).",
+    "p3": "This allows us to see which countries don't have enough vaccines to reach the herd immunity / protection threshold and thus require more donations.",
+    "p4": "It is important to note that these percentages will exceed 100% for some countries as these are percentages of the number of doses these countries have or expect to have with respect to the doses required to reach the herd immunity threshold based on full vaccination protocol (1 dose for some vaccines and 2 for others).",
+    "firstMapTitle": "Delivered Doses Percentage heat map",
+    "secondMapTitle": "Expected Doses Percentage heat map",
+    "delivered": "delivered",
+    "bookNameDelivered": "Vaccination Delivered Supply",
+    "expected": "expected",
+    "bookNameExpected": "Vaccination Expected Supply",
+    "mapWriteUp": "The {{ doseType }} doses that each country has at the moment, about {{ herdImmunityAndBooster }}% of the countries have enough doses to fully vaccinate the country's and additional booster shots, {{ herdImmunity }}% have enough doses to reach herd immunity / protection, while {{ insufficientVaccines }}% of countries don't have sufficient doses to reach the threshold. A full list of countries in each category is available for download"
+  },
+  "mapGeneral": {
+    "scaledLegend": "Scaled Legend",
+    "continents": "Continents"
+  },
+  "signin": "Sign In",
+  "signout": "Sign Out",
+  "signup": "Sign Up",
+  "noAccount": "Don't have an account? Sign Up",
+  "emailPasswordRequired": "Email and password are required.",
+  "alreadyHaveAccount": "Already have an account? Sign In",
+  "savedConfigs": {
+    "title": "Saved Configurations",
+    "subtitle": "Choose a configuration",
+    "instruction": "Save current configuration:",
+    "input": "New configuration name"
+  },
+  "here": "here"
+}

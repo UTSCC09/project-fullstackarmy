@@ -1,0 +1,94 @@
+{
+  "tabnav": {
+    "infotab": "Información",
+    "statustab": "Estado de Vacunación",
+    "ratestab": "Tasas de Vacunación",
+    "distributiontab": "Distribución de Vacunas"
+  },
+  "configbar": {
+    "region": "Filtrar por Región",
+    "date": "Filtrar por Rango de Fechas",
+    "mode": "Aplicar Modo Oscuro",
+    "countriesfilter": "Seleccione los países",
+    "datefrom": "De:",
+    "dateto": "A:"
+  },
+  "infotab": {
+    "p1": {
+      "title": "Vacunación e inmunidad colectiva",
+      "question": "¿CÓMO ACABARÁ LA PANDEMIA DE COVID-19?"
+    },
+    "p2": {
+      "title": "¿Qué es la inmunidad de grupo?",
+      "def": "La inmunidad de rebaño se produce cuando una proporción suficiente de la población desarrolla inmunidad contra una enfermedad. Si se consigue la inmunidad de rebaño, la enfermedad dejará de circular y toda la población, incluidos los que tienen inmunidad y los que no, estará protegida."
+    },
+    "p3": {
+      "title": "¿Cuál es el umbral de vacunación requerido para la inmunidad de grupo contra COVID-19?",
+      "desc": "Los expertos estiman que el porcentaje de la población que debe ser vacunada para lograr la inmunidad de grupo es de alrededor del 85%."
+    },
+    "p4": {
+      "title": "Sin embargo, hay que tener en cuenta que",
+      "desc": "Todavía estamos aprendiendo cómo las actuales vacunas Covid-19 reducen la transmisión del SRAS-CoV-2. Es probable que reduzcan el riesgo de transmisión del virus, pero probablemente no del todo. Las vacunas preparan al organismo para luchar mejor contra los virus. Sin embargo, esto no significa que una persona no pueda transmitir el virus. Sólo significa que el periodo de infecciosidad se reduce significativamente. La esperanza es que el periodo de infectividad sea tan bajo, que reduzca significativamente la posibilidad de transmisión, sin embargo, todavía no sabemos hasta qué punto las vacunas actuales pueden lograr esto. Esta es una de las razones por las que sigue siendo imperativo que la gente siga usando máscaras y practicando el distanciamiento físico, incluso si están vacunados."
+    },
+    "p5": {
+      "title": "Esto significa que",
+      "desc": "Hasta que reduzcamos sustancialmente la transmisión comunitaria del SRAS-CoV-2, y las tasas de hospitalización y muerte disminuyan drásticamente, es necesario llevar máscaras y practicar el distanciamiento físico."
+    },
+    "p6": {
+      "title": "Tenga en cuenta que",
+      "desc": "La vacuna no es eficaz al 100%, y aún no sabemos si alguien vacunado contra el SRAS-CoV-2 puede desarrollar una infección asintomática y transmitir el virus."
+    },
+    "p7": {
+      "title": "Pero, hay luz al final del túnel",
+      "desc": "Si la vacuna no sólo protege contra la enfermedad, sino que tambien reduce la transmisión, y sigue haciéndolo durante muchos años, es probable que alcancemos un estado de protección de rebaño en el que ya no sean necesarias las máscaras ni el distanciamiento físico."
+    }
+  },
+  "statusTab": {
+    "p1": "Teniendo en cuenta lo conectado que está el mundo en la era moderna, es importante vigilar el estado de vacunación global, ya que la verdadera inmunidad/protección de rebaño sólo puede lograrse cuando todos los países alcanzan un nivel de inmunidad/protección de rebaño.",
+    "p2": "Debemos entonces preguntarnos: ¿a partir de qué dosis se considera que estamos protegidos contra el COVID19?",
+    "p3": "Cada dosis administrada en la comunidad aumenta las posibilidades de supervivencia contra el virus y reduce la probabilidad de transmisión, por lo que es vital recibir el número completo de dosis recomendadas. A día de hoy, es posible que algunas vacunas sean de 3 dosis. Una primera dosis, una segunda dosis y un refuerzo.",
+    "p4": "A continuación se muestra un gráfico de barras apiladas para comparar fácilmente diferentes países de interés. Estos países pueden filtrarse utilizando la función de filtro.",
+    "firstMapTitle": "Mapa de Calor de la Parcialmente Vacunado",
+    "firstDose": "primera dosis",
+    "secondMapTitle": "Mapa de calor de la Totalmente Vacunado",
+    "secondDose": "segunda dosis",
+    "thirdMapTitle": "Mapa de calor de la Dosis de Refuerzo",
+    "thirdDose": "dosis de refuerzo",
+    "mapWriteUp": "En el nivel de dosis {{ dosageLevel }}, {{ numProtected }} de {{ total }} países ({{ percentageProtected }} de los que tenemos datos) han alcanzado el umbral de inmunidad/protección del rebaño. Se puede descargar una lista completa de países"
+  },
+  "ratesTab": {
+    "p1": "A continuación se muestra el caso de la tasa de vacunación de los países actualmente seleccionados. Esto muestra cómo ha cambiado la tasa de vacunación de un país dentro del periodo de tiempo seleccionado.",
+    "p2": "Para estimar cuándo un país alcanzará el nivel de inmunidad/protección de rebaño, podemos aprender y extrapolar de las tasas de vacunación pasadas. Hay muchos factores que pueden afectar a la tasa de vacunación, como el suministro de vacunas, por lo que se utiliza una media simple de la tasa de vacunación del último mes para predecir el tiempo que tardará cada país en alcanzar el umbral de inmunidad/protección del rebaño.",
+    "p3": "Por ejemplo, la tasa de vacunación de Canadá el mes pasado fue del 3%. Esto significa que cada mes se vacuna un 3% más de la población. Dado que el porcentaje actual de la población que está totalmente vacunada es del 78%, esto significa que, al ritmo actual, se necesitarán 2 meses y medio para que toda la población de Canadá esté totalmente vacunada."
+  },
+  "distributionTab": {
+    "p1": "Cuando se considera el estado de vacunación de un país, es importante vigilar el suministro de vacunas de cada país. Si hay un bajo suministro en ese país, no será posible distribuir tantas vacunas como sea posible para alcanzar rápidamente la inmunidad de rebaño.",
+    "p2": "Cuando se examinan los datos y las cifras sobre los países, en concreto, sobre el número de dosis de vacunas. Es importante mirar los porcentajes en lugar de los valores brutos. Por ejemplo, si un país tiene una población muy alta, significa que necesitará un número muy alto de dosis de vacunas. Esto significa que comparar el número de dosis de vacunas con el de otro país que tenga un número bajo de población no tiene sentido, ya que está garantizado que será menor. En lugar de ello, se observa un simple porcentaje: (número de dosis) / (número de dosis necesarias para alcanzar una tasa de vacunación del 85% de la población).",
+    "p3": "Esto nos permite ver qué países sufren un desabastecimiento de vacunas y necesitan más donaciones de vacunas COVID19.",
+    "p4": "Es importante señalar que estos porcentajes superarán el 100% para algunos países, ya que se trata de porcentajes del número de dosis que estos países tienen o esperan tener con respecto a las dosis necesarias para alcanzar el umbral de inmunidad de rebaño basado en el protocolo de vacunación completo (1 dosis para algunas vacunas y 2 para otras).",
+    "firstMapTitle": "Mapa de Calor del Porcentaje de Dosis Suministradas",
+    "secondMapTitle": "Mapa de Calor del Porcentaje de Dosis Esperadas",
+    "delivered": "entregado",
+    "bookNameDelivered": "Suministro de Vacunas",
+    "expected": "esperado",
+    "bookNameExpected": "Vacunación Suministro Previsto",
+    "mapWriteUp": "Las dosis {{ doseType }} que cada país tiene en este momento, alrededor del {{ herdImmunityAndBooster }}% de los países tienen suficientes dosis para vacunar completamente al país y vacunas de refuerzo adicionales, el {{ herdImmunity }}% tienen suficientes dosis para alcanzar la inmunidad / protección de rebaño, mientras que el {{ insufficientVaccines }}% de los países no tienen suficientes dosis para alcanzar el umbral. La lista completa de países en cada categoría está disponible para su descarga"
+  },
+  "mapGeneral": {
+    "scaledLegend": "Leyenda a Escala",
+    "continents": "Continentes"
+  },
+  "signin": "Iniciar Sesión",
+  "signout": "Cerrar la Sesión",
+  "signup": "Registrarse",
+  "noAccount": "Não tem uma conta? Cadastre-se",
+  "emailPasswordRequired": "E-mail e senha são necessários.",
+  "alreadyHaveAccount": "Já tem uma conta? Entre no site",
+  "savedConfigs": {
+    "title": "Configuraciones guardadas",
+    "subtitle": "Elija una configuración",
+    "instruction": "Guardar la configuración actual:",
+    "input": "Nuevo nombre de configuración"
+  },
+  "here": "aquí"
+}

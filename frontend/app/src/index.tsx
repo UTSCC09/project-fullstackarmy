@@ -1,26 +1,23 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  ApolloClient,
-  NormalizedCacheObject,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './i18n/i18n';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 
-const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  // TODO: Need to update this URI
-  uri: 'http://c09-chuaaren.utsc-labs.utoronto.ca:3000/api',
-  cache: new InMemoryCache(),
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_URL,
+  integrations: [new BrowserTracing()],
+  tracesSampleRate: 0.3,
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <Suspense fallback={<div>Loading...</div>}>
       <App />
-    </ApolloProvider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root')
 );

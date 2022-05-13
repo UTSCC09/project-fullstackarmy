@@ -1,38 +1,90 @@
-import { useState } from "react"
-import Logo from "./Logo"
-import Icon from "./Icon"
-import Button from "./Button"
-import TabHeader from "./TabHeader"
-import {GoGear} from 'react-icons/go'
-import {BiInfoSquare} from 'react-icons/bi'
-import {BiWorld} from 'react-icons/bi'
-import {AiOutlineLineChart} from 'react-icons/ai'
-import {BiBarChartSquare} from 'react-icons/bi'
+// Adapted from:
+// https://codesandbox.io/s/k1wuo0?file=/demo.tsx
+// https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
+import FilterAlt from '@mui/icons-material/FilterAlt';
+import Translate from '@mui/icons-material/Translate';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+import { ColorModeToggle } from './ColorModeToggle';
+import ConfigBar from './ConfigBar';
+import { UserContext } from './context/UserContext';
+import Logo from './Logo';
+import TranslationDropdown from './TranslationDropdown';
 
 export const Header = () => {
-  const [selectedTab, setSelectedTab] = useState('')
-  const currentPath = window.location.pathname
-  return (
-    <header>
-      <div className="nav-bar">
-        <div className="top-bar">
-          <Logo />
-          <div className="top-bar-btns">
-            <Icon icon={GoGear}/>
-            <Button text="Login" color="#FFFFFF"/>
-            <Button text="Sign Up" color="#00ACEA"/>
-          </div>
-        </div>
-        <div className="bottom-bar">
-          <div className="tabs">
-            <TabHeader title="Background Information " icon={BiInfoSquare} selected={currentPath === '/background-information' && selectedTab === 'info' ? true : false} onSelect={() => setSelectedTab('info')} path="/background-information"/>
-            <TabHeader title="Vaccination Status " icon={BiWorld} selected={currentPath === '/vaccination-status' && selectedTab === 'status' ? true : false} onSelect={() => setSelectedTab('status')} path="/vaccination-status"/>
-            <TabHeader title="Vaccination Rates " icon={AiOutlineLineChart} selected={currentPath === '/vaccination-rates' && selectedTab === 'rates' ? true : false} onSelect={() => setSelectedTab('rates')} path="/vaccination-rates"/>
-            <TabHeader title="Vaccination Distribution " icon={BiBarChartSquare} selected={currentPath === '/vaccination-distribution' && selectedTab === 'distribution' ? true : false} onSelect={() => setSelectedTab('distribution')} path="/vaccination-distribution"/>
-          </div>
-        </div>
-      </div>
-    </header>
-  )
-}
+  // State for handling configuration bar drawer
+  const [configBarOpen, setOpen] = React.useState(false);
+  const { user, updateUser } = React.useContext(UserContext);
+  const { t } = useTranslation();
 
+  const toggleDrawer = () => {
+    setOpen(!configBarOpen);
+  };
+
+  // State for handling translation dropdown
+  // Adapted from: https://codesandbox.io/s/j01dyc?file=/demo.tsx:2589-2600
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleTranslationMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const signOut = () => {
+    updateUser(null);
+  };
+
+  return (
+    <Box>
+      <AppBar position='relative'>
+        <Toolbar>
+          <Logo />
+          <Typography component='div' sx={{ flexGrow: 1 }}></Typography>
+
+          {/* {user === null && (
+            <>
+              <Button component={RouterLink} to='/signin' color='inherit'>
+                {t('signin')}
+              </Button>
+              <Button component={RouterLink} to='/signup' color='secondary'>
+                {t('signup')}
+              </Button>
+            </>
+          )}
+
+          {user !== null && (
+            <Button color='inherit' onClick={signOut}>
+              {t('signout')}
+            </Button>
+          )} */}
+
+          <IconButton
+            size='large'
+            color='inherit'
+            onClick={handleTranslationMenu}
+          >
+            <Translate />
+          </IconButton>
+
+          <ColorModeToggle />
+
+          {/* <IconButton size='large' color='inherit' onClick={toggleDrawer}>
+            <FilterAlt />
+          </IconButton> */}
+        </Toolbar>
+      </AppBar>
+      <TranslationDropdown anchorEl={anchorEl} handleClose={handleClose} />
+      <ConfigBar open={configBarOpen} handleClose={toggleDrawer} />
+    </Box>
+  );
+};
