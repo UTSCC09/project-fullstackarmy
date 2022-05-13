@@ -7,7 +7,6 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
-    "@faker-js/faker": "^6.0.0",
     "@googlemaps/react-wrapper": "^1.1.29",
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.74",
@@ -70,8 +69,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@faker-js/faker": "^6.0.0"
   }
 }
