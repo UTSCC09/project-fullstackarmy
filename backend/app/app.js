@@ -10,7 +10,7 @@ const http = require('http');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
 const isAuthorized = require('./middleware/isAuthorized');
-//test
+
 const app = express();
 
 Sentry.init({
