@@ -25,8 +25,8 @@ services:
       - DEFAULT_EMAIL=mohamedntayeh@gmail.com
 
   frontend:
-    image: ghcr.io/UTSCC09/frontendcovid19vaxtracker
-    container_name: frontendcovid19vaxtracker
+    image: ghcr.io/UTSCC09/frontend-covid19vaxtracker
+    container_name: frontend-covid19vaxtracker
     restart: always
     expose:
       - 80
@@ -35,8 +35,8 @@ services:
       - LETSENCRYPT_HOST=covid19vaxtracker.live
 
   backend:
-    image: ghcr.io/UTSCC09/backendcovid19vaxtracker
-    container_name: backendcovid19vaxtracker
+    image: ghcr.io/UTSCC09/backend-covid19vaxtracker
+    container_name: backend-covid19vaxtracker
     restart: always
     expose:
       - 3000
