@@ -10,7 +10,7 @@ on:
       - backend/**
 
 env:
-  IMAGE_NAME: backend-mohamedtayeh
+  IMAGE_NAME: backend-covid19vaxtracker
 
 jobs:
   # Push image to GitHub Packages.
