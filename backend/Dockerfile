@@ -9,11 +9,13 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY ./app/package.json ./
-# to deal with weird dependencies
-RUN npm install --legacy-peer-deps
+
+RUN npm install
 
 # Bundle app source
 COPY ./app .
+COPY dockerBash.sh dockerBash.sh
 
 EXPOSE 3000
-CMD [ "node", "app.js" ]
+RUN ["chmod", "+x", "dockerBash.sh"]
+CMD ./dockerBash.sh
