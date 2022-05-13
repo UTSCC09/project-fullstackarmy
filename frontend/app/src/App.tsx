@@ -26,7 +26,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-//test
+
 function App() {
   // Set theme attributes based on darkMode state
   const [darkMode, setDarkMode] = React.useState(false);
