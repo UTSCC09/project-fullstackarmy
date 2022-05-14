@@ -28,7 +28,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 function App() {
-  // Set theme attributes based on darkMode curr state
+  // Set theme attributes based on darkMode state
   const [darkMode, setDarkMode] = React.useState(false);
 
   const toggleDarkMode = () => {

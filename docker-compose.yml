@@ -18,8 +18,8 @@ services:
     expose:
       - 3000
     environment:
-      - VIRTUAL_HOST=api.mohamedtayeh.com
-      - LETSENCRYPT_HOST=api.mohamedtayeh.com
+      - VIRTUAL_HOST=covidapi.mohamedtayeh.com
+      - LETSENCRYPT_HOST=covidapi.mohamedtayeh.com
 
   nginx-proxy:
     image: jwilder/nginx-proxy
