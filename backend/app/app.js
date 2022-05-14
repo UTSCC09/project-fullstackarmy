@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require(`cors`);
 const bodyParser = require('body-parser');
@@ -82,6 +85,9 @@ console.log('env vars');
 console.log(process.env.MONGO_USER);
 console.log(process.env.MONGO_PASSWORD);
 console.log(process.env.MONGO_DB);
+console.log(process.env.SECRET_KEY);
+console.log(process.env.BACKEND_SENTRY_URL);
+console.log(process.env.DATA_PIPELINE_SENTRY_URL);
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

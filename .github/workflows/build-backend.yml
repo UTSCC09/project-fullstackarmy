@@ -24,6 +24,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Create backend env vars
         working-directory: backend/app
         run: |
