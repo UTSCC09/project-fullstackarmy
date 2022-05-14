@@ -4,14 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n/i18n';
-import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
+// import * as Sentry from '@sentry/react';
+// import { BrowserTracing } from '@sentry/tracing';
 
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_URL,
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 0.3,
-});
+// Sentry.init({
+//   dsn: process.env.REACT_APP_SENTRY_URL,
+//   integrations: [new BrowserTracing()],
+//   tracesSampleRate: 0.3,
+// });
 
 ReactDOM.render(
   <React.StrictMode>
