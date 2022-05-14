@@ -35,37 +35,28 @@ app.use(isAuthorized);
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
-  `http://localhost:3000`,
-  `http://localhost:3001`,
   `http://localhost:80`,
-  `http://localhost`,
-  'https://api.covid19vaxtracker.live',
-  'https://www.covid19vaxtracker.live',
+  `http://localhost:3000`,
   'https://mohamedtayeh.com',
-  'https://mohamedtayeh.com/',
-  'https://www.mohamedtayeh.com',
-  'https://www.mohamedtayeh.com/',
 ];
 
-app.use(cors());
-
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       // allow requests with no origin
-//       if (!origin) {
-//         return callback(null, true);
-//       }
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         let msg =
-//           'The CORS policy for this site does not ' +
-//           'allow access from the specified Origin.';
-//         return callback(new Error(msg), false);
-//       }
-//       return callback(null, true);
-//     },
-//   })
-// );
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      if (!origin) {
+        return callback(null, true);
+      }
+      if (allowedOrigins.indexOf(origin) === -1) {
+        let msg =
+          'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 app.use(bodyParser.json());
 
@@ -80,14 +71,6 @@ app.use(
 );
 
 app.use(Sentry.Handlers.errorHandler());
-
-console.log('env vars');
-console.log(process.env.MONGO_USER);
-console.log(process.env.MONGO_PASSWORD);
-console.log(process.env.MONGO_DB);
-console.log(process.env.SECRET_KEY);
-console.log(process.env.BACKEND_SENTRY_URL);
-console.log(process.env.DATA_PIPELINE_SENTRY_URL);
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
