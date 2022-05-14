@@ -12,6 +12,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Used to solve the issue of body and html to cover the entire page*/
+@media only screen and (max-height: 1600px) {
+  html {
+    height: auto;
+    min-height: 100% !important;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
