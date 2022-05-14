@@ -8,8 +8,8 @@ services:
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=covid19vaxtracker.live
-      - LETSENCRYPT_HOST=covid19vaxtracker.live
+      - VIRTUAL_HOST=mohamedtayeh.com
+      - LETSENCRYPT_HOST=mohamedtayeh.com
 
   backend:
     image: ghcr.io/utscc09/backend-covid19vaxtracker
@@ -18,8 +18,8 @@ services:
     expose:
       - 3000
     environment:
-      - VIRTUAL_HOST=api.covid19vaxtracker.live
-      - LETSENCRYPT_HOST=api.covid19vaxtracker.live
+      - VIRTUAL_HOST=api.mohamedtayeh.com
+      - LETSENCRYPT_HOST=api.mohamedtayeh.com
 
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -42,5 +42,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme:/etc/acme.sh
     environment:
-      - DEFAULT_EMAIL=mohamedntayeh@gmail.com
+      - DEFAULT_EMAIL=aarenchu@gmail.com
 # removing all images: docker stop $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images)
