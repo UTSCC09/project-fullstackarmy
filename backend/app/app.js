@@ -12,8 +12,10 @@ const http = require('http');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
 const isAuthorized = require('./middleware/isAuthorized');
-
+const helmet = require('helmet');
 const app = express();
+
+app.use(helmet());
 
 Sentry.init({
   dsn: process.env.BACKEND_SENTRY_URL,
