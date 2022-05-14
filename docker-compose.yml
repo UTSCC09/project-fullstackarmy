@@ -8,8 +8,8 @@ services:
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=mohamedtayeh.com
-      - LETSENCRYPT_HOST=mohamedtayeh.com
+      - VIRTUAL_HOST=mohamedtayeh.com,www.mohamedtayeh.com
+      - LETSENCRYPT_HOST=mohamedtayeh.com,www.mohamedtayeh.com
 
   backend:
     image: ghcr.io/utscc09/backend-covid19vaxtracker
@@ -42,5 +42,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme:/etc/acme.sh
     environment:
-      - DEFAULT_EMAIL=aarenchu@gmail.com
+      - DEFAULT_EMAIL=mohamedntayeh@gmail.com
 # removing all images: docker stop $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images)
