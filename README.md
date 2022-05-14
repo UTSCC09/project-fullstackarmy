@@ -2,11 +2,11 @@
 
 ## Project URL
 
-[https://www.covid19vaxtracker.live](https://www.covid19vaxtracker.live)
+https://covid.mohamedtayeh.com/
 
 ## Project Video URL
 
-[https://www.youtube.com/watch?v=IuJ9-EEIx9g](https://www.youtube.com/watch?v=IuJ9-EEIx9g)
+https://www.youtube.com/watch?v=IuJ9-EEIx9g
 
 ## Project Description
 
