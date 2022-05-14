@@ -1,6 +1,26 @@
 version: '3.7'
 
 services:
+  frontend:
+    image: ghcr.io/utscc09/frontend-covid19vaxtracker
+    container_name: frontend-covid19vaxtracker
+    restart: always
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=mohamedtayeh.com
+      - LETSENCRYPT_HOST=mohamedtayeh.com
+
+  backend:
+    image: ghcr.io/utscc09/backend-covid19vaxtracker
+    container_name: backend-covid19vaxtracker
+    restart: always
+    expose:
+      - 3000
+    environment:
+      - VIRTUAL_HOST=api.mohamedtayeh.com
+      - LETSENCRYPT_HOST=api.mohamedtayeh.com
+
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
@@ -23,24 +43,4 @@ services:
       - ./acme:/etc/acme.sh
     environment:
       - DEFAULT_EMAIL=mohamedntayeh@gmail.com
-
-  frontend:
-    image: ghcr.io/utscc09/frontend-covid19vaxtracker
-    container_name: frontend-covid19vaxtracker
-    restart: always
-    expose:
-      - 80
-    environment:
-      - VIRTUAL_HOST=mohamedtayeh.com
-      - LETSENCRYPT_HOST=mohamedtayeh.com
-
-  backend:
-    image: ghcr.io/utscc09/backend-covid19vaxtracker
-    container_name: backend-covid19vaxtracker
-    restart: always
-    expose:
-      - 3000
-    environment:
-      - VIRTUAL_HOST=api.mohamedtayeh.com
-      - LETSENCRYPT_HOST=api.mohamedtayeh.com
 # removing all images: docker stop $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images)
