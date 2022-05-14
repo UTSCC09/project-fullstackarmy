@@ -8,8 +8,8 @@ services:
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=mohamedtayeh.com
-      - LETSENCRYPT_HOST=mohamedtayeh.com
+      - VIRTUAL_HOST=covid19vaxtracker.live
+      - LETSENCRYPT_HOST=covid19vaxtracker.live
 
   backend:
     image: ghcr.io/utscc09/backend-covid19vaxtracker
@@ -18,8 +18,8 @@ services:
     expose:
       - 3000
     environment:
-      - VIRTUAL_HOST=api.mohamedtayeh.com
-      - LETSENCRYPT_HOST=api.mohamedtayeh.com
+      - VIRTUAL_HOST=api.covid19vaxtracker.live
+      - LETSENCRYPT_HOST=api.covid19vaxtracker.live
 
   nginx-proxy:
     image: jwilder/nginx-proxy
