@@ -36,8 +36,7 @@ app.use(isAuthorized);
 
 // From https://medium.com/zero-equals-false/using-cors-in-express-cac7e29b005b
 let allowedOrigins = [
-  `http://localhost:80`,
-  `http://localhost:3000`,
+  `http://localhost:3001`,
   'https://covid.mohamedtayeh.com',
   'https://covid19vaxtracker.live/',
 ];
