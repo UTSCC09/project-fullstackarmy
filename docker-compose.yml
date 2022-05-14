@@ -43,3 +43,4 @@ services:
     environment:
       - VIRTUAL_HOST=api.mohamedtayeh.com
       - LETSENCRYPT_HOST=api.mohamedtayeh.com
+# removing all images: docker stop $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images)

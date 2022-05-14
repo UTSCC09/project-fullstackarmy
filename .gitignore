@@ -21,3 +21,6 @@ yarn-error.log*
 
 choose default
 choose default.pub
+backend/app/backendEnv.sh
+backend/app/nodemon.json
+frontend/app/frontendEnv.sh
