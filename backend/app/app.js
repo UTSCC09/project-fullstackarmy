@@ -10,7 +10,7 @@ const http = require('http');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
 const isAuthorized = require('./middleware/isAuthorized');
-//test
+
 const app = express();
 
 Sentry.init({
@@ -77,6 +77,11 @@ app.use(
 );
 
 app.use(Sentry.Handlers.errorHandler());
+
+console.log('env vars');
+console.log(process.env.MONGO_USER);
+console.log(process.env.MONGO_PASSWORD);
+console.log(process.env.MONGO_DB);
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
