@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY ./app/package.json ./
+COPY ./app/package-lock.json ./
 
 # to deal with weird dependencies
 RUN npm install --legacy-peer-deps
