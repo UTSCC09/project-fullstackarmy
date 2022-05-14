@@ -44,7 +44,11 @@ let allowedOrigins = [
   'https://www.mohamedtayeh.com/',
 ];
 
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 // app.use(
 //   cors({
 //     origin: function (origin, callback) {
