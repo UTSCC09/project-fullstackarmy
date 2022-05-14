@@ -8,8 +8,8 @@ services:
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=mohamedtayeh.com,www.mohamedtayeh.com
-      - LETSENCRYPT_HOST=mohamedtayeh.com,www.mohamedtayeh.com
+      - VIRTUAL_HOST=covid.mohamedtayeh.com
+      - LETSENCRYPT_HOST=covid.mohamedtayeh.com
 
   backend:
     image: ghcr.io/utscc09/backend-covid19vaxtracker
