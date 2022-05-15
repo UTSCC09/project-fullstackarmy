@@ -5,6 +5,14 @@ const resolverHelpers = require('../helper');
 const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
 const continentIsoCodes = dataPipelineConstants.continentIsoCodes;
 
+/**
+ * Maps Ids to IsoCodes
+ * @summary Makes a query to the database to get the isoCode and isoCodeName for each id, these are already known constants that are
+ * used in generating the database in the first place, therefore these
+ * @param {boolean} forCountry - if the data retrieved is for countries or continents
+ * @return {{int: {isoCode: string, isoCodeName: string}}} - an object with the id as the key and the isoCode and isoCodeName as the value
+ * @author Mohamed Tayeh
+ */
 const idToIsoCodeQuery = async (forCountry) => {
   let isoCodeQuery;
 
@@ -26,7 +34,10 @@ const idToIsoCodeQuery = async (forCountry) => {
       let idToIsoCode = {};
 
       res.forEach((isoCodeData) => {
-        idToIsoCode[isoCodeData.id] = isoCodeData.isoCode;
+        idToIsoCode[isoCodeData.id] = {
+          isoCode: isoCodeData.isoCode,
+          isoCodeName: isoCodeData.isoCodeName,
+        };
       });
 
       return idToIsoCode;
@@ -38,7 +49,14 @@ const idToIsoCodeQuery = async (forCountry) => {
   return query;
 };
 
-// process the result of the promises/queries
+/**
+ * General helper that processes the map data queries and adds isoCode information to each row, such as isoCode and isoCodeName
+ * @param {array of queries/promises} mapDataQueries - array of map data queries
+ * @param {string} metric - the name of the metric in the query
+ * @param {{int: {isoCode: string, isoCodeName: string}}} idToIsoCode - an object with the id as the key and the isoCode and isoCodeName as the value
+ * @return {{isoCode: string, isoCodeName: string, 'metric': string}[]} metric is based on the above parameter
+ * @author Mohamed Tayeh
+ */
 const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
   const result = await Promise.all(mapDataQueries)
     .then((res) => {
@@ -46,13 +64,14 @@ const processMapDataQueries = async (mapDataQueries, metric, idToIsoCode) => {
       res.forEach((isoCodeData) => {
         if (isoCodeData) {
           // Some isoCodes will not have any data in the date range
+          let isoCodeInfo = idToIsoCode[isoCodeData.isoCode];
+
           let row = {
-            isoCode: idToIsoCode[isoCodeData.isoCode], // isoCode here is the foreign key id
-            isoCodeName: isoCodeData.isoCodeName,
+            isoCode: isoCodeInfo.isoCode, // isoCode here is the foreign key id
+            isoCodeName: isoCodeInfo.isoCodeName,
           };
 
           row[metric] = isoCodeData[metric];
-
           result.push(row);
         }
       });

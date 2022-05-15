@@ -1,27 +1,31 @@
 const mapDataTypes = `
     type VaccMapData {
         isoCode: String
+        isoCodeName: String
         peopleVaccinatedPerHundred: Float
     }
 
     type FullyVaccMapData {
         isoCode: String
+        isoCodeName: String
         peopleFullyVaccinatedPerHundred: Float
     }
 
     type BoosterVaccMapData {
         isoCode: String
+        isoCodeName: String
         totalBoostersPerHundred: Float
     }
 
     type VaccDistribMapData {
         isoCode: String
+        isoCodeName: String
         dosesDeliveredRequiredPercent: Float
         dosesExpectedRequiredPercent: Float
     }
 `;
 
-const mapDataRootQuery =`
+const mapDataRootQuery = `
     countryVaccMapData(startDate: String!, endDate: String!): [VaccMapData!]!
     countryFullyVaccMapData(startDate: String!, endDate: String!): [FullyVaccMapData!]!
     countryBoosterVaccMapData(startDate: String!, endDate: String!): [BoosterVaccMapData!]!
