@@ -1,8 +1,14 @@
 const IsoCodeVaccData = require('../../../models/IsoCodeVaccData');
 const mapDataHelpers = require('./mapDataHelper');
 
-// promises/queries of data
-
+/**
+ * Aims to get the latest available for each isoCode within the given date range
+ * @param {{int: {isoCode: string, isoCodeName: string}}} isoCodeIds - The isoCodeIds to get the data for
+ * @param {date obj} startDataFormatted
+ * @param {date obj} endDataFormatted
+ * @return {{isoCode: string, peopleVaccinatedPerHundred}} the isoCode here is the id of the isoCode, not the isoCode itself
+ * @author Mohamed Tayeh
+ */
 const mapVaccDataQueries = async (
   isoCodeIds,
   startDataFormatted,
@@ -24,6 +30,14 @@ const mapVaccDataQueries = async (
   return queries;
 };
 
+/**
+ * Aims to get the latest available for each isoCode within the given date range
+ * @param {{int: {isoCode: string, isoCodeName: string}}} isoCodeIds - The isoCodeIds to get the data for
+ * @param {date obj} startDataFormatted
+ * @param {date obj} endDataFormatted
+ * @return {{isoCode: string, peopleFullyVaccinatedPerHundred}} the isoCode here is the id of the isoCode, not the isoCode itself
+ * @author Mohamed Tayeh
+ */
 const mapFullyVaccDataQueries = async (
   isoCodeIds,
   startDataFormatted,
@@ -45,6 +59,14 @@ const mapFullyVaccDataQueries = async (
   return queries;
 };
 
+/**
+ * Aims to get the latest available for each isoCode within the given date range
+ * @param {{int: {isoCode: string, isoCodeName: string}}} isoCodeIds - The isoCodeIds to get the data for
+ * @param {date obj} startDataFormatted
+ * @param {date obj} endDataFormatted
+ * @return {{isoCode: string, totalBoostersPerHundred}} the isoCode here is the id of the isoCode, not the isoCode itself
+ * @author Mohamed Tayeh
+ */
 const mapBoosterVaccDataQueries = async (
   isoCodeIds,
   startDataFormatted,
@@ -66,6 +88,15 @@ const mapBoosterVaccDataQueries = async (
   return queries;
 };
 
+/**
+ * Brief description of the function here.
+ * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
+ * @param {string} startDate - start date
+ * @param {string} endDate - end date
+ * @param {string} vaccDose - the type of vaccination data to get, either one of 'first', 'second' or 'third'
+ * @param {boolean} forCountry
+ * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+ */
 const mapData = async (startDate, endDate, vaccDose, forCountry) => {
   const startDataFormatted = new Date(startDate);
   const endDataFormatted = new Date(endDate);
