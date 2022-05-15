@@ -101,6 +101,9 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 **Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number).
 
 - Mohamed Tayeh
+
+  - Deployment
+  - CI/CD
   - Maps Implementation
   - Data Pipelines
   - Data Sources
@@ -129,7 +132,7 @@ We set up a CI/CD pipeline using Github Actions. Whenever either [`frontend`](ht
 
 - Raha Gharadaghi
 
-  - Design of UI/frontend skeleton 
+  - Design of UI/frontend skeleton
   - Implementation of information tab parallax scroll
   - Filtering by region and date range (making queries for the charts responsive to the selected values and applying changes to the chart display)
   - Dark Mode/Light Mode feature

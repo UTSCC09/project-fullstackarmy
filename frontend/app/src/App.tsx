@@ -31,49 +31,56 @@ function App() {
   // Set theme attributes based on darkMode state
   const [darkMode, setDarkMode] = React.useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleDarkMode = React.useMemo(
+    () => () => {
+      setDarkMode((prevDarkMode) => (prevDarkMode ? false : true));
+    },
+    []
+  );
 
-  const theme = createTheme({
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            color: '#00acea',
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        components: {
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                color: '#00acea',
+              },
+            },
+          },
+          MuiTabs: {
+            styleOverrides: {
+              root: {
+                backgroundColor: darkMode ? '#303030' : 'white',
+              },
+            },
+          },
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                color: darkMode ? 'white' : 'black',
+              },
+            },
           },
         },
-      },
-      MuiTabs: {
-        styleOverrides: {
-          root: {
-            backgroundColor: darkMode ? '#303030' : 'white',
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+          primary: {
+            main: '#ffffff',
+          },
+          secondary: {
+            main: '#00acea',
           },
         },
-      },
-      MuiTypography: {
-        styleOverrides: {
-          root: {
-            color: darkMode ? 'white' : 'black',
+        typography: {
+          button: {
+            textTransform: 'none',
           },
         },
-      },
-    },
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-      primary: {
-        main: '#ffffff',
-      },
-      secondary: {
-        main: '#00acea',
-      },
-    },
-    typography: {
-      button: {
-        textTransform: 'none',
-      },
-    },
-  });
+      }),
+    [darkMode]
+  );
 
   // User state
   const [user, setUser] = React.useState(null);

@@ -4,6 +4,7 @@ export type FeatureData = [isoCode: string, value: number][];
 
 export type MapQueryType = 'countryMapQuery' | 'continentMapQuery';
 
+// also has a value property that is dependent on the query
 export type ExcelBookData = {
   isoCodeName: string;
   isoCode: string;
