@@ -391,34 +391,28 @@ const isoCodeVaccDataUpdateReq = (isoCodeVaccDataInput, authToken) => {
   return result;
 };
 
-// const dataPipeline = async () => {
-//   let success = await getDataSets();
-//   console.log(success);
-//   let authToken = await helpers.authenticationToken();
-//   await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
-//   await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
-//   console.log('done');
+const dataPipeline = async () => {
+  try {
+    let dataSetsSuccess = await getDataSets();
+    if (dataSetsSuccess) {
+      let authToken = await helpers.authenticationToken();
+      await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
+      await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
+    }
+    console.log('Vaccination Data Pipeline ran successfully');
+  } catch (err) {
+    helpers.logError(err);
+  }
+};
 
-//   // try {
-//   //   let dataSetsSuccess = await getDataSets();
-//   //   if (dataSetsSuccess) {
-//   //     let authToken = await helpers.authenticationToken();
-//   //     await isoCodesUpdateReq(isoCodesUpdatePayload, authToken);
-//   //     await isoCodeVaccDataUpdateReq(vaccDataPayload, authToken);
-//   //   }
-//   // } catch (err) {
-//   //   helpers.logError(err);
-//   // }
-// };
+dataPipeline();
 
-// dataPipeline();
+let scheduledJob = new CronJob(
+  '*/20 * * * * *',
+  dataPipeline,
+  null,
+  false,
+  'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-//   '*/ 00 09 * * *',
-//   dataPipeline,
-//   null,
-//   false
-//   // 'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();

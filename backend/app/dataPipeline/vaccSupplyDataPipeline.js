@@ -211,27 +211,25 @@ const addIsoCodeVaccSupplyDataReq = async (
   return req;
 };
 
-// const dataPipeline = async () => {
-//   let success = await getDataSets();
-//   console.log(success);
-//   let authToken = await helpers.authenticationToken();
-//   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
-//   console.log('done');
-//   // let dataSetsSuccess = await getDataSets();
-//   // if (dataSetsSuccess) {
-//   //   let authToken = await helpers.authenticationToken();
-//   //   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
-//   // }
-// };
+const dataPipeline = async () => {
+  try {
+    let dataSetsSuccess = await getDataSets();
+    if (dataSetsSuccess) {
+      let authToken = await helpers.authenticationToken();
+      await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+    }
+    console.log('Vaccination Supply Data Pipeline ran successfully');
+  } catch (err) {
+    helpers.logError(err);
+  }
+};
 
-// dataPipeline();
+let scheduledJob = new CronJob(
+  '*/20 * * * * *',
+  dataPipeline,
+  null,
+  false,
+  'America/Toronto'
+);
 
-// let scheduledJob = new CronJob(
-//   '00 30 09 * * *',
-//   dataPipeline,
-//   null,
-//   false,
-//   'America/Toronto'
-// );
-
-// scheduledJob.start();
+scheduledJob.start();
