@@ -6,7 +6,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Stack from '@mui/material/Stack';
-import { DateFilterContext } from './context/DateFilterContext';
+import { DateFilterContext } from '../context/DateFilterProvider';
 import { useTranslation } from 'react-i18next';
 
 const currentDate = new Date();
@@ -15,8 +15,7 @@ const minStartDate = new Date(Date.parse('2020-12-02')); // smallest date value 
 export const DateFilter = () => {
   const { t } = useTranslation();
 
-  const { selectedDate, updateSelectedDate } =
-    React.useContext(DateFilterContext);
+  const { selectedDate, setSelectedDate } = React.useContext(DateFilterContext);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -25,7 +24,7 @@ export const DateFilter = () => {
           label={t('configbar.datefrom')}
           value={selectedDate[0]}
           onChange={(newValue) => {
-            updateSelectedDate([newValue, selectedDate[1]]);
+            setSelectedDate([newValue, selectedDate[1]]);
           }}
           renderInput={(params) => <TextField color='secondary' {...params} />}
           minDate={minStartDate}
@@ -35,7 +34,7 @@ export const DateFilter = () => {
           label={t('configbar.dateto')}
           value={selectedDate[1]}
           onChange={(newValue) => {
-            updateSelectedDate([selectedDate[0], newValue]);
+            setSelectedDate([selectedDate[0], newValue]);
           }}
           renderInput={(params) => <TextField color='secondary' {...params} />}
           minDate={selectedDate[0] == null ? minStartDate : selectedDate[0]}
