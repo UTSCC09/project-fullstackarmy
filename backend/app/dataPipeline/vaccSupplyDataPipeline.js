@@ -212,19 +212,26 @@ const addIsoCodeVaccSupplyDataReq = async (
 };
 
 const dataPipeline = async () => {
-  let dataSetsSuccess = await getDataSets();
-  if (dataSetsSuccess) {
-    let authToken = await helpers.authenticationToken();
-    await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
-  }
+  let success = await getDataSets();
+  console.log(success);
+  let authToken = await helpers.authenticationToken();
+  await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+  console.log('done');
+  // let dataSetsSuccess = await getDataSets();
+  // if (dataSetsSuccess) {
+  //   let authToken = await helpers.authenticationToken();
+  //   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+  // }
 };
 
-let scheduledJob = new CronJob(
-  '00 30 09 * * *',
-  dataPipeline,
-  null,
-  false,
-  'America/Toronto'
-);
+dataPipeline();
 
-scheduledJob.start();
+// let scheduledJob = new CronJob(
+//   '00 30 09 * * *',
+//   dataPipeline,
+//   null,
+//   false,
+//   'America/Toronto'
+// );
+
+// scheduledJob.start();
