@@ -3,7 +3,6 @@ const mapDataHelpers = require('./mapDataHelper');
 const resolverHelpers = require('../helper');
 
 const distribMapData = async () => {
-  // ! have to check if this is true for this query
   // Create map object here rather than populate the query for
   // time efficiency
   const idToIsoCode = await mapDataHelpers.idToIsoCodeQuery(
@@ -18,9 +17,11 @@ const distribMapData = async () => {
     })
     .then((res) => {
       return res.map((isoCodeData) => {
+        let isoCodeInfo = idToIsoCode[isoCodeData.isoCode];
+
         return {
-          isoCode: idToIsoCode[isoCodeData.isoCode],
-          isoCodeName: isoCodeData.isoCodeName,
+          isoCode: isoCodeInfo.isoCode, // isoCode here is the foreign key id
+          isoCodeName: isoCodeInfo.isoCodeName,
           dosesDeliveredRequiredPercent:
             isoCodeData.dosesDeliveredRequiredPercent,
           dosesExpectedRequiredPercent:
