@@ -20,7 +20,7 @@ const RouterComponent: React.FC<Props> = () => {
   return (
     <Router>
       <div
-        className='app-container'
+        className='app'
         style={{
           backgroundColor: darkMode ? '#303030' : 'white',
         }}

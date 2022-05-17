@@ -4,3 +4,6 @@
 2022-04-08 02:34:10 pm EDT vaccineSupplyPipelinelogs.txt successStatus: true recordsSent: 89 recordsSuccessfullyAdded: 89 errorMsg:  
 2022-04-08 02:40:40 pm EDT vaccineSupplyPipelinelogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  
 2022-04-08 03:00:20 pm EDT vaccineSupplyPipelinelogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  
+2022-05-17 04:15:55 pm EDT vaccineSupplyPipelinelogs.txt successStatus: false recordsSent: 170 recordsSuccessfullyAdded: 0 errorMsg: request to http://localhost:3000/api failed, reason: connect ECONNREFUSED 127.0.0.1:3000 
+2022-05-17 04:16:24 pm EDT vaccineSupplyPipelinelogs.txt successStatus: true recordsSent: 170 recordsSuccessfullyAdded: 170 errorMsg:  
+2022-05-17 04:26:58 pm EDT vaccineSupplyPipelinelogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  

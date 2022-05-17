@@ -37,3 +37,4 @@
 2022-04-08 02:34:51 pm EDT vacDataPipelineLogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  
 2022-04-08 02:40:33 pm EDT vacDataPipelineLogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  
 2022-04-08 03:09:31 pm EDT vacDataPipelineLogs.txt successStatus: true recordsSent: 0 recordsSuccessfullyAdded: 0 errorMsg:  
+2022-05-17 04:22:53 pm EDT vacDataPipelineLogs.txt successStatus: true recordsSent: 29741 recordsSuccessfullyAdded: 29741 errorMsg:  
