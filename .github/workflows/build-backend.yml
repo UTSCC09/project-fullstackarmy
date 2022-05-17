@@ -14,8 +14,7 @@ env:
   IMAGE_NAME: backend-covid19vaxtracker
 
 jobs:
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
+  # Push image to GitHub Packages - https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
