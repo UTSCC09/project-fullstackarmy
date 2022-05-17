@@ -5,10 +5,10 @@ import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserContext } from './context/UserContext';
+import { UserContext } from '../context/UserProvider';
 import { CountriesFilter } from './CountriesFilter';
 import { DateFilter } from './DateFilter';
-import SavedConfigs from './userconfig/SavedConfigs';
+import SavedConfigs from '../userconfig/SavedConfigs';
 
 interface Props {
   open: boolean;
@@ -39,16 +39,25 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
       open={open}
       onBackdropClick={closeDrawer}
     >
-      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
+      <Typography
+        variant='subtitle1'
+        align='left'
+        sx={{ marginLeft: '14px', marginTop: '14px' }}
+      >
         {t('configbar.region')}
       </Typography>
       <CountriesFilter />
 
       <Divider />
 
-      <Typography variant='subtitle1' align='left' sx={{ marginLeft: '14px' }}>
+      <Typography
+        variant='subtitle1'
+        align='left'
+        sx={{ marginLeft: '14px', marginTop: '14px' }}
+      >
         {t('configbar.date')}
       </Typography>
+
       <DateFilter />
 
       {user !== null && (
