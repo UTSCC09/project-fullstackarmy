@@ -211,20 +211,20 @@ const addIsoCodeVaccSupplyDataReq = async (
   return req;
 };
 
-const dataPipeline = async () => {
-  let success = await getDataSets();
-  console.log(success);
-  let authToken = await helpers.authenticationToken();
-  await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
-  console.log('done');
-  // let dataSetsSuccess = await getDataSets();
-  // if (dataSetsSuccess) {
-  //   let authToken = await helpers.authenticationToken();
-  //   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
-  // }
-};
+// const dataPipeline = async () => {
+//   let success = await getDataSets();
+//   console.log(success);
+//   let authToken = await helpers.authenticationToken();
+//   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+//   console.log('done');
+//   // let dataSetsSuccess = await getDataSets();
+//   // if (dataSetsSuccess) {
+//   //   let authToken = await helpers.authenticationToken();
+//   //   await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
+//   // }
+// };
 
-dataPipeline();
+// dataPipeline();
 
 // let scheduledJob = new CronJob(
 //   '00 30 09 * * *',
