@@ -14,8 +14,8 @@ import { Bar } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import { ColorModeContext } from '../context/ColorModeContext';
+import { CountriesFilterContext } from '../context/CountriesFilterProvider';
+import { ColorModeContext } from '../context/ColorModeProvider';
 
 const VaccDoseDemand = () => {
   ChartJS.register(

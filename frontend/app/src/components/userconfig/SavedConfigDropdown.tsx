@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserProvider';
 import { ALL_SAVED_CONFIGS } from './queries/UserConfigQueries';
 import { useLazyQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';

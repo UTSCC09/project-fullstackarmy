@@ -19,9 +19,9 @@ import { Line } from 'react-chartjs-2';
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import Loading from '../elements/Loading/Loading';
 import Error from '../elements/Error/Error';
-import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import { DateFilterContext } from '../context/DateFilterContext';
-import { ColorModeContext } from '../context/ColorModeContext';
+import { CountriesFilterContext } from '../context/CountriesFilterProvider';
+import { DateFilterContext } from '../context/DateFilterProvider';
+import { ColorModeContext } from '../context/ColorModeProvider';
 
 const formatDate = (date) => {
   let d = new Date(Date.parse(date));

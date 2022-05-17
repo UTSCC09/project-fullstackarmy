@@ -19,7 +19,7 @@ import {
   CountryVaccMapData,
   TimePeriodVars,
 } from './types/types';
-import { DateFilterContext } from '../context/DateFilterContext';
+import { DateFilterContext } from '../context/DateFilterProvider';
 
 interface Props {}
 

@@ -1,28 +1,29 @@
 // Adapted from:
 // https://codesandbox.io/s/k1wuo0?file=/demo.tsx
 // https://codesandbox.io/s/persistentdrawerright-material-demo-forked-756g4v?file=/demo.tsx:2050-2054
+
 import FilterAlt from '@mui/icons-material/FilterAlt';
 import Translate from '@mui/icons-material/Translate';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+// import { useTranslation } from 'react-i18next';
+// import { Link as RouterLink } from 'react-router-dom';
 import { ColorModeToggle } from './ColorModeToggle';
-import ConfigBar from './ConfigBar';
-import { UserContext } from './context/UserContext';
+import ConfigBar from './configBar/ConfigBar';
+// import { UserContext } from './context/UserContext';
 import Logo from './Logo';
 import TranslationDropdown from './TranslationDropdown';
 
 export const Header = () => {
   // State for handling configuration bar drawer
   const [configBarOpen, setOpen] = React.useState(false);
-  const { user, updateUser } = React.useContext(UserContext);
-  const { t } = useTranslation();
+  // const { user, setUser } = React.useContext(UserContext);
+  // const { t } = useTranslation();
 
   const toggleDrawer = () => {
     setOpen(!configBarOpen);
@@ -40,9 +41,9 @@ export const Header = () => {
     setAnchorEl(null);
   };
 
-  const signOut = () => {
-    updateUser(null);
-  };
+  // const signOut = () => {
+  //   setUser(null);
+  // };
 
   return (
     <Box>
@@ -78,9 +79,9 @@ export const Header = () => {
 
           <ColorModeToggle />
 
-          {/* <IconButton size='large' color='inherit' onClick={toggleDrawer}>
+          <IconButton size='large' color='inherit' onClick={toggleDrawer}>
             <FilterAlt />
-          </IconButton> */}
+          </IconButton>
         </Toolbar>
       </AppBar>
       <TranslationDropdown anchorEl={anchorEl} handleClose={handleClose} />

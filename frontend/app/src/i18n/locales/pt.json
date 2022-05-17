@@ -91,5 +91,8 @@
     "instruction": "Guardar a configuração actual:",
     "input": "Novo nome de configuração"
   },
-  "here": "aqui"
+  "here": "aqui",
+  "error": {
+    "noData": "Não há dados disponíveis"
+  }
 }
