@@ -1,15 +1,15 @@
 import React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { LanguageContext } from '../context/LanguageContext';
+import { LanguageContext } from '../context/LanguageProvider';
 import { MenuItem } from '@mui/material';
-import { CountriesFilterContext } from '../context/CountriesFilterContext';
-import { DateFilterContext } from '../context/DateFilterContext';
+import { CountriesFilterContext } from '../context/CountriesFilterProvider';
+import { DateFilterContext } from '../context/DateFilterProvider';
 
 const SavedConfigsPopoverItem = ({ key, cfg }) => {
   const { changeLanguage } = React.useContext(LanguageContext);
-  const { updateSelectedDate } = React.useContext(DateFilterContext);
-  const { updateSelectedCountries } = React.useContext(CountriesFilterContext);
+  const { setSelectedDate } = React.useContext(DateFilterContext);
+  const { setSelectedCountries } = React.useContext(CountriesFilterContext);
   const handleClick = (cfg) => {
     if (cfg.savedLanguage) {
       changeLanguage(cfg.savedLanguage);
@@ -17,10 +17,10 @@ const SavedConfigsPopoverItem = ({ key, cfg }) => {
     if (cfg.savedStartDate && cfg.savedEndDate) {
       let startDate = new Date(Date.parse(cfg.savedStartDate));
       let endDate = new Date(Date.parse(cfg.savedEndDate));
-      updateSelectedDate([startDate, endDate]);
+      setSelectedDate([startDate, endDate]);
     }
     if (cfg.savedIsoCodes) {
-      updateSelectedCountries(cfg.savedIsoCodes);
+      setSelectedCountries(cfg.savedIsoCodes);
     }
     return null;
   };

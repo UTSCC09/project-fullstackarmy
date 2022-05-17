@@ -12,20 +12,20 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/UserProvider';
 import Error from '../elements/Error/Error';
 import { SIGN_IN } from './queries/AuthenticationQuries';
 
 const SignIn: React.FC = () => {
   const [errorPanel, setErrorPanel] = React.useState<string | null>(null);
-  const { updateUser } = React.useContext(UserContext);
+  const { setUser } = React.useContext(UserContext);
   const { t } = useTranslation();
 
   const navigate = useNavigate();
 
   const [signIn] = useLazyQuery(SIGN_IN, {
     onCompleted: (data) => {
-      updateUser(data.signin);
+      setUser(data.signin);
       navigate('/');
     },
     onError: (error) => {
