@@ -29,11 +29,13 @@ jobs:
         working-directory: backend/app
         run: |
           touch .env
+          echo BACKEND_API_URL=${{ secrets.BACKEND_API_URL }} >> .env
           echo MONGO_USER=${{ secrets.MONGO_USER }} >> .env
           echo MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} >> .env
           echo MONGO_DB=${{ secrets.MONGO_DB }} >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo BACKEND_SENTRY_URL=${{ secrets.BACKEND_SENTRY_URL }} >> .env
+          echo DATA_PIPELINE_SENTRY_URL=${{ secrets.DATA_PIPELINE_SENTRY_URL }} >> .env
           echo DATA_PIPELINE_SENTRY_URL=${{ secrets.DATA_PIPELINE_SENTRY_URL }} >> .env
 
       - name: Build image
