@@ -1,20 +1,16 @@
 const fetch = require('node-fetch');
 const graphqlRequest = require('graphql-request');
-const constants = require('./dataPipelineConstants');
-const helpers = require('./dataPipelineHelpers');
+const constants = require('../helpers/dataPipelineConstants');
+const helpers = require('../helpers/dataPipelineHelpers');
 const fs = require('fs');
 const { CronJob } = require('cron');
 
-const graphQLClient = new graphqlRequest.GraphQLClient(
-  process.env.BACKEND_API_URL
-);
-
 const VaccSupplyDataURL =
   'https://data.covid19taskforce.com/covax-api/getCovaxDashboardData';
-const StoredFileName = 'VaccSupplyData.txt';
+const StoredFileName = '../txtFiles/vaccSupplyData.txt';
 
-const VaccSupplyDataPipelineName = 'vaccineSupplyPipeline';
-const VaccSupplyDataPipelineTxt = 'vaccineSupplyPipelinelogs.txt';
+const VaccSupplyDataPipelineName = 'vaccSupplyPipeline';
+const VaccSupplyDataPipelineTxt = '../txtFiles/vaccSupplyPipelinelogs.txt';
 
 let vaccSupplyPayload = [];
 
@@ -22,7 +18,6 @@ let vaccSupplyPayload = [];
 // efficiently
 // Get the previous data sent to backend
 let prevData;
-
 /**
  * FS call back in case of error
  * @param {NodeJS.ErrnoException} err
@@ -162,8 +157,8 @@ const addIsoCodeVaccSupplyDataReq = async (
     username: process.env.DATA_PIPELINE_USERNAME,
   };
 
-  graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
-  const req = graphQLClient.request(query, variables);
+  helpers.graphQLClient.setHeader('authorization', `Bearer ${authToken}`);
+  const req = helpers.graphQLClient.request(query, variables);
 
   req
     .then((res) => {
@@ -218,14 +213,13 @@ const dataPipeline = async () => {
       let authToken = await helpers.authenticationToken();
       await addIsoCodeVaccSupplyDataReq(vaccSupplyPayload, authToken);
     }
-    console.log('Vaccination Supply Data Pipeline ran successfully');
   } catch (err) {
     helpers.logError(err);
   }
 };
 
 let scheduledJob = new CronJob(
-  '*/20 * * * * *',
+  '00 30 09 * * *',
   dataPipeline,
   null,
   false,
