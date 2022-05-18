@@ -8,7 +8,7 @@ const resolverHelpers = require('../helper');
  * @author Mohamed Tayeh
  */
 module.exports = {
-  updateDataPipelineLogs: async ({ dataPipelineLogsInput }) => {
+  updateDataPipelineLogs: async ({ dataPipelineLogsInput, username }) => {
     const {
       date,
       pipelineName,
@@ -16,11 +16,13 @@ module.exports = {
       recordsSent,
       recordsSuccessfullyAdded,
       msg,
-      username,
     } = dataPipelineLogsInput;
 
+    console.log(username);
+    console.log(process.env.DATA_PIPELINE_USERNAME);
+
     if (username !== process.env.DATA_PIPELINE_USERNAME) {
-      throw Error('Unauthorized');
+      throw Error('Unauthorized action');
     }
 
     const newLog = new DataPipelineLogs({
