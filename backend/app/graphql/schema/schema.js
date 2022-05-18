@@ -61,6 +61,7 @@ input isoCodeInput {
 
 ${mapDataTypes}
 ${dataPipelineTypes}
+${authTypes}
 type RootQuery {
     isoCodes(isoCodes:[String!]!): [IsoCode!]!
     countryIsoCodes: [IsoCode!]!
@@ -74,10 +75,12 @@ type RootQuery {
     getSupplyDataByIsoCode(isoCodes:[String!]!): [VaccSupplyData!]
     ${mapDataRootQuery}
     ${dataPipelineRootQuery}
+    ${authRootQuery}
 }
 
 type RootMutation {
     ${dataPipelineRootMutation}
+    ${authRootMutation}
 }
 
 schema {

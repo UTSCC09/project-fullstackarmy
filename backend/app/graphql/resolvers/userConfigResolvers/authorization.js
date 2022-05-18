@@ -3,6 +3,7 @@ const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sanitizeInputs } = require('../helper');
+const resolverHelpers = require('../helper');
 
 const signUp = async (username, password) => {
   try {
@@ -21,7 +22,7 @@ const signUp = async (username, password) => {
 
     return { ...result._doc, password: null, _id: result.id };
   } catch (err) {
-    throw err;
+    resolverHelpers.unexpectedError(err);
   }
 };
 
