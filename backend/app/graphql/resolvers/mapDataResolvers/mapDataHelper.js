@@ -1,4 +1,4 @@
-const dataPipelineConstants = require('../../../dataPipeline/dataPipelineConstants');
+const dataPipelineConstants = require('../../../dataPipeline/helpers/dataPipelineConstants');
 const IsoCode = require('../../../models/IsoCode');
 const resolverHelpers = require('../helper');
 

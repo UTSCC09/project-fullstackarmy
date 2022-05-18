@@ -148,7 +148,9 @@ const authenticationToken = () => {
       return res.signin.token;
     })
     .catch((err) => {
+      throw err;
       Sentry.captureException(err);
+      return null;
     });
 
   return req;
@@ -160,3 +162,4 @@ exports.updateDataPipelineLogs = updateDataPipelineLogs;
 exports.updateDataPipelineTxt = updateDataPipelineTxt;
 exports.logError = logError;
 exports.authenticationToken = authenticationToken;
+exports.graphQLClient = graphQLClient;
