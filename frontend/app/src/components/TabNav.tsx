@@ -9,7 +9,7 @@ import { BiWorld } from 'react-icons/bi';
 import { AiOutlineLineChart } from 'react-icons/ai';
 import { BiBarChartSquare } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   selected: string;
@@ -17,6 +17,9 @@ interface Props {
 
 const TabNav: React.FC<Props> = ({ selected }) => {
   const [value, setValue] = React.useState(selected);
+
+  const { t } = useTranslation();
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
