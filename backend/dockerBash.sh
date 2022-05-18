@@ -5,10 +5,10 @@
 node app.js &
   
 # Start vaccination data pipeline
-node ./dataPipeline/vaccDataPipeline.js &
+node ./dataPipeline/pipelines/vaccDataPipeline.js &
 
 # Start vaccination supply pipeline
-node ./dataPipeline/vaccSupplyDataPipeline.js &
+node ./dataPipeline/pipelines/vaccSupplyDataPipeline.js &
 
 # Wait for any process to exit
 wait -n
