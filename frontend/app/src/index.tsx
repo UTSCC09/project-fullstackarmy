@@ -10,7 +10,7 @@ import { BrowserTracing } from '@sentry/tracing';
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_URL,
   integrations: [new BrowserTracing()],
-  tracesSampleRate: 1,
+  tracesSampleRate: 0.5,
 });
 
 ReactDOM.render(

@@ -1,6 +1,6 @@
 const IsoCode = require('../../models/IsoCode');
 const { transformIsoCode } = require('./helper');
-const dataPipelineConstants = require('../../dataPipeline/dataPipelineConstants');
+const dataPipelineConstants = require('../../dataPipeline/helpers/dataPipelineConstants');
 const nonCountryIsoCodes = Object.keys(dataPipelineConstants.isoCodeToTypes);
 const resolverHelpers = require('./helper');
 
