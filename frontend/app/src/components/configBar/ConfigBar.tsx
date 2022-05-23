@@ -48,7 +48,7 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
       </Typography>
       <CountriesFilter />
 
-      <Divider />
+      {/* <Divider />
 
       <Typography
         variant='subtitle1'
@@ -71,7 +71,7 @@ const ConfigBar: React.FC<Props> = ({ open, handleClose }) => {
           </Typography>
           <SavedConfigs />
         </>
-      )}
+      )} */}
     </Drawer>
   );
 };
